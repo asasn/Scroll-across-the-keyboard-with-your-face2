@@ -1,0 +1,11 @@
+﻿IcoMoon - Free
+Glyphs Available	490
+Grid Size	16
+Designer	Keyamoon
+License		GPL / CC BY 4.0
+
+Zondicons
+Glyphs Available	297
+Grid Size	20
+Designer	Steve Schoger
+License		CC BY 4.0

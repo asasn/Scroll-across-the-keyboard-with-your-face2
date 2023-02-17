@@ -1,0 +1,27 @@
+﻿<UserControl x:Name="userControl" x:Class="RootNS.MyControls.TomatoClock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:hc="https://handyorg.github.io/handycontrol"
+             DataContext="{Binding ThisClock, ElementName=userControl}"
+             mc:Ignorable="d" ToolTip="番茄时钟" Margin="5" ToolTipService.ShowDuration="60000"
+             d:DesignHeight="40" d:DesignWidth="180" Loaded="UserControl_Loaded" >
+    <Border BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5">
+        <Grid Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Button ToolTip="点击此处进行设置（下一次开始计时才生效）" x:Name="BtnSet" FontFamily="../Resources/icons/#icomoon" Content="&#xea79;" FontSize="24" BorderThickness="0" Padding="0" Background="Transparent" Height="30" Width="30" Click="BtnSet_Click" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"/>
+            <ProgressBar x:Name="PbTime" Grid.Column="1" Value="{Binding ProgressValue}" Maximum="{Binding TimeSetTotalSeconds}" Margin="2,5,2,5" MinWidth="45" />
+            <hc:NumericUpDown ToolTip="在此设置响铃时间（分钟）（下一次开始计时才生效）" Maximum="99" Visibility="{Binding IsSetting}" Minimum="1" x:Name="CbTime" Value="{Binding TimeSetTotalMinutes}" Grid.Column="1" Loaded="CbTime_Loaded" Margin="2,5,2,5" MinWidth="45"/>
+            <TextBlock x:Name="TbTime" Text="{Binding ShowTimeText}" Grid.Column="2" Padding="0" Width="40" Margin="2,5,2,5" VerticalAlignment="Center"/>
+            <Button x:Name="BtnStart" FontFamily="../Resources/icons/#icomoon" Content="{Binding ButtonContent}" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="开始/停止" Height="30" Width="30" Grid.Column="3" Click="BtnStart_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <MediaElement x:Name="MeDida" Visibility="Collapsed" LoadedBehavior="Manual" Source="Resources/voices/dida.wav"/>
+            <MediaElement x:Name="MeRing" Visibility="Collapsed" LoadedBehavior="Manual" Source="Resources/voices/ring.wav" />
+        </Grid>
+    </Border>
+
+</UserControl>

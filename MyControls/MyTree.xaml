@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="RootNS.MyControls.MyTree"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:hc="https://handyorg.github.io/handycontrol" 
+    xmlns:behavior="clr-namespace:RootNS.Helper" 
+    Background="#FFFEFEFE" UseLayoutRounding="True"
+    mc:Ignorable="d" VirtualizingPanel.IsVirtualizing="True"
+    d:DesignHeight="450" d:DesignWidth="250" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded">
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="R1" Height="25"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="Transparent" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <Button x:Name="BtnFolder" ToolTip="添加目录（小键盘+）" FontFamily="../Resources/icons/#icomoon" Content="&#xe980;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnFolder_Click"/>
+                <Button x:Name="BtnAddDoc" ToolTip="添加文档（回车）" FontFamily="../Resources/icons/#icomoon" Content="&#xe969;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnAddDoc_Click"/>
+                <Button x:Name="BtnDel" ToolTip="删除节点（Del）" FontFamily="../Resources/icons/#icomoon" Content="&#xe9b1;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnDel_Click"/>
+                <Button x:Name="BtnUnDel" ToolTip="撤销删除（Ctrl+Z）" FontFamily="../Resources/icons/#icomoon" Content="&#xea8e;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnUnDel_Click"/>
+                <Button x:Name="BtnUp" ToolTip="节点向上移动（Ctrl + U）" FontFamily="../Resources/icons/#icomoon" Content="&#xeb63;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnUp_Click"/>
+                <Button x:Name="BtnDown" ToolTip="节点向下移动（Ctrl + J）" FontFamily="../Resources/icons/#icomoon" Content="&#xe90c;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnDown_Click"/>
+                <Button ToolTip="发送到作品相关"  x:Name="BtnKeep" FontFamily="../Resources/icons/#icomoon" Content="&#xebd7;" FontSize="16" Background="Transparent" Foreground="Orange" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnKeep_Click"/>
+                <Button ToolTip="发送到已发布" x:Name="BtnSend" FontFamily="../Resources/icons/#icomoon" Content="&#xe9e2;" FontSize="16" Background="Transparent" Foreground="Orange" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnSend_Click"/>
+            </StackPanel>
+            <StackPanel Background="Transparent" HorizontalAlignment="Stretch" Orientation="Horizontal" Grid.Column="1" >
+                <Button ToolTip="导出选定文档或者分卷（Ctrl + Insert）" x:Name="BtnExport" FontFamily="../Resources/icons/#icomoon" Content="&#xeb3d;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnExport_Click"/>
+                <Button ToolTip="导入（Insert）" x:Name="BtnImport" FontFamily="../Resources/icons/#icomoon" Content="&#xeb3c;" FontSize="16" Background="Transparent" Foreground="DodgerBlue" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnImport_Click"/>
+            </StackPanel>
+        </Grid>
+        <TreeView x:Name="TreeNodes" TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded">
+            <TreeView.Resources>
+                <RoutedUICommand x:Key="AddFolder" Text="添加目录"/>
+                <RoutedUICommand x:Key="AddDoc" Text="添加文档"/>
+                <RoutedUICommand x:Key="DelNode" Text="删除节点"/>
+                <RoutedUICommand x:Key="ReName" Text="重命名"/>
+                <RoutedUICommand x:Key="MoveUp" Text="向上移动节点"/>
+                <RoutedUICommand x:Key="MoveDown" Text="向下移动节点"/>
+                <RoutedUICommand x:Key="UnDel" Text="撤销删除"/>
+                <RoutedUICommand x:Key="Keep" Text="作品相关"/>
+                <RoutedUICommand x:Key="Send" Text="发布"/>
+                <RoutedUICommand x:Key="Import" Text="导入"/>
+                <RoutedUICommand x:Key="Export" Text="导出"/>
+                <RoutedUICommand x:Key="CopyTitle" Text="复制节点标题"/>
+                <RoutedUICommand x:Key="CopyText" Text="复制节点文本（不包含未保存的部分）"/>
+            </TreeView.Resources>
+            <TreeView.ContextMenu>
+                <ContextMenu x:Name="TreeViewMenu" Opened="TreeViewMenu_Opened">
+                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="添加目录" IsEnabled="True" Command="{StaticResource AddFolder}" InputGestureText="Add"/>
+                    <MenuItem Header="添加文档" IsEnabled="False" Command="{StaticResource AddDoc}" InputGestureText="Enter"/>
+                    <MenuItem Header="删除节点" IsEnabled="False" Command="{StaticResource DelNode}" InputGestureText="Delete"/>
+                    <MenuItem Header="重命名" IsEnabled="True" Command="{StaticResource ReName}" InputGestureText="F2"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
+            <TreeView.CommandBindings>
+                <CommandBinding Command="{StaticResource AddFolder}" Executed="Command_AddFolder_Executed" CanExecute="CommandBinding_CanExecute_AddFolder"/>
+                <CommandBinding Command="{StaticResource AddDoc}" Executed="Command_AddDoc_Executed" />
+                <CommandBinding Command="{StaticResource DelNode}" Executed="Command_Delete_Executed" />
+                <CommandBinding Command="{StaticResource UnDel}" Executed="Command_UnDel_Executed" />
+                <CommandBinding Command="{StaticResource ReName}" Executed="Command_ReName_Executed" />
+                <CommandBinding Command="{StaticResource MoveUp}" Executed="Command_MoveUp_Executed" />
+                <CommandBinding Command="{StaticResource MoveDown}" Executed="Command_MoveDown_Executed" />
+                <CommandBinding Command="{StaticResource Keep}" Executed="Command_Keep_Executed" CanExecute="CommandBinding_CanExecute_Keep"/>
+                <CommandBinding Command="{StaticResource Send}" Executed="Command_Send_Executed" CanExecute="CommandBinding_CanExecute_Send"/>
+                <CommandBinding Command="{StaticResource Import}" Executed="Command_Import_Executed" CanExecute="CommandBinding_CanExecute_ImportExport" />
+                <CommandBinding Command="{StaticResource Export}" Executed="Command_Export_Executed" CanExecute="CommandBinding_CanExecute_ImportExport"/>
+                <CommandBinding Command="{StaticResource CopyTitle}" Executed="Command_CopyTitle_Executed" />
+                <CommandBinding Command="{StaticResource CopyText}" Executed="Command_CopyText_Executed" />
+            </TreeView.CommandBindings>
+            <TreeView.InputBindings>
+                <KeyBinding Command="{StaticResource AddFolder}" Key="Add" CommandParameter="{Binding TypeName}"/>
+                <KeyBinding Command="{StaticResource AddDoc}" Key="Return" />
+                <KeyBinding Command="{StaticResource DelNode}" Key="Delete" />
+                <KeyBinding Command="{StaticResource UnDel}" Key="Z" Modifiers="Ctrl" />
+                <KeyBinding Command="{StaticResource ReName}" Key="F2" />
+                <KeyBinding Command="{StaticResource MoveUp}" Key="U" Modifiers="Ctrl" />
+                <KeyBinding Command="{StaticResource MoveDown}" Key="J" Modifiers="Ctrl" />
+                <KeyBinding Command="{StaticResource Keep}" Key="F7" />
+                <KeyBinding Command="{StaticResource Send}" Key="F8" />
+                <KeyBinding Command="{StaticResource Import}" Key="Insert" />
+                <KeyBinding Command="{StaticResource Export}" Key="Insert" Modifiers="Ctrl" />
+                <KeyBinding Command="{StaticResource CopyTitle}" Key="C" Modifiers="Ctrl" />
+                <KeyBinding Command="{StaticResource CopyText}" Key="A" Modifiers="Ctrl" />
+            </TreeView.InputBindings>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="AllowDrop" Value="{Binding IsDir}" />
+                    <Setter Property="Opacity" Value="{Binding IsDel, Converter={StaticResource IsDelConvertOpacity}}"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding ChildNodes}">
+                    <Border Margin="0" Padding="0" Height="26">
+                        <ContentControl Content="{Binding Converter={StaticResource NodeConvertToNodeTemplate}}" DataContext="{Binding}"/>
+                    </Border>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <TreeView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Margin="0,0,0,100"/>
+                </ItemsPanelTemplate>
+            </TreeView.ItemsPanel>
+        </TreeView>
+    </Grid>
+</UserControl>

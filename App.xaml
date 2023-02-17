@@ -1,9 +1,27 @@
-﻿<Application x:Class="主程序.App"
+﻿<Application x:Class="RootNS.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:主程序"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:RootNS"
+             xmlns:models="clr-namespace:RootNS.Models"
+             xmlns:converter="clr-namespace:RootNS.Converter"
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Style/TreeViewItemStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Style/TabControlStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <models:Gval x:Key="Gval"/>
+            <converter:Bool2IconString x:Key="Bool2IconString"/>
+            <converter:SetTreeMaxWidth x:Key="SetTreeMaxWidth"/>
+            <converter:SetEditorMaxWidth x:Key="SetEditorMaxWidth"/>
+            <converter:IsDelConvertOpacity x:Key="IsDelConvertOpacity"/>
+            <converter:NodeConvertToNodeTemplate x:Key="NodeConvertToNodeTemplate"/>
+            <converter:TypeConvertToShowText x:Key="TypeConvertToShowText"/>
+            <!--<converter:TypeName2Visibility x:Key="TypeName2Visibility"/>-->
+            <!--<converter:TypeName2IsEnabled x:Key="TypeName2IsEnabled"/>-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
