@@ -25,16 +25,16 @@ namespace RootNS.Converter
                 {
                     if ((bool)values[1] == true)
                     {
-                        return "\uea59";
+                        return "\ue96c";
                     }
                     else
                     {
-                        return "\uea58";
+                        return "\ue96c";
                     }
                 }
                 else
                 {
-                    return "\uea4f";
+                    return "\ue968";
                 }
             }
             catch (Exception)

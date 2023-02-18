@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Button ToolTip="点击此处进行设置（下一次开始计时才生效）" x:Name="BtnSet" FontFamily="../Resources/icons/#icomoon" Content="&#xea79;" FontSize="24" BorderThickness="0" Padding="0" Background="Transparent" Height="30" Width="30" Click="BtnSet_Click" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"/>
+            <Button ToolTip="点击此处进行设置（下一次开始计时才生效）" x:Name="BtnSet" FontFamily="../Resources/icons/#icomoon" Content="&#xe91e;" FontSize="24" BorderThickness="0" Padding="0" Background="Transparent" Height="30" Width="30" Click="BtnSet_Click" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"/>
             <ProgressBar x:Name="PbTime" Grid.Column="1" Value="{Binding ProgressValue}" Maximum="{Binding TimeSetTotalSeconds}" Margin="2,5,2,5" MinWidth="45" />
             <hc:NumericUpDown ToolTip="在此设置响铃时间（分钟）（下一次开始计时才生效）" Maximum="99" Visibility="{Binding IsSetting}" Minimum="1" x:Name="CbTime" Value="{Binding TimeSetTotalMinutes}" Grid.Column="1" Loaded="CbTime_Loaded" Margin="2,5,2,5" MinWidth="45"/>
             <TextBlock x:Name="TbTime" Text="{Binding ShowTimeText}" Grid.Column="2" Padding="0" Width="40" Margin="2,5,2,5" VerticalAlignment="Center"/>

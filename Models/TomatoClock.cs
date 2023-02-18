@@ -115,12 +115,12 @@ namespace RootNS.Models
 
 
 
-        private object _buttonIconPlay = "\ue9cf";//默认图标：play
+        private object _buttonIconPlay = "\ue9b9";//默认图标：play
 
-        private object _buttonIconStop = "\ueb40";//图标：stop
+        private object _buttonIconStop = "\ue9e1";//图标：stop
 
 
-        private object _buttonContent = "\ue9cf";//默认图标：play
+        private object _buttonContent = "\ue9b9";//默认图标：play
         public object ButtonContent
         {
             get { return _buttonContent; }
