@@ -69,5 +69,33 @@ namespace RootNS.Models
                 StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(BooksBank)));
             }
         }
+
+        private static ObservableCollection<Node> _openingDocList = new ObservableCollection<Node>();
+        /// <summary>
+        /// 打开文档的集合
+        /// </summary>
+        public static ObservableCollection<Node> OpeningDocList
+        {
+            get { return _openingDocList; }
+            set
+            {
+                _openingDocList = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(OpeningDocList)));
+            }
+        }
+
+        private static string _previousText = string.Empty;
+        /// <summary>
+        /// 搜索查找的文字（上一个）
+        /// </summary>
+        public static string PreviousText
+        {
+            get { return _previousText; }
+            set
+            {
+                _previousText = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(PreviousText)));
+            }
+        }
     }
 }

@@ -73,14 +73,17 @@
     <Compile Include="Converter\NodeConverter.cs" />
     <Compile Include="Converter\ValueConverter.cs" />
     <Compile Include="Helper\ControlHelper.cs" />
+    <Compile Include="Helper\EditorHelper.cs" />
     <Compile Include="Helper\FileIO.cs" />
     <Compile Include="Helper\Settings.cs" />
     <Compile Include="Helper\SqliteHelper.cs" />
+    <Compile Include="Helper\SysHelper.cs" />
     <Compile Include="Helper\TableHelper.cs" />
     <Compile Include="Helper\Workflow\DataIn.cs" />
     <Compile Include="Helper\Workflow\DataOut.cs" />
     <Compile Include="Helper\Workflow\Starting.cs" />
     <Compile Include="Helper\Workflow\UserOperate.cs" />
+    <Compile Include="Helper\Workflow\Views.cs" />
     <Compile Include="Helper\Workflow\Workflow.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\Book\BookMethods.cs" />
@@ -90,11 +93,31 @@
     <Compile Include="Models\Gval\Gval_Common.cs" />
     <Compile Include="Models\Gval\Gval_ControlObject.cs" />
     <Compile Include="Models\Gval\Gval_Path.cs" />
+    <Page Include="MyControls\Editorkernel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\EditorShell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\FindReplaceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyControls\MyTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MyControls\NodeDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\UcSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\UcShower.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,11 +133,27 @@
     <Compile Include="Helper\NotificationObject.cs" />
     <Compile Include="Models\Node\Node.cs" />
     <Compile Include="Models\Node\NodeMethods.cs" />
+    <Compile Include="Models\Shower.cs" />
+    <Compile Include="MyControls\Editorkernel.xaml.cs">
+      <DependentUpon>Editorkernel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\EditorShell.xaml.cs">
+      <DependentUpon>EditorShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyControls\MyTree.xaml.cs">
       <DependentUpon>MyTree.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyControls\NodeDoc.xaml.cs">
       <DependentUpon>NodeDoc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\UcSearch.xaml.cs">
+      <DependentUpon>UcSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\UcShower.xaml.cs">
+      <DependentUpon>UcShower.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -36,12 +36,12 @@ namespace RootNS.MyControls
             Node node = this.DataContext as Node;
             if (node.IsDir == false && node.IsDel == false)
             {
-                //Gval.PreviousText = String.Empty;
-                //if (Gval.OpeningDocList.Contains(node) == false)
-                //{
-                //    Gval.OpeningDocList.Add(node);
-                //}
-                //EditorHelper.SelectItem(Gval.EditorTabControl, node);
+                Gval.PreviousText = String.Empty;
+                if (Gval.OpeningDocList.Contains(node) == false)
+                {
+                    Gval.OpeningDocList.Add(node);
+                }
+                EditorHelper.SelectItem(Gval.Views.EditorTabControl, node);
             }
         }
 

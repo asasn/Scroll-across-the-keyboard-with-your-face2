@@ -1,4 +1,5 @@
 ﻿using RootNS.Helper;
+using RootNS.MyControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace RootNS.Models
             public static HandyControl.Controls.ComboBox BooksComboBox { get; set; }
 
             public static HandyControl.Controls.TabControl EditorTabControl { get; set; }
+
+            public static UcShower UcShower { get; set; }
+            public static UcSearch UcSearch { get; set; }
         }
 
 

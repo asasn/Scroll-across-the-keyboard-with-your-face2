@@ -106,6 +106,10 @@ namespace RootNS.Models
 
         public void Remove()
         {
+            if (Gval.OpeningDocList.Contains(this))
+            {
+                Gval.OpeningDocList.Remove(this);
+            }
             if (this.IsDel == true)
             {
                 this.RealRemove();

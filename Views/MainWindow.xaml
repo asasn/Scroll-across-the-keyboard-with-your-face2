@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RootNS"
-        xmlns:MyControls="clr-namespace:RootNS.MyControls" xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:mycontrols="clr-namespace:RootNS.MyControls" xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Closing="Window_Closing"
         Title="MainWindow" Width="1920" Height="1080"  WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered">
     <Grid x:Name="GridMind">
@@ -50,13 +50,13 @@
                         </hc:ComboBox>
                         <TabControl IsEnabled="{Binding SelectedItem, Converter={StaticResource Object2BooleanConverter}, ElementName=TreeBox}" Grid.Row="4" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}" Style="{DynamicResource TabControlStyle}" SelectionChanged="TabControl_SelectionChanged">
                             <TabItem Header="草稿" DataContext="{Binding TreeRoot.ChildNodes[0]}" Uid="{Binding Guid}">
-                                <MyControls:MyTree/>
+                                <mycontrols:MyTree/>
                             </TabItem>
                             <TabItem Header="作品相关" DataContext="{Binding TreeRoot.ChildNodes[1]}" Uid="{Binding Guid}">
-                                <MyControls:MyTree/>
+                                <mycontrols:MyTree/>
                             </TabItem>
                             <TabItem Header="已发布" DataContext="{Binding TreeRoot.ChildNodes[2]}" Uid="{Binding Guid}">
-                                <MyControls:MyTree/>
+                                <mycontrols:MyTree/>
                             </TabItem>
                         </TabControl>
                         <Grid Grid.Row="6">
@@ -103,7 +103,7 @@
                         <RadioButton x:Name="RbSnippetsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe963;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="文章片段（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbSnippetsInBook_Checked"/>
                         <RadioButton x:Name="RbPlotDesignInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe95b;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="情节设计（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbPlotDesignInBook_Checked"/>
                         <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
-                        <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ff;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
+                        <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
                     </StackPanel>
                 </Border>
                 <Border x:Name="BorderL" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
@@ -112,10 +112,11 @@
                 <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" Background="Ivory"/>
                 <GridSplitter Grid.Column="5" HorizontalAlignment="Stretch" Background="Ivory"/>
                 <Border x:Name="BorderR" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="6" Width="{Binding Width, ElementName=BorderL, Mode=OneWay}">
-                    <MyControls:TomatoClock VerticalAlignment="Top"/>
+                    <mycontrols:TomatoClock VerticalAlignment="Top"/>
                 </Border>
-                <hc:Card x:Name="Editor" Grid.Column="4" Content="Card" HorizontalAlignment="Left" Margin="317,444,0,0" VerticalAlignment="Top"/>
+                <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" />
             </Grid>
+            
         </GroupBox>
         <GroupBox x:Name="GboxMaterial" Header="资料栏" DataContext="{Binding MaterialBook, Source={StaticResource Gval}}" Style="{StaticResource BaseStyle}" Grid.Column="4" Width="{Binding ActualWidth, ElementName=GboxTree, Mode=OneWay}" Grid.RowSpan="2">
             <Border x:Name="BorderM" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
@@ -134,7 +135,7 @@
                     <RadioButton x:Name="RbSnippets" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe963;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="文章片段（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbSnippets_Checked" />
                     <RadioButton x:Name="RbPlotDesign" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe95b;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="情节设计（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbPlotDesign_Checked"/>
                     <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
-                    <RadioButton x:Name="RbCards" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ff;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCards_Checked"/>
+                    <RadioButton x:Name="RbCards" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCards_Checked"/>
                     <RadioButton x:Name="RbInspiration" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea15;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="灵感管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbInspiration_Checked" IsChecked="True"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2">

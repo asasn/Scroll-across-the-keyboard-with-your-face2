@@ -195,7 +195,24 @@ namespace RootNS
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            if (Gval.Views.EditorTabControl != null)
+            {
+                while (Gval.Views.EditorTabControl.Items.Count > 0)//集合可能改变，故而不需要i++之类的条件
+                {
+                    HandyControl.Controls.TabItem tabItem = Gval.Views.EditorTabControl.Items[Gval.Views.EditorTabControl.Items.Count - 1] as HandyControl.Controls.TabItem;
+                    tabItem.Focus();
+                    Workflow.FindByName(tabItem.CommandBindings, "Close").Execute(tabItem);
+                }
+            }
+            foreach (SqliteHelper cSqlite in SqliteHelper.PoolDict.Values)
+            {
+                cSqlite.Close();
+            }
+            if (MyControls.FindReplaceDialog.theDialog != null)
+            {
+                MyControls.FindReplaceDialog.theDialog.Close();
+            }
+            Application.Current.Shutdown(0);
         }
 
 

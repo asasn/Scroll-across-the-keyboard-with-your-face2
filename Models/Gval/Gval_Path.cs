@@ -43,6 +43,9 @@ namespace RootNS.Models
             public static string CurrentThemeColor { get { return "CurrentThemeColor"; } }
             public static string TomatoTimeSetTotalMinutes { get { return "TomatoTimeSetTotalMinutes"; } }
             public static string Scroll2End { get { return "Scroll2End"; } }
+
+            public static string FontSizeBypt { get { return "FontSizeBypt"; } }
+            
         }
     }
 }

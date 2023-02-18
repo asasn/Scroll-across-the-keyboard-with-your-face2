@@ -1,0 +1,99 @@
+﻿<UserControl x:Name="ThisControl" x:Class="RootNS.MyControls.Editorkernel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:hc="https://handyorg.github.io/handycontrol" UseLayoutRounding="True"
+    xmlns:Document="clr-namespace:ICSharpCode.AvalonEdit.Document;assembly=ICSharpCode.AvalonEdit"
+             mc:Ignorable="d"
+    d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <RoutedUICommand x:Key="SaveText" Text="保存文本"/>
+        <RoutedUICommand x:Key="Typesetting" Text="排版"/>
+        <RoutedUICommand x:Key="Find" Text="查找"/>
+        <RoutedUICommand x:Key="Replace" Text="替换"/>
+        <RoutedUICommand x:Key="MoveNext" Text="下一个"/>
+        <RoutedUICommand x:Key="MovePrevious" Text="上一个"/>
+        <RoutedUICommand x:Key="CloseTabItem" Text="关闭当前页面"/>
+        <RoutedUICommand x:Key="EditCard" Text="编辑信息卡"/>
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource SaveText}" Executed="Command_SaveText_Executed" />
+        <CommandBinding Command="{StaticResource Typesetting}" Executed="Command_Typesetting_Executed" />
+        <CommandBinding Command="{StaticResource Find}" Executed="Command_Find_Executed" />
+        <CommandBinding Command="{StaticResource Replace}" Executed="Command_Replace_Executed" />
+        <CommandBinding Command="{StaticResource MoveNext}" Executed="Command_MoveNext_Executed" />
+        <CommandBinding Command="{StaticResource MovePrevious}" Executed="Command_MovePrevious_Executed" />
+        <CommandBinding Command="{StaticResource CloseTabItem}" Executed="Command_CloseTabItem_Executed" />
+        <CommandBinding Command="{StaticResource EditCard}" Executed="Command_EditCard_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{StaticResource SaveText}" Key="S" Modifiers="Ctrl"/>
+        <KeyBinding Command="{StaticResource Typesetting}" Key="F9"/>
+        <KeyBinding Command="{StaticResource Find}" Key="F" Modifiers="Ctrl"/>
+        <KeyBinding Command="{StaticResource Replace}" Key="H" Modifiers="Ctrl"/>
+        <KeyBinding Command="{StaticResource MoveNext}" Key="F3"/>
+        <KeyBinding Command="{StaticResource MovePrevious}" Key="F4"/>
+        <KeyBinding Command="{StaticResource CloseTabItem}" Key="W" Modifiers="Ctrl"/>
+        <KeyBinding Command="{StaticResource EditCard}" Key="F5"/>
+    </UserControl.InputBindings>
+    <Grid Background="#FFFAFAFA" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="Column0" Width="100*"/>
+            <ColumnDefinition x:Name="Column1" Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="Row0" Height="100*"/>
+            <RowDefinition x:Name="Row1" Height="20"/>
+        </Grid.RowDefinitions>
+        <avalonEdit:TextEditor 
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            Grid.Row="0"
+            x:Name="ThisTextEditor" ShowLineNumbers="True" 
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
+            FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" KeyDown="ThisTextEditor_KeyDown" TextChanged="ThisTextEditor_TextChanged" Initialized="ThisTextEditor_Initialized">
+            <avalonEdit:TextEditor.ContextMenu>
+                <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
+                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="测试" IsEnabled="True"/>
+                </ContextMenu>
+            </avalonEdit:TextEditor.ContextMenu>
+            <avalonEdit:TextEditor.Options>
+                <avalonEdit:TextEditorOptions
+                    HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
+                    WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
+            </avalonEdit:TextEditor.Options>
+        </avalonEdit:TextEditor>
+        <Grid Grid.Row="1" Grid.ColumnSpan="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"  >
+                <Label hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Content="段落：" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="10,0,0,0"/>
+                <Label hc:BorderElement.CornerRadius="0" x:Name="LbParagraph" BorderThickness="0,0,0,0" Content="{Binding Document.LineCount, ElementName=ThisTextEditor}" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" MinWidth="40"/>
+                <Label hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Content="字数：" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="10,0,0,0"/>
+                <Label hc:BorderElement.CornerRadius="0" x:Name="LbWorksCount" BorderThickness="0,0,0,0" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" MinWidth="40"/>
+                <Label Name="lbValue" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Content="价值：" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="10,0,0,0"/>
+                <Label Name="LbValueValue" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" MinWidth="40"/>
+                <Label Name="lbValue2" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Content="单价：" Background="Transparent" Foreground="CadetBlue" Padding="10,0,0,0"/>
+                <Label Name="LbValueValue5" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
+                <Label Name="mmm1" Content='/' hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
+                <Label Name="LbValueValue4" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
+                <Label Name="mmm2" Content='/' hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
+                <Label Name="LbValueValue3" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
+            </StackPanel>
+            <Slider x:Name="slider" Value="12" Width="120" Maximum="36" Minimum="10" ValueChanged="slider_ValueChanged" ToolTip="{Binding Value, ElementName=slider}" SmallChange="1" LargeChange="1" Grid.Row="1" Grid.Column="2" IsSnapToTickEnabled="True" Loaded="slider_Loaded"/>
+        </Grid>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnSaveDoc" Padding="0" BorderThickness="0" ToolTip="保存文档（Ctrl + S）" IsEnabled="False" Click="BtnSaveText_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe947;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopy" Padding="0" BorderThickness="0" ToolTip="复制文档内容（不包含未保存的部分）" Click="BtnCopy_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe98a;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopyTitle" Padding="0" BorderThickness="0" ToolTip="复制文档标题" Click="BtnCopyTitle_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe965;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnPaste" Padding="0" BorderThickness="0" ToolTip="从剪贴板粘贴" Click="BtnPaste_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe94e;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnUndo" Padding="0" BorderThickness="0" ToolTip="粘贴之前的原文" Click="BtnUndo_Click" IsEnabled="False"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c3;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnTypesetting" Padding="0" BorderThickness="0" ToolTip="排版（F9）" Click="BtnTypesetting_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xea11;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="关闭（Ctrl + W）" Click="BtnClose_Click"/>
+        </StackPanel>
+        <Button x:Name="reSlider" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c3;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="还原字体大小" Click="reSlider_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
+    </Grid>
+</UserControl>
