@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace RootNS.Converter
@@ -50,4 +51,80 @@ namespace RootNS.Converter
             return null;
         }
     }
+
+    /// <summary>
+    /// 节点类型和是否文件夹决定统计单位
+    /// </summary>
+    public class TypeName2ShowText : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values == null)
+            {
+                return null;
+            }
+            try
+            {
+                if (values[0].ToString() == Book.TypeNameEnum.信息卡.ToString())
+                {
+                    return null;
+                }
+
+                //是目录的时候，显示为“章”，否则显示为“字”
+                if ((bool)values[1] == true)
+                {
+                    return "章";
+                }
+                else
+                {
+                    return "字";
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object[] ConvertBack(object value, Type[] targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// TypeName决定是否显示统计
+    /// </summary>
+    public class TypeName2Visibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return Visibility.Visible;
+            }
+            try
+            {
+                if (value.ToString() == Book.TypeNameEnum.信息卡.ToString())
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+            catch
+            {
+                return Visibility.Visible;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object ConvertBack(object value, Type targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
 }

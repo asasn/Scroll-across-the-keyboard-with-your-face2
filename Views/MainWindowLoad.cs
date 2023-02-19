@@ -94,6 +94,10 @@ namespace RootNS
         {
             //载入书籍数据
             Workflow.LoadBooksToBank();
+            RbHistory.IsChecked = false;
+            RbHistory.IsChecked = true;
+            RbInspiration.IsChecked = false;
+            RbInspiration.IsChecked = true;
         }
 
     }

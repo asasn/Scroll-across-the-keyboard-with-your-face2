@@ -69,11 +69,7 @@ namespace RootNS.MyControls
             Node node = new Node();
             if (selectedNode == null)
             {
-                if (rootNode.TypeName == Book.TypeNameEnum.草稿.ToString() ||
-                    rootNode.TypeName == Book.TypeNameEnum.作品相关.ToString())
-                {
-                    rootNode.ChildNodes.Add(node);
-                }
+                rootNode.ChildNodes.Add(node);
             }
             else
             {
@@ -146,7 +142,7 @@ namespace RootNS.MyControls
             {
                 selectedNode.MoveTo(dstNode);
             }
-            
+
         }
         private void Command_Send_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -292,6 +288,12 @@ namespace RootNS.MyControls
         {
             TreeViewItem container = GetNearestContainer(e.OriginalSource as UIElement);
             Node dragNode = (sender as TreeView).SelectedValue as Node;
+            if (dragNode == null)
+            {
+                //禁止跨控件拖动
+                return;
+            }
+
             Node dropNode = container.DataContext as Node;
 
             dragNode.MoveTo(dropNode);
@@ -307,7 +309,9 @@ namespace RootNS.MyControls
         /// <param name="e"></param>
         private void TreeNodes_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.OriginalSource.GetType() == typeof(TextBox))
+            if (e.OriginalSource.GetType() == typeof(TextBox) ||
+                e.OriginalSource.GetType() == typeof(ScrollViewer) ||
+                e.OriginalSource.GetType() == typeof(HandyControl.Controls.ScrollViewer))
             {
                 return;
             }
@@ -359,7 +363,7 @@ namespace RootNS.MyControls
         /// <summary>
         /// 方便在这个控件当中调用的临时变量
         /// </summary>
-        TreeViewItem selectedItem;
+        TreeViewItem selectedItem = new TreeViewItem();
         private void TreeNodes_Selected(object sender, RoutedEventArgs e)
         {
             selectedItem = e.OriginalSource as TreeViewItem;
@@ -462,6 +466,10 @@ namespace RootNS.MyControls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (FunctionsPack.IsInDesignMode(this))
+            {
+                return;
+            }
             if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.草稿.ToString())
             {
                 BtnFolder.IsEnabled = false;
@@ -477,6 +485,9 @@ namespace RootNS.MyControls
             }
         }
 
+        private void TreeNodes_DragOver(object sender, DragEventArgs e)
+        {
 
+        }
     }
 }

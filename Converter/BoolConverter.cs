@@ -1,8 +1,10 @@
-﻿using System;
+﻿using RootNS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace RootNS.Converter
@@ -87,32 +89,64 @@ namespace RootNS.Converter
         }
     }
 
+
     /// <summary>
-    /// 是否目录决定统计单位
+    /// 布尔值决定是否显现
     /// </summary>
-    public class TypeConvertToShowText : IValueConverter
+    public class BoolConvertToVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null)
             {
-                return null;
+                return Visibility.Collapsed;
             }
             try
             {
-                //是目录的时候，显示为“章”，否则显示为“字”
                 if ((bool)value == true)
                 {
-                    return "章";
+                    return Visibility.Visible;
                 }
-                else
-                {
-                    return "字";
-                }
+
+                return Visibility.Collapsed;
             }
             catch
             {
-                return null;
+                return Visibility.Collapsed;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object ConvertBack(object value, Type targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 布尔值决定是否显现
+    /// </summary>
+    public class BoolConvertToReVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return Visibility.Visible;
+            }
+            try
+            {
+                if ((bool)value == true)
+                {
+                    return Visibility.Collapsed;
+                }
+
+                return Visibility.Visible;
+            }
+            catch
+            {
+                return Visibility.Visible;
             }
         }
 

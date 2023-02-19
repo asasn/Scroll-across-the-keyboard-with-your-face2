@@ -30,8 +30,13 @@ namespace RootNS.MyControls
         private void ThisControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Node node = this.DataContext as Node;
-            if (node.IsDir == false && node.IsDel == false)
+            if (node.IsDel == false)
             {
+                if (node.TypeName == Book.TypeNameEnum.情节设计.ToString()){}
+                else
+                {
+                    if (node.IsDir == true){return;}
+                }
                 Gval.PreviousText = String.Empty;
                 if (Gval.OpeningDocList.Contains(node) == false)
                 {

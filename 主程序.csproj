@@ -97,6 +97,7 @@
     <Compile Include="Models\Gval\Gval_Common.cs" />
     <Compile Include="Models\Gval\Gval_ControlObject.cs" />
     <Compile Include="Models\Gval\Gval_Path.cs" />
+    <Compile Include="MyControls\VirtualizingWrapPanel.cs" />
     <Compile Include="Views\MainWindowLoad.cs" />
     <Compile Include="Views\MainWindowOperation.cs" />
     <Page Include="MyControls\Editorkernel.xaml">
