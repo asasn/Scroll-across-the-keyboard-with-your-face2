@@ -1,4 +1,5 @@
-﻿using RootNS.Helper;
+﻿using ICSharpCode.AvalonEdit.Highlighting;
+using RootNS.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -23,13 +24,25 @@ namespace RootNS.Models
                 Node node = new Node() { TypeName = enumName, Guid = new Guid(guid) };
                 TreeRoot.ChildNodes.Add(node);
             }
-            this.CoverPath = Gval.Path.Data + this.Guid.ToString() + ".jpg";
+            this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
+            this.InitSyntax();
         }
 
         public void Save()
         {
 
         }
+
+        /// <summary>
+        /// 初始化配色方案，填入本控件语法对象
+        /// </summary>
+        private void InitSyntax()
+        {
+            System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
+            this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
+            xshdReader.Close();
+        }
+
 
 
         /// <summary>

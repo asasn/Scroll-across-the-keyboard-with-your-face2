@@ -4,6 +4,8 @@
 	<!--fontWeight="bold" fontFamily="行楷" foreground="#0000CD"-->
 	<Color name="搜索" background="#40FF40"/>
 	<Color name="符号" foreground="#C08040" />
+	<Color name="数字" foreground="#C08040" />
+	<Color name="字母" foreground="#C08040" />
 	<Color name="标记" foreground="Yellow" />
 	<Color name="对话" foreground="DarkGoldenrod" />
 	<Color name="敏感" foreground="Red"/>
@@ -17,14 +19,14 @@
 			<End>”</End>
 		</Span>
 		<Rule color="符号" >
-			‘.*?’|".*?"|'.*?'|《.*?》|（.*?）|【.*?】|\(.*?\)|\[.*?\]|\{.*?\}
+			‘.*?’|".*?"|'.*?'|《.*?》|（.*?）|【.*?】|\(.*?\)|\[.*?\]|\{.*?\}|『(.+?)』|「(.+?)」
 		</Rule>
-		<Rule color="标记" >
-			测试|标记
+		<Rule color="字母" >
+			[0-9]|[a-z]|[A-Z]
 		</Rule>
-		<Keywords color="标记">
+		<!--以下为单独一个出现时的情况-->
+		<!--<Keywords color="标记">
 			<Word>测试</Word>
-		</Keywords>
-
+		</Keywords>-->
 	</RuleSet>
 </SyntaxDefinition>

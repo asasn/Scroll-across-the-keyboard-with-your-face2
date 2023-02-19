@@ -25,10 +25,6 @@ namespace RootNS.MyControls
         public NodeDoc()
         {
             InitializeComponent();
-            if (FunctionsPack.IsInDesignMode(this))
-            {
-                return;
-            }
         }
 
         private void ThisControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)

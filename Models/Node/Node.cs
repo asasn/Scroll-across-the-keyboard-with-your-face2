@@ -12,6 +12,19 @@ namespace RootNS.Models
 {
     public partial class Node : Entity
     {
+        private object _toolTip;
+        /// <summary>
+        /// 悬浮显示内容
+        /// </summary>
+        public object ToolTip
+        {
+            get { return _toolTip; }
+            set
+            {
+                _toolTip = value;
+                RaisePropertyChanged(nameof(ToolTip));
+            }
+        }
 
         private double _pointX;
         /// <summary>
@@ -268,18 +281,6 @@ namespace RootNS.Models
         public string TempTitle { get; set; }
 
 
-        private object _tempToolTip;
-        /// <summary>
-        /// （供搜索功能使用的临时变量）悬浮显示内容
-        /// </summary>
-        public object TempToolTip
-        {
-            get { return _tempToolTip; }
-            set
-            {
-                _tempToolTip = value;
-                RaisePropertyChanged(nameof(TempToolTip));
-            }
-        }
+
     }
 }

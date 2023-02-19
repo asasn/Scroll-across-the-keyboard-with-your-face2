@@ -4,13 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              MouseDoubleClick="ThisControl_MouseDoubleClick" MouseRightButtonDown="ThisControl_MouseRightButtonDown" 
-             mc:Ignorable="d" UseLayoutRounding="True" ToolTipService.ShowDuration="60000"
+             mc:Ignorable="d" UseLayoutRounding="True" ToolTipService.ShowDuration="60000" ToolTip="{Binding ToolTip}"
              d:DesignHeight="25" d:DesignWidth="240">
-    <UserControl.ToolTip>
-        <Grid MaxWidth="300" MaxHeight="500">
-            <TextBox IsReadOnly="True" MaxLength="100" TextWrapping="Wrap" Text="{Binding Text}"></TextBox>
-        </Grid>
-    </UserControl.ToolTip>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25"/>

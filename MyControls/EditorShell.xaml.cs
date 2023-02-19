@@ -70,6 +70,7 @@ namespace RootNS.MyControls
                 }
                 editorBase.ThisTextEditor.Text = stuff.Text;
                 editorBase.BtnSaveDoc.IsEnabled = false;
+                editorBase.ThisTextEditor.Select(editorBase.ThisTextEditor.Text.Length, 0);
                 //EditorHelper.SetColorRulesForCards(editorBase.ThisTextEditor);
                 //if (stuff.ToLineNum == 0)
                 //{

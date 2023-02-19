@@ -17,9 +17,9 @@ namespace RootNS.Helper
         public static void Start()
         {
             Gval.FlagLoadingCompleted = false;
-            if (FileIO.IsFolderExists(Gval.Path.Data) == false)
+            if (FileIO.IsFolderExists(Gval.Path.DataDirectory) == false)
             {
-                FileIO.TryToCreateFolder(Gval.Path.Data);
+                FileIO.TryToCreateFolder(Gval.Path.DataDirectory);
             }
             TableHelper.TryToBuildDatabaseForBook(Gval.MaterialBook);
             Gval.FlagLoadingCompleted = true;

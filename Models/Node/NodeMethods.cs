@@ -206,7 +206,7 @@ namespace RootNS.Models
         /// 获取包括自身在内的子节点列表
         /// </summary>
         /// <returns></returns>
-        private ArrayList GetChildNodesList()
+        public ArrayList GetChildNodesList()
         {
             ArrayList arrayList = new ArrayList();
             RecursiveTraversalChilds(this, arrayList);

@@ -27,10 +27,6 @@ namespace RootNS.MyControls
         public MyTree()
         {
             InitializeComponent();
-            if (FunctionsPack.IsInDesignMode(this))
-            {
-                return;
-            }
         }
 
 
@@ -360,11 +356,16 @@ namespace RootNS.MyControls
         #endregion
 
 
+        /// <summary>
+        /// 方便在这个控件当中调用的临时变量
+        /// </summary>
         TreeViewItem selectedItem;
         private void TreeNodes_Selected(object sender, RoutedEventArgs e)
         {
             selectedItem = e.OriginalSource as TreeViewItem;
+            (this.DataContext as Node).Owner.SelectedNode = TreeNodes.SelectedItem as Node;
             Node selectedNode = TreeNodes.SelectedItem as Node;
+
             if ((TreeNodes.DataContext as Node) == selectedNode.Owner.TreeRoot.ChildNodes[2])
             {
                 if (selectedNode.IsDir == true)

@@ -17,10 +17,11 @@ namespace RootNS.Models
         /// </summary>
         public struct Path
         {
-            public static string App { get { return Environment.CurrentDirectory + "/"; } }
-            public static string Data { get { return Environment.CurrentDirectory + "/Data/"; } }
-            public static string Resources { get { return Environment.CurrentDirectory + "/Resources/"; } }
-            public static string XshdPath { get { return Environment.CurrentDirectory + "/Resources/Text.xshd"; } }
+            public static string AppBaseDirectory { get { return AppDomain.CurrentDomain.BaseDirectory; } }
+            public static string DataDirectory { get { return AppDomain.CurrentDomain.BaseDirectory + "/Data/"; } }
+            public static string ResourcesDirectory { get { return AppDomain.CurrentDomain.BaseDirectory + "/Resources/"; } }
+            public static string XshdFilePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Text.xshd";
+
         }
 
         /// <summary>
@@ -43,7 +44,6 @@ namespace RootNS.Models
             public static string CurrentThemeColor { get { return "CurrentThemeColor"; } }
             public static string TomatoTimeSetTotalMinutes { get { return "TomatoTimeSetTotalMinutes"; } }
             public static string Scroll2End { get { return "Scroll2End"; } }
-
             public static string FontSizeBypt { get { return "FontSizeBypt"; } }
             
         }

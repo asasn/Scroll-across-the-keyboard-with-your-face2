@@ -157,8 +157,8 @@ namespace RootNS.MyControls
                 theDialog.Show();
 
                 //设置窗口位置
-                Workflow.ForViewPointX(theDialog, Gval.Views.UcShower);
-                Workflow.ForViewPointY(theDialog, Gval.Views.UcShower);
+                Workflow.ForViewPointX(theDialog, Gval.Views.BorderR);
+                Workflow.ForViewPointY(theDialog, Gval.Views.BorderR);
             }
             else
             {
@@ -179,8 +179,8 @@ namespace RootNS.MyControls
                 theDialog = new FindReplaceDialog(editor);
 
                 //设置窗口位置
-                Workflow.ForViewPointX(theDialog, Gval.Views.UcShower);
-                Workflow.ForViewPointY(theDialog, Gval.Views.UcShower);
+                Workflow.ForViewPointX(theDialog, Gval.Views.BorderR);
+                Workflow.ForViewPointY(theDialog, Gval.Views.BorderR);
             }
             return theDialog;
         }

@@ -1,0 +1,45 @@
+﻿<UserControl x:Name="ThisControl" x:Class="RootNS.MyControls.UcSearcher"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="485" d:DesignWidth="290" DataContext="{Binding ThisSearcher, ElementName=ThisControl}" Loaded="ThisControl_Loaded">
+    <Grid Background="#FFFAFAFA" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="33*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            <CheckBox x:Name="CbSelected" Content="只搜选中" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbSelected}"/>
+            <CheckBox x:Name="CbTitle" Content="只搜标题" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbTitle}" IsThreeState="True"/>
+            <CheckBox x:Name="CbMaterial" Content="资料库" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbMaterial}"/>
+            <RadioButton x:Name="RbAnd" Content="与模式" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbAnd}"/>
+            <RadioButton x:Name="RbOr" Content="或模式" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbOr}"/>
+            <RadioButton x:Name="RbRegex" Content="正则模式" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbRegex}"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="5">
+            <TextBox Padding="0" Text="{Binding KeyWords, UpdateSourceTrigger=PropertyChanged}" hc:BorderElement.CornerRadius="0" BorderBrush="DodgerBlue" BorderThickness="0,0,0,1" x:Name="TbKeyWords" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="TbKeyWords_KeyDown"/>
+            <Button ToolTip="搜索" x:Name="BtnSearch" FontFamily="../Resources/icons/#icomoon" Content="&#xe9cb;" FontSize="16" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  Grid.Column="1" BorderThickness="0" Padding="0" Click="BtnSearch_Click" Background="Transparent" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="30"></Button>
+        </Grid>
+        <ListBox x:Name="ListBoxOfResults" ItemsSource="{Binding Results}" Grid.Row="2" Margin="5,0,5,5">
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding ChildNodes}" >
+                    <ContentControl Content="{Binding Converter={StaticResource NodeConvertToNodeTemplate}}" DataContext="{Binding}"/>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

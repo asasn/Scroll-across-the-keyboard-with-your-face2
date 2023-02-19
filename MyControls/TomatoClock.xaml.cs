@@ -25,10 +25,6 @@ namespace RootNS.MyControls
         public TomatoClock()
         {
             InitializeComponent();
-            if (FunctionsPack.IsInDesignMode(this))
-            {
-                return;
-            }
         }
 
         public Models.TomatoClock ThisClock { get; set; } = new Models.TomatoClock();

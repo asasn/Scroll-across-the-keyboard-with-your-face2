@@ -6,12 +6,8 @@
         xmlns:local="clr-namespace:RootNS"
         xmlns:mycontrols="clr-namespace:RootNS.MyControls" xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Closing="Window_Closing"
-        Title="MainWindow" Width="1920" Height="1080"  WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered">
+        Title="MainWindow" Width="1920" Height="1080"  WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered" Loaded="WinMain_Loaded">
     <Grid x:Name="GridMind">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="188*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="ColTree" Width="260" MinWidth="260" >
                 <ColumnDefinition.MaxWidth>
@@ -50,7 +46,7 @@
                         </hc:ComboBox>
                         <TabControl IsEnabled="{Binding SelectedItem, Converter={StaticResource Object2BooleanConverter}, ElementName=TreeBox}" Grid.Row="4" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}" Style="{DynamicResource TabControlStyle}" SelectionChanged="TabControl_SelectionChanged">
                             <TabItem Header="草稿" DataContext="{Binding TreeRoot.ChildNodes[0]}" Uid="{Binding Guid}">
-                                <mycontrols:MyTree/>
+                                <mycontrols:MyTree Loaded="MyTree_Loaded"/>
                             </TabItem>
                             <TabItem Header="作品相关" DataContext="{Binding TreeRoot.ChildNodes[1]}" Uid="{Binding Guid}">
                                 <mycontrols:MyTree/>
@@ -111,10 +107,19 @@
                 </Border>
                 <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" Background="Ivory"/>
                 <GridSplitter Grid.Column="5" HorizontalAlignment="Stretch" Background="Ivory"/>
-                <Border x:Name="BorderR" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="6" Width="{Binding Width, ElementName=BorderL, Mode=OneWay}">
-                    <mycontrols:TomatoClock VerticalAlignment="Top"/>
+                <Border x:Name="BorderR" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="6" Width="{Binding Width, ElementName=BorderL, Mode=OneWay}" Loaded="BorderR_Loaded">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <mycontrols:UcShower/>
+                        <mycontrols:UcSearcher Grid.Row="1" Loaded="UcSearcher_Loaded"/>
+                        <mycontrols:TomatoClock  Grid.Row="2"/>
+                    </Grid>
                 </Border>
-                <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" />
+                <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" Loaded="Editor_Loaded" />
             </Grid>
             
         </GroupBox>

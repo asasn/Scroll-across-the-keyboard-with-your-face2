@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace RootNS.Models
 {
@@ -22,11 +23,10 @@ namespace RootNS.Models
         {
             public static MainWindow MainWindow { get; set; }
             public static HandyControl.Controls.ComboBox BooksComboBox { get; set; }
-
             public static HandyControl.Controls.TabControl EditorTabControl { get; set; }
-
             public static UcShower UcShower { get; set; }
-            public static UcSearch UcSearch { get; set; }
+            public static UcSearcher UcSearcher { get; set; }
+            public static Border BorderR { get; set; }
         }
 
 

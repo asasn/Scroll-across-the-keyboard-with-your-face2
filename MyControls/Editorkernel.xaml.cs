@@ -45,22 +45,20 @@ namespace RootNS.MyControls
             Timer.Start();
 
             theDialog = new FindReplaceDialog(this.ThisTextEditor);
+
         }
 
         private void ThisTextEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            if (FunctionsPack.IsInDesignMode(this))
-            {
-                return;
-            }
-            if (Gval.Views.EditorTabControl.SelectedItem == null ||
-               ((Gval.Views.EditorTabControl.SelectedItem as HandyControl.Controls.TabItem).Content as Editorkernel).DataContext != this.DataContext)
-            {
-                return;
-            }
+            ThisTextEditor.TextArea.Focus();
             //因为在TabControl中，每次切换的时候都会触发这个事件，故而一些初始化步骤放在父容器，不要放在这里
-        }
 
+            if (ThisTextEditor.SyntaxHighlighting == null)
+            {
+                ThisTextEditor.SyntaxHighlighting = (this.DataContext as Node).Owner.Syntax;
+            }
+        }
+        
         private bool canSaveFlag;
         Stopwatch stopWatch = new Stopwatch();
         public DispatcherTimer Timer = new DispatcherTimer();
@@ -382,25 +380,6 @@ namespace RootNS.MyControls
 
         }
 
-
-
-        private void ThisTextEditor_Initialized(object sender, EventArgs e)
-        {
-            //Node stuff = this.DataContext as Node;
-            //if (stuff == null)
-            //{
-            //    return;
-            //}
-            //if (string.IsNullOrWhiteSpace(stuff.Text) == true)
-            //{
-            //    stuff.Text = "　　";
-            //}
-            //EditorHelper.SetColorRulesForCards(ThisTextEditor);
-            //ThisTextEditor.Text = stuff.Text;
-            //EditorHelper.MoveToEnd(ThisTextEditor);
-            //BtnSaveDoc.IsEnabled = false;
-            //ThisTextEditor.Focus();
-        }
 
         private void TextEditorMenu_Opened(object sender, RoutedEventArgs e)
         {

@@ -52,7 +52,7 @@ namespace RootNS.Helper
                 }
                 else
                 {
-                    PoolDict.Add(dbName, new SqliteHelper(Gval.Path.Data, dbName + ".db"));
+                    PoolDict.Add(dbName, new SqliteHelper(Gval.Path.DataDirectory, dbName + ".db"));
                 }
             }
 

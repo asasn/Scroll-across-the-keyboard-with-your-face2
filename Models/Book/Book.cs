@@ -1,4 +1,5 @@
-﻿using RootNS.Helper;
+﻿using ICSharpCode.AvalonEdit.Highlighting;
+using RootNS.Helper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -134,19 +135,34 @@ namespace RootNS.Models
             }
         }
 
-        //private Node _selectedNode;
-        ///// <summary>
-        ///// 选中的节点
-        ///// </summary>
-        //public Node SelectedNode
-        //{
-        //    get { return _selectedNode; }
-        //    set
-        //    {
-        //        _selectedNode = value;
-        //        this.RaisePropertyChanged("SelectedNode");
-        //    }
-        //}
+
+        private IHighlightingDefinition _syntax;
+        /// <summary>
+        /// 语法高亮对象
+        /// </summary>
+        public IHighlightingDefinition Syntax
+        {
+            get { return _syntax; }
+            set
+            {
+                _syntax = value;
+                RaisePropertyChanged(nameof(Syntax));
+            }
+        }
+
+        private Node _selectedNode;
+        /// <summary>
+        /// 选中的节点
+        /// </summary>
+        public Node SelectedNode
+        {
+            get { return _selectedNode; }
+            set
+            {
+                _selectedNode = value;
+                this.RaisePropertyChanged("SelectedNode");
+            }
+        }
 
 
         //private ObservableCollection<object> _cGuidList = new ObservableCollection<object>();

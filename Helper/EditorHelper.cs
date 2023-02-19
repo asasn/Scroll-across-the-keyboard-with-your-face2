@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 
 namespace RootNS.Helper
 {
@@ -30,6 +31,7 @@ namespace RootNS.Helper
                 if (item.Uid == node.Guid.ToString())
                 {
                     item.IsSelected = true;
+                    (item.Content as Editorkernel).ThisTextEditor.TextArea.Focus();
                     return item;
                 }
             }
@@ -63,7 +65,6 @@ namespace RootNS.Helper
             //排版完成，重新赋值给文本框
             tEditor.Text = reText;
             //光标移动至文末 
-            tEditor.ScrollToLine(tEditor.LineCount);
             tEditor.ScrollToEnd();
             tEditor.Select(tEditor.Text.Length, 0);
             tEditor.Focus();
@@ -117,5 +118,8 @@ namespace RootNS.Helper
             }
             win.Close();
         }
+
+
+
     }
 }
