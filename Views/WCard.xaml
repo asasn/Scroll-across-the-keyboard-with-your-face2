@@ -1,0 +1,90 @@
+﻿<Window x:Name="ThisWindow" x:Class="RootNS.Views.WCard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RootNS.Views" xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:models="clr-namespace:RootNS.Models" d:DataContext="{d:DesignInstance Type=models:Card}"
+        mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
+      UseLayoutRounding="True" AllowsTransparency="True" 
+      d:DesignHeight="200" d:DesignWidth="300" Width="300" MinWidth="300" MinHeight="200" MaxWidth="400"
+      MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
+    <Border Effect="{StaticResource EffectShadow3}" Margin="5" CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
+        <ScrollViewer>
+            <Grid Margin="2" DataContext="{Binding DataContext, ElementName=ThisWindow}">
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="RHeader" Height="26"/>
+                    <RowDefinition MinHeight="26" Height="Auto"/>
+                    <RowDefinition MinHeight="26" Height="Auto"/>
+                    <RowDefinition x:Name="RMain" Height="Auto"/>
+                    <RowDefinition MinHeight="26" Height="Auto"/>
+                    <RowDefinition x:Name="RBottom" Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="26"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="0" Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="26"/>
+                        <ColumnDefinition Width="26"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="名称" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox Background="Transparent" Text="{Binding Title}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
+                    <Button Grid.Row="1" Grid.Column="1" IsEnabled="{Binding HasChange}" Padding="0" x:Name="BtnSave" ToolTip="保存信息卡内容" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSave_Click" Width="26" Height="26" />
+                    <Button Visibility="Hidden" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeMore" ToolTip="点击隐藏部分（当前为全模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xe932;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeMore_Click" Width="26" Height="26"/>
+                    <Button Visibility="Visible" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeMore2" ToolTip="点击查看更多（当前为简略模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xe934;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeMore_Click" Width="26" Height="26"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="诞年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox Background="Transparent" Text="{Binding PointX}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
+                    <Label Content="实年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="1" IsEnabled="False"/>
+                    <TextBox Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" Grid.Column="1" IsEnabled="False"/>
+                </Grid>
+                <ItemsControl x:Name="MainLines"  VirtualizingPanel.IsVirtualizing="True" ItemsSource="{Binding ThisCard.Lines, ElementName=ThisWindow}" Grid.Row="3">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Visibility="{Binding Visibility, Converter={StaticResource BoolConvertToVisibility}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="30" Width="Auto"/>
+                                    <ColumnDefinition Width="100*"/>
+                                    <ColumnDefinition Width="26"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="{Binding Title}" BorderThickness="0" Padding="0" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                                <ItemsControl VirtualizingPanel.IsVirtualizing="True" Grid.Column="1" ItemsSource="{Binding Tips}" MinWidth="242" MinHeight="18" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Background="Transparent" Text="{Binding Content}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="0,5,8,0" MinWidth="30"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel x:Name="MainWrapPanel" Orientation="Horizontal" VirtualizingStackPanel.IsVirtualizing="True"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                                <Button x:Name="BtnAdd" FontFamily="../Resources/icons/#icomoon" Content="&#xe9bb;" FontSize="18" Background="Transparent" Foreground="DodgerBlue"  Grid.Column="2" Padding="0" BorderThickness="0" Click="BtnAdd_Click" VerticalAlignment="Top"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" VirtualizingStackPanel.IsVirtualizing="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <Grid Grid.Row="4">
+                    <Label Content="备注" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox Background="Transparent" Text="{Binding Summary}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Border>
+</Window>

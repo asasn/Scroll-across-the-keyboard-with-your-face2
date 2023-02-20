@@ -57,20 +57,6 @@ namespace RootNS.Models
 
 
 
-        private object _attachment;
-        /// <summary>
-        /// 附件
-        /// </summary>
-        public object Attachment
-        {
-            get { return _attachment; }
-            set
-            {
-                _attachment = value;
-                RaisePropertyChanged(nameof(Attachment));
-            }
-        }
-
         private string _summary = String.Empty;
         /// <summary>
         /// 简介/备忘
@@ -97,6 +83,22 @@ namespace RootNS.Models
             {
                 _isDel = value;
                 this.RaisePropertyChanged(nameof(IsDel));
+            }
+        }
+
+
+
+        private object _attachment = String.Empty;
+        /// <summary>
+        /// 附件
+        /// </summary>
+        public object Attachment
+        {
+            get { return _attachment; }
+            set
+            {
+                _attachment = value;
+                RaisePropertyChanged(nameof(Attachment));
             }
         }
     }

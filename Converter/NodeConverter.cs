@@ -19,7 +19,7 @@ namespace RootNS.Converter
         {
             if (value == null)
             {
-                return new NodeDoc();
+                return new NodeItem();
             }
             Node node = (Node)value;
             try
@@ -36,11 +36,11 @@ namespace RootNS.Converter
                 //{
                 //    return new NodeItemForMaterial();
                 //}
-                return new NodeDoc();
+                return new NodeItem();
             }
             catch
             {
-                return new NodeDoc();
+                return new NodeItem();
             }
         }
 
@@ -52,8 +52,10 @@ namespace RootNS.Converter
         }
     }
 
+
+
     /// <summary>
-    /// 节点类型和是否文件夹决定统计单位
+    /// TypeName和是否文件夹决定统计单位
     /// </summary>
     public class TypeName2ShowText : IMultiValueConverter
     {
@@ -97,7 +99,7 @@ namespace RootNS.Converter
     /// <summary>
     /// TypeName决定是否显示统计
     /// </summary>
-    public class TypeName2Visibility : IValueConverter
+    public class TypeName2CountVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -107,7 +109,14 @@ namespace RootNS.Converter
             }
             try
             {
-                if (value.ToString() == Book.TypeNameEnum.信息卡.ToString())
+                if (value.ToString() == Book.TypeNameEnum.大事记.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.故事大纲.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.情节设计.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.信息卡.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.全局题材管理.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.全局情节设计.ToString() ||
+                    value.ToString() == Book.TypeNameEnum.全局信息卡.ToString()
+                    )
                 {
                     return Visibility.Collapsed;
                 }
@@ -127,4 +136,36 @@ namespace RootNS.Converter
         }
     }
 
+    /// <summary>
+    /// TypeName和是否文件夹决定CheckBox是否显现
+    /// </summary>
+    public class TypeName2CheckBoxVisibility : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values == null)
+            {
+                return Visibility.Collapsed;
+            }
+            try
+            {
+                if (values[0].ToString() == Book.TypeNameEnum.故事大纲.ToString() && (bool)values[1] == false)
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Collapsed;
+            }
+            catch
+            {
+                return Visibility.Collapsed;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object[] ConvertBack(object value, Type[] targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

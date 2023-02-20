@@ -19,6 +19,7 @@ namespace RootNS.Models
         public Gval()
         {
             StaticPropertyChanged += Gval_StaticPropertyChanged;
+            MainWindowTitle = string.Format("{0}{1}——{2}的小说创作方案", "脸滚键盘", CurrentVersion, AppAuthor);
         }
 
         /// <summary>
@@ -32,6 +33,19 @@ namespace RootNS.Models
 
         }
 
+        private string _mainWindowTitle;
+
+        public string MainWindowTitle
+        {
+            get { return _mainWindowTitle; }
+            set
+            {
+                _mainWindowTitle = value;
+                RaisePropertyChanged(nameof(MainWindowTitle));
+            }
+        }
+
+
         private static string _currentVersion = "2.0.3.0";
 
         public static string CurrentVersion
@@ -44,16 +58,6 @@ namespace RootNS.Models
             }
         }
 
-        private static string _appAuthor = "不问苍生问鬼神";
-
-        public static string AppAuthor
-        {
-            get { return _appAuthor; }
-            set
-            {
-                _appAuthor = value;
-                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppAuthor)));
-            }
-        }
+        public static string AppAuthor { get { return "不问苍生问鬼神"; } }
     }
 }

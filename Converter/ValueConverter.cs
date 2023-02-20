@@ -58,7 +58,7 @@ namespace RootNS.Converter
     ///// <summary>
     ///// TypeName决定按钮是否显现
     ///// </summary>
-    //public class TypeName2Visibility : IValueConverter
+    //public class TypeName2CountVisibility : IValueConverter
     //{
     //    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     //    {

@@ -61,8 +61,9 @@ namespace RootNS.Helper
         private static string GetSqlStringForCreateContentTable()
         {
             string sql = string.Empty;
-            sql += string.Format("CREATE TABLE IF NOT EXISTS 内容 (Guid CHAR  PRIMARY KEY REFERENCES 节点 (Guid) ON DELETE CASCADE ON UPDATE CASCADE, Title CHAR, Text TEXT, Summary CHAR, Count INTEGER (0), PointX DOUBLE DEFAULT (0), PointY DOUBLE DEFAULT (0));");
+            sql += string.Format("CREATE TABLE IF NOT EXISTS 内容 (Guid CHAR  PRIMARY KEY REFERENCES 节点 (Guid) ON DELETE CASCADE ON UPDATE CASCADE, Title CHAR, Text TEXT, Summary CHAR, Count INTEGER (0), PointX DOUBLE DEFAULT (0), PointY DOUBLE DEFAULT (0), Attachment TEXT);");
             sql += string.Format("CREATE INDEX IF NOT EXISTS 内容Guid ON 内容(Guid);");
+            sql += string.Format("CREATE INDEX IF NOT EXISTS 内容Text ON 内容(Text);");
             return sql;
         }
         private static string GetSqlStringForCreateSettingsTable()

@@ -22,9 +22,8 @@
             <converter:IsDelConvertOpacity x:Key="IsDelConvertOpacity"/>
             <converter:NodeConvertToNodeTemplate x:Key="NodeConvertToNodeTemplate"/>
             <converter:TypeName2ShowText x:Key="TypeName2ShowText"/>
-            <converter:TypeName2Visibility x:Key="TypeName2Visibility"/>
-            <!--<converter:TypeName2Visibility x:Key="TypeName2Visibility"/>-->
-            <!--<converter:TypeName2IsEnabled x:Key="TypeName2IsEnabled"/>-->
+            <converter:TypeName2CountVisibility x:Key="TypeName2CountVisibility"/>
+            <converter:TypeName2CheckBoxVisibility x:Key="TypeName2CheckBoxVisibility"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

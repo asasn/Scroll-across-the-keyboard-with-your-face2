@@ -28,7 +28,7 @@ namespace RootNS.Models
             this.InitSyntax();
         }
 
-        public void Save()
+        public void Insert()
         {
 
         }
@@ -74,6 +74,7 @@ namespace RootNS.Models
                     Title = reader["Title"] == DBNull.Value ? null : reader["Title"].ToString(),
                     Text = reader["Text"] == DBNull.Value ? null : reader["Text"].ToString(),
                     Summary = reader["Summary"] == DBNull.Value ? null : reader["Summary"].ToString(),
+                    Attachment = reader["Attachment"] == DBNull.Value ? null : reader["Attachment"].ToString(),
                     Count = reader["Count"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Count"]),
                     PointX = Convert.ToDouble(reader["PointX"]),
                     PointY = Convert.ToDouble(reader["PointY"]),

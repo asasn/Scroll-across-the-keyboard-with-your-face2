@@ -44,7 +44,7 @@ namespace RootNS.MyControls
         private void Command_ReName_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Node selectedNode = _lastReNameNode = TreeNodes.SelectedItem as Node;
-            if (selectedNode != null)
+            if (selectedNode != null && selectedNode.IsChecked == false)
             {
                 selectedNode.ReNameing = !selectedNode.ReNameing;
                 TextBox TbReName = ControlHelper.FindChild<TextBox>(selectedItem as DependencyObject, "TbReName");
@@ -59,7 +59,7 @@ namespace RootNS.MyControls
             Node rootNode = TreeNodes.DataContext as Node;
             Node node = new Node() { IsDir = true };
             rootNode.ChildNodes.Add(node);
-            node.Save();
+            node.Insert();
         }
 
         private void Command_AddDoc_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace RootNS.MyControls
                     selectedNode.Parent.ChildNodes.Add(node);
                 }
             }
-            node.Save();
+            node.Insert();
         }
 
         private void Command_Delete_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -483,11 +483,73 @@ namespace RootNS.MyControls
             {
                 BtnSend.IsEnabled = false;
             }
+            if (this.Tag != null)
+            {
+                BtnKeep.Visibility = Visibility.Hidden;
+                BtnSend.Visibility = Visibility.Hidden;
+                BtnImport.Visibility = Visibility.Hidden;
+                BtnExport.Visibility = Visibility.Hidden;
+            }
         }
 
         private void TreeNodes_DragOver(object sender, DragEventArgs e)
         {
 
+        }
+
+
+
+
+
+        private void SearchBar_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
+        {
+            BtnClearSearch.Visibility = Visibility.Visible;
+            foreach (Node node in TreeNodes.Items)
+            {
+                if (node.Title.ToLower().Contains(e.Info.ToLower()) ||
+                    node.Text.ToLower().Contains(e.Info.ToLower()))
+                {
+                    node.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    node.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void BtnClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchBar.Text))
+            {
+                return;
+            }
+            BtnClearSearch.Visibility = Visibility.Hidden;
+            SearchBar.Clear();
+            foreach (Node node in TreeNodes.Items)
+            {
+                node.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void SearchBar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            SearchBar.Visibility = Visibility.Visible;
+        }
+
+        private void SearchBar_MouseLeave(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void TreeNodes_MouseEnter(object sender, MouseEventArgs e)
+        {
+            SearchBar.Visibility = Visibility.Visible;
+        }
+
+        private void TreeNodes_MouseLeave(object sender, MouseEventArgs e)
+        {
+            SearchBar.Visibility = Visibility.Hidden;
         }
     }
 }

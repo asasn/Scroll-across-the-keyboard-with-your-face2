@@ -75,7 +75,10 @@ namespace RootNS
         {
             Gval.Views.EditorTabControl = sender as HandyControl.Controls.TabControl;
         }
-
+        private void UcShower_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.UcShower = sender as UcShower;
+        }
         private void UcSearcher_Loaded(object sender, RoutedEventArgs e)
         {
             Gval.Views.UcSearcher = sender as UcSearcher;

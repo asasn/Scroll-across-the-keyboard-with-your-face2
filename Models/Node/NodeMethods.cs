@@ -58,18 +58,61 @@ namespace RootNS.Models
         /// <exception cref="NotImplementedException"></exception>
         private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (Gval.FlagLoadingCompleted == false) //忽略载入过程当中的变化
+            if (Gval.FlagLoadingCompleted == false) //重要：忽略载入过程当中的变化
             {
                 return;
             }
             if (e.PropertyName == nameof(Title))
             {
                 this.HasNameChange = true;
-            }
-            if (
-                e.PropertyName == nameof(IsChecked) ||
-                e.PropertyName == nameof(IsExpanded))
+            }       
+            if (e.PropertyName == nameof(IsExpanded))
             {
+                object propertyValue = this.GetType().GetProperty(e.PropertyName).GetValue(this, null);
+                this.UpdateNodeProperty("节点", e.PropertyName, propertyValue.ToString());
+            }
+            if (e.PropertyName == nameof(IsChecked))
+            {
+                //节点的检查状态改变时，注意相关的算法
+                if (this.IsChecked == true)
+                {
+                    //检查子节点
+                    foreach (Node child in ChildNodes)
+                    {
+                        if (child.IsChecked == false)
+                        {
+                            child.IsChecked = true;
+                        }
+                    }
+                    //检查父节点
+                    if (this.Parent != null)
+                    {
+                        bool AllTrue = true;
+                        foreach (Node brothers in Parent.ChildNodes)
+                        {
+                            if (brothers.IsChecked == false)
+                            {
+                                AllTrue = false;
+                                break;
+                            }
+                        }
+                        if (AllTrue && this.Parent.IsChecked == false)
+                        {
+                            this.Parent.IsChecked = true;
+                        }
+                    }
+                }
+                else
+                {
+                    //检查父节点
+                    if (this.Parent != null)
+                    {
+                        if (this.Parent.IsChecked == true)
+                        {
+                            this.Parent.IsChecked = false;
+                        }
+                    }
+                }
                 object propertyValue = this.GetType().GetProperty(e.PropertyName).GetValue(this, null);
                 this.UpdateNodeProperty("节点", e.PropertyName, propertyValue.ToString());
             }
@@ -93,13 +136,13 @@ namespace RootNS.Models
         }
 
         /// <summary>
-        /// 把节点保存进书库中
+        /// 新建节点至表中（插入或忽略）
         /// </summary>
         /// <param name="book"></param>
-        public void Save()
+        public void Insert()
         {
             string sql = string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", this.Index, this.Guid, this.Parent.Guid, this.TypeName, this.IsDir, this.IsExpanded, this.IsChecked, this.IsDel);
-            sql += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');", this.Guid, this.Title.Replace("'", "''"), this.Text.Replace("'", "''"), this.Summary.Replace("'", "''"), this.Count, this.PointX, this.PointY);
+            sql += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", this.Guid, this.Title.Replace("'", "''"), this.Text.Replace("'", "''"), this.Summary.Replace("'", "''"), this.Count, this.PointX, this.PointY, this.Attachment);
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sql);
         }
 
@@ -304,7 +347,7 @@ namespace RootNS.Models
             this.Parent.ChildNodes[b].UpdateNodeProperty("节点", "Index", b.ToString());
         }
 
-        
+
 
         /// <summary>
         /// 更新一条节点记录
@@ -312,7 +355,7 @@ namespace RootNS.Models
         /// <param name="node"></param>
         /// <param name="fieldName">字段名</param>
         /// <param name="value">值</param>
-        private void UpdateNodeProperty(string tableName, string fieldName, string value)
+        public void UpdateNodeProperty(string tableName, string fieldName, string value)
         {
             string sql = string.Format("UPDATE {0} SET [{1}]='{2}' WHERE Guid='{3}';", tableName, fieldName, value.Replace("'", "''"), this.Guid);
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sql);

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RootNS.Models
 {
@@ -26,33 +27,36 @@ namespace RootNS.Models
             }
         }
 
-        private double _pointX;
+        private bool _hasChange;
         /// <summary>
-        /// 点位坐标X
+        /// 运行时变量：供信息卡使用
         /// </summary>
-        public double PointX
+        public bool HasChange
         {
-            get { return _pointX; }
+            get { return _hasChange; }
             set
             {
-                _pointX = value;
-                this.RaisePropertyChanged("PointX");
+                _hasChange = value;
+                RaisePropertyChanged(nameof(HasChange));
             }
         }
 
-        private double _pointY;
+        private Visibility _visibility;
         /// <summary>
-        /// 点位坐标Y
+        /// 是否显示
         /// </summary>
-        public double PointY
+        public Visibility Visibility
         {
-            get { return _pointY; }
+            get { return _visibility; }
             set
             {
-                _pointY = value;
-                this.RaisePropertyChanged("PointY");
+                _visibility = value;
+                RaisePropertyChanged(nameof(Visibility));
             }
         }
+
+
+
 
         private Node _parent;
         /// <summary>
@@ -69,34 +73,6 @@ namespace RootNS.Models
         }
 
 
-        private bool _isDir;
-        /// <summary>
-        /// 是否目录
-        /// </summary>
-        public bool IsDir
-        {
-            get { return _isDir; }
-            set
-            {
-                _isDir = value;
-                this.RaisePropertyChanged("IsDir");
-            }
-        }
-
-
-        private string _text = String.Empty;
-        /// <summary>
-        /// 文字内容
-        /// </summary>
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                _text = value;
-                RaisePropertyChanged(nameof(Text));
-            }
-        }
 
         private ObservableCollection<object> _cGuidList = new ObservableCollection<object>();
         /// <summary>
@@ -147,77 +123,7 @@ namespace RootNS.Models
             }
         }
 
-        private int _count;
-        /// <summary>
-        /// 字数统计（一般是针对Text属性而言）
-        /// </summary>
-        public int Count
-        {
-            get { return _count; }
-            set
-            {
-                _count = value;
-                RaisePropertyChanged(nameof(Count));
-            }
-        }
 
-        private bool _isExpanded;
-        /// <summary>
-        /// 是否展开
-        /// </summary>
-        public bool IsExpanded
-        {
-            get { return _isExpanded; }
-            set
-            {
-                _isExpanded = value;
-                this.RaisePropertyChanged("IsExpanded");
-            }
-        }
-
-        private bool _isChecked;
-        /// <summary>
-        /// 是否勾选
-        /// </summary>
-        public bool IsChecked
-        {
-            get { return _isChecked; }
-            set
-            {
-                _isChecked = value;
-                this.RaisePropertyChanged("IsChecked");
-            }
-        }
-
-        private bool _isSelected;
-        /// <summary>
-        /// 是否选中
-        /// </summary>
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                this.RaisePropertyChanged("IsSelected");
-            }
-        }
-
-
-
-        private string _typeName = string.Empty;
-        /// <summary>
-        /// 节点类型（名称）
-        /// </summary>
-        public string TypeName
-        {
-            get { return _typeName; }
-            set
-            {
-                _typeName = value;
-                this.RaisePropertyChanged(nameof(TypeName));
-            }
-        }
 
         private Book _owner;
         /// <summary>
@@ -232,22 +138,6 @@ namespace RootNS.Models
                 RaisePropertyChanged(nameof(Owner));
             }
         }
-
-
-        //private Guid _ownerGuid;
-        ///// <summary>
-        ///// 隶属于哪一本书
-        ///// </summary>
-        //public Guid OwnerGuid
-        //{
-        //    get { return _ownerGuid; }
-        //    set
-        //    {
-        //        _ownerGuid = value;
-        //        this.RaisePropertyChanged(nameof(OwnerGuid));
-        //    }
-        //}
-
 
 
 

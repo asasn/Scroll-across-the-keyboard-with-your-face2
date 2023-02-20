@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RootNS"
         xmlns:mycontrols="clr-namespace:RootNS.MyControls" xmlns:hc="https://handyorg.github.io/handycontrol"
-        mc:Ignorable="d" Closing="Window_Closing"
-        Title="MainWindow" Width="1920" Height="1080"  WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered" Loaded="WinMain_Loaded">
+        mc:Ignorable="d" Closing="Window_Closing" Width="1920" Height="1080"  
+        Title="{Binding MainWindowTitle, Source={StaticResource Gval}}" WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered" Loaded="WinMain_Loaded">
     <Grid x:Name="GridMind">
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="ColTree" Width="260" MinWidth="260" >
@@ -93,7 +93,7 @@
                     <ColumnDefinition Width="20*"/>
                 </Grid.ColumnDefinitions>
                 <Border x:Name="BorderL" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
-                    <mycontrols:MyTree x:Name="Notes"/>
+                    <mycontrols:MyTree x:Name="Notes" Tag="Notes"/>
                 </Border>
                 <Border x:Name="BorderTool" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="0" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}">
                     <StackPanel>
@@ -114,18 +114,18 @@
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
-                        <mycontrols:UcShower/>
+                        <mycontrols:UcShower Loaded="UcShower_Loaded"/>
                         <mycontrols:UcSearcher Grid.Row="1" Loaded="UcSearcher_Loaded"/>
                         <mycontrols:TomatoClock  Grid.Row="2"/>
                     </Grid>
                 </Border>
                 <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" Loaded="Editor_Loaded" />
             </Grid>
-            
+
         </GroupBox>
         <GroupBox x:Name="GboxMaterial" Header="资料栏" DataContext="{Binding MaterialBook, Source={StaticResource Gval}}" Style="{StaticResource BaseStyle}" Grid.Column="4" Width="{Binding ActualWidth, ElementName=GboxTree, Mode=OneWay}" Grid.RowSpan="2">
             <Border x:Name="BorderM" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
-                <mycontrols:MyTree x:Name="Materials" />
+                <mycontrols:MyTree x:Name="Materials" Tag="Materials"/>
             </Border>
         </GroupBox>
         <GroupBox Header="资料库" Style="{StaticResource BaseStyle}" Grid.Column="6" Width="60" Grid.RowSpan="2">
