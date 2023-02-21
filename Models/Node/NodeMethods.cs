@@ -58,10 +58,17 @@ namespace RootNS.Models
         /// <exception cref="NotImplementedException"></exception>
         private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == nameof(Attachment) && this.Attachment !=null && string.IsNullOrEmpty(this.Attachment.ToString()) == false)
+            {
+                this.Card = JsonHelper.Jto<RootNS.Models.Card>(this.Attachment.ToString());
+            }
+
             if (Gval.FlagLoadingCompleted == false) //重要：忽略载入过程当中的变化
             {
                 return;
             }
+
+
             if (e.PropertyName == nameof(Title))
             {
                 this.HasNameChange = true;

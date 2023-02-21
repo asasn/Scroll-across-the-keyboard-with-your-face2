@@ -31,22 +31,7 @@ namespace RootNS.Models
             Count,
         }
 
-        private void ChildNodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            //this.CGuidList = TreeRoot.CGuidList;
-        }
 
-        private void Book_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //if (e.PropertyName == nameof(Guid))
-            //{
-            //    TreeRoot.OwnerGuid = this.Guid;
-            //}
-            //if (e.PropertyName == nameof(TreeRoot))
-            //{
-            //    TreeRoot.Guid = TreeRootGuid;
-            //}
-        }
 
         //private Guid _treeRootGuid;
         ///// <summary>

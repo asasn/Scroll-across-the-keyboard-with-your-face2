@@ -13,6 +13,21 @@ namespace RootNS.Models
 {
     public partial class Node : Entity
     {
+
+        private Card _card = new Card();
+        /// <summary>
+        /// 卡片对象
+        /// </summary>
+        public Card Card
+        {
+            get { return _card; }
+            set
+            {
+                _card = value;
+                RaisePropertyChanged(nameof(Card));
+            }
+        }
+
         private object _toolTip;
         /// <summary>
         /// 悬浮显示内容

@@ -55,10 +55,12 @@ namespace RootNS.MyControls
 
             if (ThisTextEditor.SyntaxHighlighting == null)
             {
+                (this.DataContext as Node).Owner.UpdataSyntax();
                 ThisTextEditor.SyntaxHighlighting = (this.DataContext as Node).Owner.Syntax;
             }
+
         }
-        
+
         private bool canSaveFlag;
         Stopwatch stopWatch = new Stopwatch();
         public DispatcherTimer Timer = new DispatcherTimer();
@@ -116,7 +118,7 @@ namespace RootNS.MyControls
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].Close();
                 //HandyControl.Controls.Growl.SuccessGlobal(String.Format("{0} 已保存！", node.Title));
                 Console.WriteLine(string.Format("本次保存成功！"));
-                canSaveFlag = false; 
+                canSaveFlag = false;
                 BtnSaveDoc.IsEnabled = false;
                 (this.DataContext as Node).HasChange = false;
             }
@@ -187,8 +189,8 @@ namespace RootNS.MyControls
         {
             if (this.Parent.GetType() == typeof(HandyControl.Controls.TabItem))
             {
-               HandyControl.Controls.TabItem tabItem = this.Parent as HandyControl.Controls.TabItem;
-               Workflow.FindByName(tabItem.CommandBindings, "Close").Execute(tabItem);
+                HandyControl.Controls.TabItem tabItem = this.Parent as HandyControl.Controls.TabItem;
+                Workflow.FindByName(tabItem.CommandBindings, "Close").Execute(tabItem);
             }
         }
 
@@ -354,7 +356,51 @@ namespace RootNS.MyControls
         /// <param name="e"></param>
         private void ThisTextEditor_MouseHover(object sender, MouseEventArgs e)
         {
-           
+            TextViewPosition? pos = ThisTextEditor.GetPositionFromPoint(e.GetPosition(ThisTextEditor));
+            if (pos != null)
+            {
+                //toolTip.PlacementTarget = this; // required for property inheritance
+                int offset = ThisTextEditor.Document.GetOffset(pos.Value.Location);
+                foreach (HighlightingRule rule in ThisTextEditor.SyntaxHighlighting.MainRuleSet.Rules)
+                {
+                    ICSharpCode.AvalonEdit.Document.DocumentLine line = ThisTextEditor.Document.GetLineByOffset(offset);
+                    string segment = ThisTextEditor.Document.GetText(line);
+                    int lineOffset = offset - line.Offset;
+                    System.Text.RegularExpressions.MatchCollection matches = rule.Regex.Matches(segment);
+                    if (matches.Count > 0)
+                    {
+                        foreach (System.Text.RegularExpressions.Match match in matches)
+                        {
+                            //注意偏移值的问题，第一个相等条件相当于左边多出半个字符宽度，第二个则是右边多出半个字符宽度……
+                            if (match.Index <= lineOffset && lineOffset - match.Index <= match.Value.Length)
+                            {
+                                foreach (Node node in (this.DataContext as Node).Owner.TreeRoot.ChildNodes[7].ChildNodes)
+                                {
+                                    if (node.Attachment == null)
+                                    {
+                                        continue;
+                                    }
+                                    if (match.Value.Equals(node.Title.Trim()))
+                                    {
+                                        toolTip.Content = node.Title;
+                                        toolTip.IsOpen = true;
+                                        return;
+                                    }
+                                    foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
+                                    {
+                                        if (match.Value.Equals(tip.Content.Trim()))
+                                        {
+                                            toolTip.Content = tip.Content.Trim();
+                                            toolTip.IsOpen = true;
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

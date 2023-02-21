@@ -88,7 +88,7 @@ namespace RootNS.Models
 
 
 
-        private object _attachment = String.Empty;
+        private object _attachment;
         /// <summary>
         /// 附件
         /// </summary>
@@ -101,5 +101,8 @@ namespace RootNS.Models
                 RaisePropertyChanged(nameof(Attachment));
             }
         }
+
+
+
     }
 }

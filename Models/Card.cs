@@ -23,16 +23,6 @@ namespace RootNS.Models
             }
         }
 
-        //private Dictionary<string, object> _cardDict = new Dictionary<string, object>();
-        //public Dictionary<string, object> CardDict
-        //{
-        //    get { return _cardDict; }
-        //    set
-        //    {
-        //        _cardDict = value;
-        //        RaisePropertyChanged(nameof(CardDict));
-        //    }
-        //}
 
         private ObservableCollection<Line> _lines = new ObservableCollection<Line>();
 

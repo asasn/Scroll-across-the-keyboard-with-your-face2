@@ -35,6 +35,7 @@ namespace RootNS.Views
             {
                 (this.DataContext as Node).Attachment = string.Empty;
             }
+            //TODO：改变卡片对象的绑定方式，使用(this.DataContext as Node).Card
             ThisCard = JsonHelper.Jto<RootNS.Models.Card>((this.DataContext as Node).Attachment.ToString());
             if (ThisCard == null)
             {

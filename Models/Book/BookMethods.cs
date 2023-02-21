@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RootNS.Models
@@ -25,7 +26,44 @@ namespace RootNS.Models
                 TreeRoot.ChildNodes.Add(node);
             }
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
-            this.InitSyntax();
+        }
+
+
+
+        private HighlightingRule NewRule(string keyword, string colorName)
+        {
+            try
+            {
+                new Regex(keyword);
+            }
+            catch (Exception)
+            {
+                keyword = "\\" + keyword;
+            }
+            HighlightingRule rule = new HighlightingRule
+            {
+                Color = this.Syntax.GetNamedColor(colorName),
+                Regex = new Regex(keyword.Trim())
+            };
+            return rule;
+        }
+
+
+        private void ChildNodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //this.CGuidList = TreeRoot.CGuidList;
+        }
+
+        private void Book_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            //if (e.PropertyName == nameof(Guid))
+            //{
+            //    TreeRoot.OwnerGuid = this.Guid;
+            //}
+            //if (e.PropertyName == nameof(TreeRoot))
+            //{
+            //    TreeRoot.Guid = TreeRootGuid;
+            //}
         }
 
         public void Insert()
@@ -34,13 +72,37 @@ namespace RootNS.Models
         }
 
         /// <summary>
-        /// 初始化配色方案，填入本控件语法对象
+        /// 刷新配色方案，填入本控件语法对象
         /// </summary>
-        private void InitSyntax()
+        public void UpdataSyntax()
         {
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();
+
+            if (this.TreeRoot.ChildNodes[7].ChildNodes.Count == 0)
+            {
+                return;
+            }
+            foreach (Node node in this.TreeRoot.ChildNodes[7].ChildNodes)
+            {
+                if (node.Attachment == null)
+                {
+                    continue;
+                }
+                Card card = JsonHelper.Jto<RootNS.Models.Card>(node.Attachment.ToString());
+                if (card == null)
+                {
+                    continue;
+                }
+                HighlightingRule rule = NewRule(node.Title.Trim(), "角色");
+                this.Syntax.MainRuleSet.Rules.Add(rule);
+                foreach (Card.Line.Tip tip in card.Lines[0].Tips)
+                {
+                    HighlightingRule ruleTip = NewRule(tip.Content.Trim(), "角色");
+                    this.Syntax.MainRuleSet.Rules.Add(ruleTip);
+                }
+            }
         }
 
 
