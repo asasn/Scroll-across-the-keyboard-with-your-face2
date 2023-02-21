@@ -4,7 +4,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:hc="https://handyorg.github.io/handycontrol" UseLayoutRounding="True"
-    xmlns:Document="clr-namespace:ICSharpCode.AvalonEdit.Document;assembly=ICSharpCode.AvalonEdit"
+    xmlns:Document="clr-namespace:ICSharpCode.AvalonEdit.Document;assembly=ICSharpCode.AvalonEdit" xmlns:models="clr-namespace:RootNS.Models" d:DataContext="{d:DesignInstance Type=models:Node}"
              mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -86,7 +86,7 @@
             <Slider x:Name="slider" Value="12" Width="120" Maximum="36" Minimum="10" ValueChanged="slider_ValueChanged" ToolTip="{Binding Value, ElementName=slider}" SmallChange="1" LargeChange="1" Grid.Row="1" Grid.Column="2" IsSnapToTickEnabled="True" Loaded="slider_Loaded"/>
         </Grid>
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnSaveDoc" Padding="0" BorderThickness="0" ToolTip="保存文档（Ctrl + S）" IsEnabled="False" hc:FloatingBlock.Content="✔" Click="BtnSaveText_Click"/>
+            <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnSaveDoc" Padding="0" BorderThickness="0" ToolTip="保存文档（Ctrl + S）" hc:FloatingBlock.Content="✔" Click="BtnSaveText_Click"/>
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe947;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopy" Padding="0" BorderThickness="0" ToolTip="复制文档内容（不包含未保存的部分）" Click="BtnCopy_Click"/>
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe98a;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopyTitle" Padding="0" BorderThickness="0" ToolTip="复制文档标题" Click="BtnCopyTitle_Click"/>
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe965;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnPaste" Padding="0" BorderThickness="0" ToolTip="从剪贴板粘贴" Click="BtnPaste_Click"/>

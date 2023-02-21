@@ -41,7 +41,7 @@ namespace RootNS.Models
         }
 
         //生成资料库时，指定一个固定的值作为Guid；
-        private static Book _materialBook = new Book() { Guid = new Guid("00000000-1111-1111-1111-000000000000") };
+        private static Book _materialBook = new Book() { Guid = new Guid("00000000-1111-1111-1111-000000000000"), Title = "资料库" };
         /// <summary>
         /// 资料库
         /// </summary>

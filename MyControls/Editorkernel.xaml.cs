@@ -109,15 +109,16 @@ namespace RootNS.MyControls
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
                 node.Count = textCount;
-                BtnSaveDoc.IsEnabled = false;
-                string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Count='{2}' WHERE Guid='{3}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Count, node.Guid);
+                string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].ExecuteNonQuery(sql);
                 //保持连接会导致文件占用，不能及时同步和备份，过多重新连接则是不必要的开销。
                 //故此在数据库占用和重复连接之间选择了一个平衡，允许保存之后的数据库得以上传。
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].Close();
                 //HandyControl.Controls.Growl.SuccessGlobal(String.Format("{0} 已保存！", node.Title));
                 Console.WriteLine(string.Format("本次保存成功！"));
-                canSaveFlag = false;
+                canSaveFlag = false; 
+                BtnSaveDoc.IsEnabled = false;
+                (this.DataContext as Node).HasChange = false;
             }
             catch (Exception ex)
             {
@@ -184,11 +185,6 @@ namespace RootNS.MyControls
 
         private void Command_CloseTabItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (this.Parent.GetType() == typeof(Grid))
-            {
-                EditorHelper.CloseLightEditor(this, (((this.Parent as Grid).Parent as Control).Parent as Grid).Parent as Window);
-            }
-
             if (this.Parent.GetType() == typeof(HandyControl.Controls.TabItem))
             {
                HandyControl.Controls.TabItem tabItem = this.Parent as HandyControl.Controls.TabItem;
@@ -318,6 +314,7 @@ namespace RootNS.MyControls
         private void ThisTextEditor_TextChanged(object sender, EventArgs e)
         {
             BtnSaveDoc.IsEnabled = true;
+            (this.DataContext as Node).HasChange = true;
             //文字变更之后，刷新展示区
             RefreshShowContent(textCount);
         }

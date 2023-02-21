@@ -28,21 +28,24 @@ namespace RootNS.Views
             InitializeComponent();
 
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if ((this.DataContext as Node).Attachment == null)
             {
                 (this.DataContext as Node).Attachment = string.Empty;
             }
-            ThisCard = JsonHelper.Jto<Card>((this.DataContext as Node).Attachment.ToString());
+            ThisCard = JsonHelper.Jto<RootNS.Models.Card>((this.DataContext as Node).Attachment.ToString());
             if (ThisCard == null)
             {
                 ThisCard = new Card();
             }
             HiddenNullLines();
+            TbTitle.Text = (this.DataContext as Node).Title;
+            TbSummary.Text = (this.DataContext as Node).Summary;
+            TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
+            (this.DataContext as Node).HasChange = false;
         }
-
-        public Visibility LineVisibility { get; set; } = Visibility.Visible;
 
         public Card ThisCard
         {
@@ -52,7 +55,10 @@ namespace RootNS.Views
 
         // Using a DependencyProperty as the backing store for ThisCard.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ThisCardProperty =
-            DependencyProperty.Register("ThisCard", typeof(Card), typeof(WCard), new PropertyMetadata(new Card()));
+            DependencyProperty.Register("ThisCard", typeof(Card), typeof(WCard), new PropertyMetadata(null));
+
+
+
 
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -60,19 +66,47 @@ namespace RootNS.Views
             //左键按下时，允许拖曳
             DragMove();
         }
+
+
+        private void UpdataCard()
+        {
+            (this.DataContext as Node).Title = TbTitle.Text;
+            (this.DataContext as Node).PointX = Convert.ToInt64(TbBornYear.Text);
+            (this.DataContext as Node).Summary = TbSummary.Text;
+            (this.DataContext as Node).Attachment = JsonHelper.Otj<RootNS.Models.Card>(ThisCard);
+            (this.DataContext as Node).UpdateNodeProperty("内容", "Title", (this.DataContext as Node).Title);
+            (this.DataContext as Node).UpdateNodeProperty("内容", "PointX", (this.DataContext as Node).PointX.ToString());
+            (this.DataContext as Node).UpdateNodeProperty("内容", "Summary", (this.DataContext as Node).Summary);
+            (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", (this.DataContext as Node).Attachment.ToString());
+
+        }
+
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             ClaerNullLines();
             (this.DataContext as Node).HasChange = false;
-            (this.DataContext as Node).Attachment = ThisCard;
-            (this.DataContext as Node).UpdateNodeProperty("内容", "Title", (this.DataContext as Node).Title);
-            (this.DataContext as Node).UpdateNodeProperty("内容", "PointX", (this.DataContext as Node).PointX.ToString());
-            (this.DataContext as Node).UpdateNodeProperty("内容", "Summary", (this.DataContext as Node).Summary);
-            (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", JsonHelper.Otj(ThisCard));
+            UpdataCard();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            if (BtnSave.IsEnabled == true)
+            {
+                MessageBoxResult dr = MessageBox.Show("尚未保存\n要在退出前保存更改吗？", "Tip", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                if (dr == MessageBoxResult.Yes)
+                {
+                    BtnSave_Click(null, null);
+                }
+                if (dr == MessageBoxResult.No)
+                {
+
+                }
+                if (dr == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
             this.Close();
         }
 
@@ -120,34 +154,60 @@ namespace RootNS.Views
                     line.Visibility = true;
                 }
             }
+            //if (BtnSeeMore.Visibility == Visibility.Visible)
+            //{
+            //    //隐藏模式时，进行一些处理
+            //    bool allLineNull = true;
+            //    foreach (Card.Line line in ThisCard.Lines)
+            //    {
+            //        if (line.Visibility)
+            //        {
+            //            allLineNull = false;
+            //            break;
+            //        }
+            //        if (allLineNull)
+            //        {
+            //            GMainLines.Visibility = Visibility.Collapsed;
+            //        }
+            //    }
+            //}
         }
 
 
+        private void BtnSeeLess_Click(object sender, RoutedEventArgs e)
+        {
+            //从全模式转变为隐藏模式
+            BtnSeeLess.Visibility = Visibility.Hidden;
+            BtnSeeMore.Visibility = Visibility.Visible;
+            HiddenNullLines();
+        }
+
         private void BtnSeeMore_Click(object sender, RoutedEventArgs e)
         {
-            if (BtnSeeMore.Visibility == Visibility.Visible)
+            //从隐藏模式转变为全模式
+            BtnSeeLess.Visibility = Visibility.Visible;
+            BtnSeeMore.Visibility = Visibility.Hidden;
+            foreach (Card.Line line in ThisCard.Lines)
             {
-                //从全模式转变为隐藏模式
-                BtnSeeMore.Visibility = Visibility.Hidden;
-                BtnSeeMore2.Visibility = Visibility.Visible;
-                HiddenNullLines();
-            }
-            else
-            {
-                //从隐藏模式转变为全模式
-                BtnSeeMore.Visibility = Visibility.Visible;
-                BtnSeeMore2.Visibility = Visibility.Hidden;
-                foreach (Card.Line line in ThisCard.Lines)
-                {
-                    line.Visibility = true;
-                }
-
+                line.Visibility = true;
             }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             (this.DataContext as Node).HasChange = true;
+        }
+        private void TbBornYear_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            (this.DataContext as Node).HasChange = true;
+            TbBornYear.Text = InputCheck(TbBornYear.Text);
+            TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
+        }
+
+        private string InputCheck(string strInput)
+        {
+            long.TryParse(strInput, out long longOut);
+            return longOut.ToString();
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)

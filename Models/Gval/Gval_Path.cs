@@ -24,16 +24,6 @@ namespace RootNS.Models
 
         }
 
-        /// <summary>
-        /// 一些固定的设置（常量）
-        /// </summary>
-        public struct Constants
-        {
-            public static Guid MaterialGuid { get { return new Guid("00000000-1111-1111-1111-000000000000"); } }
-
-            
-        }
-
 
         /// <summary>
         /// 设置的键名

@@ -37,19 +37,20 @@ namespace RootNS.MyControls
             }
             if (node.TypeName == Book.TypeNameEnum.全局题材管理.ToString())
             {
-                WBase wBase = new WBase();
+                if (node.IsDir == true) { return; }
+                WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
             if (node.TypeName == Book.TypeNameEnum.大事记.ToString() ||
                 node.TypeName == Book.TypeNameEnum.故事大纲.ToString())
             {
-                WBase wBase = new WBase();
+                WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
             if (node.TypeName == Book.TypeNameEnum.情节设计.ToString() ||
                 node.TypeName == Book.TypeNameEnum.全局情节设计.ToString())
             {
-                WBase wBase = new WBase();
+                WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
             if (node.TypeName == Book.TypeNameEnum.信息卡.ToString() ||
@@ -64,7 +65,8 @@ namespace RootNS.MyControls
                 node.TypeName == Book.TypeNameEnum.全局资料管理.ToString() ||
                 node.TypeName == Book.TypeNameEnum.全局灵感管理.ToString())
             {
-                WBase wBase = new WBase();
+                if (node.IsDir == true) { return; }
+                WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
 

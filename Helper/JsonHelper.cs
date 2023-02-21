@@ -8,12 +8,12 @@ using System.Web.Script.Serialization;
 namespace RootNS.Helper
 {
     internal class JsonHelper
-    {       
+    {
         /// <summary>
-             /// 把Obj对象转换成Json字符串
-             /// </summary>
-             /// <param name="sender"></param>
-             /// <param name="e"></param>
+        /// 把Obj对象转换成Json字符串
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static string Otj<T>(T obj)
         {
             JavaScriptSerializer jserializer = new JavaScriptSerializer();
