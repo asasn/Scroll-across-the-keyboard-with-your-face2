@@ -8,6 +8,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RootNS.Models
@@ -48,6 +49,10 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
+                if (this.TypeName == this.Owner.TreeRoot.ChildNodes[7].TypeName)
+                {
+                    this.Owner.UpdataSyntax();
+                }
             }
         }
         /// <summary>
@@ -58,9 +63,12 @@ namespace RootNS.Models
         /// <exception cref="NotImplementedException"></exception>
         private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Attachment) && this.Attachment !=null && string.IsNullOrEmpty(this.Attachment.ToString()) == false)
+            if (e.PropertyName == nameof(Attachment) &&
+                this.Attachment != null &&
+                string.IsNullOrEmpty(this.Attachment.ToString()) == false)
             {
                 this.Card = JsonHelper.Jto<RootNS.Models.Card>(this.Attachment.ToString());
+                this.ToolTip = new MyControls.CardShower(this);
             }
 
             if (Gval.FlagLoadingCompleted == false) //重要：忽略载入过程当中的变化
@@ -72,7 +80,7 @@ namespace RootNS.Models
             if (e.PropertyName == nameof(Title))
             {
                 this.HasNameChange = true;
-            }       
+            }
             if (e.PropertyName == nameof(IsExpanded))
             {
                 object propertyValue = this.GetType().GetProperty(e.PropertyName).GetValue(this, null);
@@ -179,7 +187,7 @@ namespace RootNS.Models
             int pn = this.Parent.ChildNodes.IndexOf(this);//变动之前的索引位置
             this.Parent.ChildNodes.Remove(this);
 
-            ArrayList arrayList = this.GetChildNodesList();
+            ArrayList arrayList = this.GetHeirsList();
             string sqlDel = string.Empty;
             foreach (var item in arrayList)
             {
@@ -242,7 +250,7 @@ namespace RootNS.Models
         private void ChangeDelFlag(bool flag)
         {
             this.IsDel = flag;
-            ArrayList arrayList = this.GetChildNodesList();
+            ArrayList arrayList = this.GetHeirsList();
             string sqlDel = string.Empty;
             foreach (var item in arrayList)
             {
@@ -253,10 +261,10 @@ namespace RootNS.Models
         }
 
         /// <summary>
-        /// 获取包括自身在内的子节点列表
+        /// 获取包括自身在内的后代列表（递归遍历子孙节点）
         /// </summary>
         /// <returns></returns>
-        public ArrayList GetChildNodesList()
+        public ArrayList GetHeirsList()
         {
             ArrayList arrayList = new ArrayList();
             RecursiveTraversalChilds(this, arrayList);
@@ -289,6 +297,11 @@ namespace RootNS.Models
             {
                 CommitReName();
                 HasNameChange = false;
+                //提交之后，节点的标题改变，这个时候再来应用刷新高亮的方法
+                if (this.TypeName == this.Owner.TreeRoot.ChildNodes[7].TypeName)
+                {
+                    this.Owner.UpdataSyntax();
+                }
             }
         }
 
@@ -366,6 +379,125 @@ namespace RootNS.Models
         {
             string sql = string.Format("UPDATE {0} SET [{1}]='{2}' WHERE Guid='{3}';", tableName, fieldName, value.Replace("'", "''"), this.Guid);
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sql);
+        }
+
+        /// <summary>
+        /// 从文本文档当中导入至章节
+        /// </summary>
+        public void Import()
+        {
+            Node parent;
+            if (this.TypeName.Equals("草稿") ||
+                this.TypeName.Equals("作品相关") ||
+                this.TypeName.Equals("已发布")) { }
+            else
+            {
+                return;
+            }
+            if (this.IsDir)
+            {
+                parent = this;
+            }
+            else
+            {
+                parent = this.Parent;
+            }
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".txt",
+                Filter = "文本文件(*.txt, *.book)|*.txt;*.book|所有文件(*.*)|*.*",
+                Multiselect = true
+            };
+
+            string[] files;
+            // 打开选择框选择
+            if (dlg.ShowDialog() == true)
+            {
+                files = dlg.FileNames;
+            }
+            else
+            {
+                return;
+            }
+            string sqlImport = string.Empty;
+            foreach (string srcFullFileName in files)
+            {
+                string[] rets = Regex.Split(FileIO.ReadFromTxt(srcFullFileName), "(第.+?章.*?\n)");
+
+                string title = string.Empty;
+                string content = string.Empty;
+                foreach (string str in rets)
+                {
+                    Match match = Regex.Match(str, "(第.+?章.*?\n)");
+                    if (match.Success)
+                    {
+                        title = match.Value;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(title))
+                        {
+                            title = System.IO.Path.GetFileNameWithoutExtension(srcFullFileName);
+                        }
+                        content = str;
+                    }
+                    if (string.IsNullOrEmpty(content))
+                    {
+                        continue;
+                    }
+                    Node newNode = new Node
+                    {
+                        Title = title.Trim(),
+                        Text = "　　" + content.Trim(),
+                    };
+                    newNode.Count = EditorHelper.CountWords(newNode.Text);
+                    parent.ChildNodes.Add(newNode);
+                    sqlImport += string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", newNode.Index, newNode.Guid, newNode.Parent.Guid, newNode.TypeName, newNode.IsDir, newNode.IsExpanded, newNode.IsChecked, newNode.IsDel);
+                    sqlImport += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", newNode.Guid, newNode.Title.Replace("'", "''"), newNode.Text.Replace("'", "''"), newNode.Summary.Replace("'", "''"), newNode.Count, newNode.PointX, newNode.PointY, newNode.Attachment);
+                    title = string.Empty;
+                    content = string.Empty;
+                }
+
+            }
+            SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlImport);
+        }
+
+        /// <summary>
+        /// 导出至文本文档
+        /// </summary>
+        public void Export()
+        {
+            System.Windows.Forms.FolderBrowserDialog folder = new System.Windows.Forms.FolderBrowserDialog();
+            folder.Description = "选择文件所在文件夹目录";  //提示的文字
+            folder.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string path = folder.SelectedPath;
+                string fileName = this.Owner.Title + "_" + this.Title;
+                if (FileIO.IsFolderExists(path) == false)
+                {
+                    FileIO.TryToCreateFolder(path);
+                }
+                string content = string.Empty;
+                foreach (Node node in this.GetHeirsList())
+                {
+                    content += node.Title + "\n";
+                    content += node.Text + "\n\n";
+                }
+                ExportMethod(fileName, path, content);
+            }
+        }
+
+        private void ExportMethod(string fileName, string path, string content)
+        {
+            string fullFileName = String.Format("{0}/{1}.txt", path, fileName);
+            int n = 1;
+            while (FileIO.IsFileExists(fullFileName) == true)
+            {
+                fullFileName = String.Format("{0}/{1} - {2}.txt", path, fileName, n);
+                n++;
+            }
+            FileIO.WriteToTxt(fullFileName, content);
         }
     }
 }

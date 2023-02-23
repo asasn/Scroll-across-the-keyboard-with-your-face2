@@ -35,7 +35,7 @@ namespace RootNS.Views
             {
                 (this.DataContext as Node).Attachment = string.Empty;
             }
-            //TODO：改变卡片对象的绑定方式，使用(this.DataContext as Node).Card
+            //Hack：简化卡片对象的绑定方式，使用(this.DataContext as Node).Card
             ThisCard = JsonHelper.Jto<RootNS.Models.Card>((this.DataContext as Node).Attachment.ToString());
             if (ThisCard == null)
             {
@@ -45,6 +45,8 @@ namespace RootNS.Views
             TbTitle.Text = (this.DataContext as Node).Title;
             TbSummary.Text = (this.DataContext as Node).Summary;
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
+            TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
+            (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).HasChange = false;
         }
 
@@ -71,23 +73,56 @@ namespace RootNS.Views
 
         private void UpdataCard()
         {
+            //ToDo：这里可以进行一些sql语句的优化
             (this.DataContext as Node).Title = TbTitle.Text;
             (this.DataContext as Node).PointX = Convert.ToInt64(TbBornYear.Text);
+            (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).Summary = TbSummary.Text;
             (this.DataContext as Node).Attachment = JsonHelper.Otj<RootNS.Models.Card>(ThisCard);
             (this.DataContext as Node).UpdateNodeProperty("内容", "Title", (this.DataContext as Node).Title);
             (this.DataContext as Node).UpdateNodeProperty("内容", "PointX", (this.DataContext as Node).PointX.ToString());
+            (this.DataContext as Node).UpdateNodeProperty("内容", "PointY", (this.DataContext as Node).PointY.ToString());
             (this.DataContext as Node).UpdateNodeProperty("内容", "Summary", (this.DataContext as Node).Summary);
             (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", (this.DataContext as Node).Attachment.ToString());
 
         }
 
 
+        private void UpDataHilgliting()
+        {
+            if (Gval.Views.CurrentEditorkernel == null)
+            {
+                return;
+            }
+            (this.DataContext as Node).Owner.UpdataSyntax();
+        }
+
+        private bool HasDuplicateTitle()
+        {
+            foreach (Node node in (this.DataContext as Node).Parent.ChildNodes)
+            {
+                //标题相同，但是Guid不同时
+                if (TbTitle.Text.Trim() == node.Title &&
+                    node.Guid != (this.DataContext as Node).Guid)
+                {
+                    FunctionsPack.ShowMessageBox("存在同名节点，请使用其他名称！");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (HasDuplicateTitle())
+            {
+                return;
+            }
             ClaerNullLines();
             (this.DataContext as Node).HasChange = false;
             UpdataCard();
+            UpDataHilgliting();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)

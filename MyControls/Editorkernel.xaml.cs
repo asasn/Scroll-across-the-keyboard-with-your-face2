@@ -50,15 +50,14 @@ namespace RootNS.MyControls
 
         private void ThisTextEditor_Loaded(object sender, RoutedEventArgs e)
         {
+            Gval.Views.CurrentEditorkernel = this;
             ThisTextEditor.TextArea.Focus();
             //因为在TabControl中，每次切换的时候都会触发这个事件，故而一些初始化步骤放在父容器，不要放在这里
 
             if (ThisTextEditor.SyntaxHighlighting == null)
             {
                 (this.DataContext as Node).Owner.UpdataSyntax();
-                ThisTextEditor.SyntaxHighlighting = (this.DataContext as Node).Owner.Syntax;
             }
-
         }
 
         private bool canSaveFlag;
@@ -159,7 +158,7 @@ namespace RootNS.MyControls
             {
                 if (string.IsNullOrEmpty(Gval.PreviousText) == true)
                 {
-                    //TODO:另行实现
+                    //ToDo：另行实现，上次搜索文字的保留
                     //Gval.PreviousText = Gval.Views.UcSearch.TbKeyWords.Text;
                 }
             }
@@ -196,7 +195,7 @@ namespace RootNS.MyControls
 
         private void Command_EditCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //TODO:编辑卡片
+            //ToDo：在文档当中编辑卡片的功能，暂未考虑清楚是否应该有这个功能
             //Card[] CardBoxs = { Gval.CurrentBook.CardRole, Gval.CurrentBook.CardOther, Gval.CurrentBook.CardWorld };
             //foreach (Card rootCard in CardBoxs)
             //{
@@ -347,7 +346,7 @@ namespace RootNS.MyControls
             LbValueValue.Content = string.Format("{0:F}/{1:F}", sValue, vValue);
         }
 
-        ToolTip toolTip = new ToolTip();
+        ToolTip toolTip = new ToolTip() { Background = Brushes.Transparent, BorderBrush=Brushes.Transparent };
 
         /// <summary>
         /// 鼠标悬浮提示
@@ -359,7 +358,6 @@ namespace RootNS.MyControls
             TextViewPosition? pos = ThisTextEditor.GetPositionFromPoint(e.GetPosition(ThisTextEditor));
             if (pos != null)
             {
-                //toolTip.PlacementTarget = this; // required for property inheritance
                 int offset = ThisTextEditor.Document.GetOffset(pos.Value.Location);
                 foreach (HighlightingRule rule in ThisTextEditor.SyntaxHighlighting.MainRuleSet.Rules)
                 {
@@ -371,18 +369,17 @@ namespace RootNS.MyControls
                     {
                         foreach (System.Text.RegularExpressions.Match match in matches)
                         {
-                            //注意偏移值的问题，第一个相等条件相当于左边多出半个字符宽度，第二个则是右边多出半个字符宽度……
                             if (match.Index <= lineOffset && lineOffset - match.Index <= match.Value.Length)
                             {
-                                foreach (Node node in (this.DataContext as Node).Owner.TreeRoot.ChildNodes[7].ChildNodes)
+                                foreach (Node node in (this.DataContext as Node).Owner.TreeRoot.ChildNodes[7].GetHeirsList())
                                 {
-                                    if (node.Attachment == null)
+                                    if (node.Attachment == null || node.Card == null)
                                     {
                                         continue;
                                     }
                                     if (match.Value.Equals(node.Title.Trim()))
                                     {
-                                        toolTip.Content = node.Title;
+                                        toolTip.Content = new CardShower(node);
                                         toolTip.IsOpen = true;
                                         return;
                                     }
@@ -390,7 +387,7 @@ namespace RootNS.MyControls
                                     {
                                         if (match.Value.Equals(tip.Content.Trim()))
                                         {
-                                            toolTip.Content = tip.Content.Trim();
+                                            toolTip.Content = new CardShower(node);
                                             toolTip.IsOpen = true;
                                             return;
                                         }

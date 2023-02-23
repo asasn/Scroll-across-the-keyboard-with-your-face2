@@ -7,7 +7,7 @@
     xmlns:behavior="clr-namespace:RootNS.Helper" 
     Background="#FFFEFEFE" UseLayoutRounding="True"
     mc:Ignorable="d" VirtualizingPanel.IsVirtualizing="True"
-    d:DesignHeight="450" d:DesignWidth="250" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded" Margin="2,2,2,2">
+    d:DesignHeight="450" d:DesignWidth="250" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="R1" Height="25"/>
@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="100*"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Background="Transparent" HorizontalAlignment="Stretch" Orientation="Horizontal">
+            <StackPanel Background="Transparent" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button x:Name="BtnFolder" ToolTip="添加目录（小键盘+）" FontFamily="../Resources/icons/#icomoon" Content="&#xe96e;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnFolder_Click"/>
                 <Button x:Name="BtnAddDoc" ToolTip="添加文档（回车）" FontFamily="../Resources/icons/#icomoon" Content="&#xe967;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnAddDoc_Click"/>
                 <Button x:Name="BtnDel" ToolTip="删除节点（Del）" FontFamily="../Resources/icons/#icomoon" Content="&#xea11;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnDel_Click"/>
@@ -34,7 +34,7 @@
                 <Button ToolTip="导入（Insert）" x:Name="BtnImport" FontFamily="../Resources/icons/#icomoon" Content="&#xe98f;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnImport_Click"/>
             </StackPanel>
         </Grid>
-        <TreeView x:Name="TreeNodes" hc:ScrollViewer.IsPenetrating="False"  TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded" DragOver="TreeNodes_DragOver" Grid.RowSpan="2" MouseEnter="TreeNodes_MouseEnter" MouseLeave="TreeNodes_MouseLeave">
+        <TreeView Margin="2" x:Name="TreeNodes" hc:ScrollViewer.IsPenetrating="False"  TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded" DragOver="TreeNodes_DragOver" Grid.RowSpan="2" MouseEnter="TreeNodes_MouseEnter" MouseLeave="TreeNodes_MouseLeave">
             <TreeView.Resources>
                 <RoutedUICommand x:Key="AddFolder" Text="添加目录"/>
                 <RoutedUICommand x:Key="AddDoc" Text="添加文档"/>

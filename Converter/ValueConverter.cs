@@ -11,7 +11,7 @@ using System.Windows.Data;
 namespace RootNS.Converter
 {
     /// <summary>
-    /// 动态设置编辑器外壳的最大宽度
+    /// 动态设置编辑器外壳TabControl的最大宽度
     /// </summary>
     public class SetEditorMaxWidth : IMultiValueConverter
     {
@@ -23,7 +23,6 @@ namespace RootNS.Converter
             }
             catch (Exception)
             {
-
                 return 700;
             }
         }
@@ -34,7 +33,7 @@ namespace RootNS.Converter
     }
 
     /// <summary>
-    /// 动态设置目录树的最大宽度
+    /// 动态设置目录树外壳GroupBox的最大宽度
     /// </summary>
     public class SetTreeMaxWidth : IMultiValueConverter
     {
@@ -46,7 +45,7 @@ namespace RootNS.Converter
             }
             catch (Exception)
             {
-                return 240;
+                return 264;
             }
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

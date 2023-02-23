@@ -27,7 +27,10 @@ namespace RootNS.MyControls
         {
             InitializeComponent();
         }
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+           
+        }
         private void ThisControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Node node = this.DataContext as Node;
@@ -56,6 +59,7 @@ namespace RootNS.MyControls
             if (node.TypeName == Book.TypeNameEnum.信息卡.ToString() ||
                 node.TypeName == Book.TypeNameEnum.全局信息卡.ToString())
             {
+                if (node.IsDir == true) { return; }
                 WCard wCard = new WCard();
                 wCard.DataContext = node;
                 wCard.Show();
@@ -75,9 +79,7 @@ namespace RootNS.MyControls
                 node.TypeName == Book.TypeNameEnum.作品相关.ToString() ||
                 node.TypeName == Book.TypeNameEnum.已发布.ToString())
             {
-
                 if (node.IsDir == true) { return; }
-
                 Gval.PreviousText = String.Empty;
                 if (Gval.OpeningDocList.Contains(node) == false)
                 {
@@ -111,5 +113,7 @@ namespace RootNS.MyControls
         {
 
         }
+
+
     }
 }

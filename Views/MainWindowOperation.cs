@@ -27,7 +27,7 @@ namespace RootNS
         /// <param name="e"></param>
         private void BtnReLayout_Click(object sender, RoutedEventArgs e)
         {
-            ColTree.Width = new GridLength(240, GridUnitType.Pixel);
+            ColTree.Width = new GridLength(264, GridUnitType.Pixel);
             ColEditor.Width = new GridLength(700, GridUnitType.Pixel);
         }
 
@@ -99,7 +99,6 @@ namespace RootNS
         private void RbCardsInBook_Checked(object sender, RoutedEventArgs e)
         {
             Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[7];
-            Notes.BtnFolder.IsEnabled = false;
         }
 
 

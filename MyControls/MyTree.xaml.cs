@@ -155,21 +155,21 @@ namespace RootNS.MyControls
         }
         private void Command_Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //Node selectedNode = TreeNodes.SelectedItem as Node;
-            //if (selectedNode == null)
-            //{
-            //    selectedNode = (sender as Button).DataContext as Node;
-            //}
-            //selectedNode.Import();
+            Node selectedNode = TreeNodes.SelectedItem as Node;
+            if (selectedNode == null)
+            {
+                selectedNode = (sender as Button).DataContext as Node;
+            }
+            selectedNode.Import();
         }
         private void Command_Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //Node selectedNode = TreeNodes.SelectedItem as Node;
-            //if (selectedNode == null)
-            //{
-            //    return;
-            //}
-            //selectedNode.Export();
+            Node selectedNode = TreeNodes.SelectedItem as Node;
+            if (selectedNode == null)
+            {
+                selectedNode = (sender as Button).DataContext as Node;
+            }
+            selectedNode.Export();
         }
 
         private void Command_CopyTitle_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -235,7 +235,7 @@ namespace RootNS.MyControls
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            Command_Export_Executed(null, null);
+            Command_Export_Executed(sender, null);
         }
         #endregion
 
@@ -503,6 +503,7 @@ namespace RootNS.MyControls
 
         private void SearchBar_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
+            //ToDo：该功能暂时未能向下遍历，只能取第一层子节点
             BtnClearSearch.Visibility = Visibility.Visible;
             foreach (Node node in TreeNodes.Items)
             {
@@ -520,6 +521,7 @@ namespace RootNS.MyControls
 
         private void BtnClearSearch_Click(object sender, RoutedEventArgs e)
         {
+            //UnDone：对应向下遍历的恢复暂未实现
             if (string.IsNullOrEmpty(SearchBar.Text))
             {
                 return;

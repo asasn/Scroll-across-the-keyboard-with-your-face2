@@ -9,7 +9,7 @@
         Title="{Binding MainWindowTitle, Source={StaticResource Gval}}" WindowStartupLocation="CenterScreen" WindowState="Maximized" ContentRendered="WinMain_ContentRendered" Loaded="WinMain_Loaded">
     <Grid x:Name="GridMind">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="ColTree" Width="260" MinWidth="260" >
+            <ColumnDefinition x:Name="ColTree" Width="264" MinWidth="264" >
                 <ColumnDefinition.MaxWidth>
                     <MultiBinding Converter="{StaticResource SetTreeMaxWidth}">
                         <Binding ElementName="WinMain" Path="ActualWidth"/>

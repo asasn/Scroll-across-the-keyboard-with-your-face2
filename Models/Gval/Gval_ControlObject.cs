@@ -27,6 +27,7 @@ namespace RootNS.Models
             public static UcShower UcShower { get; set; }
             public static UcSearcher UcSearcher { get; set; }
             public static Border BorderR { get; set; }
+            public static Editorkernel CurrentEditorkernel { get; set; }
         }
 
 

@@ -17,12 +17,13 @@ namespace RootNS.Models
             string[] ls = new string[] { "别称", "身份", "外观", "阶级", "所属", "物品", "能力", "经历" };
             foreach (string lineTitle in ls)
             {
-                Line line = new Line();
-                line.Title = lineTitle;
+                Line line = new Line
+                {
+                    Title = lineTitle
+                };
                 Lines.Add(line);
             }
         }
-
 
         private ObservableCollection<Line> _lines = new ObservableCollection<Line>();
 

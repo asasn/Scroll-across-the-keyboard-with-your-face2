@@ -189,7 +189,7 @@ namespace RootNS.Helper
         {
             if (false == File.Exists(fullFileName))
                 return string.Empty;
-            StreamReader sr = new StreamReader(fullFileName, Encoding.UTF8);
+            StreamReader sr = new StreamReader(fullFileName, Encoding.Default);
             string text = sr.ReadToEnd();
             sr.Close();
             return text;

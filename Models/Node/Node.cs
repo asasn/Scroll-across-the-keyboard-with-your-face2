@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RootNS.Models
 {
     public partial class Node : Entity
     {
 
-        private Card _card = new Card();
+        private Card _card;
         /// <summary>
         /// 卡片对象
         /// </summary>
@@ -153,6 +154,8 @@ namespace RootNS.Models
                 RaisePropertyChanged(nameof(Owner));
             }
         }
+
+
 
 
 

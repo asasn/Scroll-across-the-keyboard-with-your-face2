@@ -1,0 +1,82 @@
+﻿<UserControl x:Name="ThisWindow" x:Class="RootNS.MyControls.CardShower"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RootNS.Views" xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:models="clr-namespace:RootNS.Models" 
+      d:DataContext="{d:DesignInstance Type=models:Node}"
+      mc:Ignorable="d" Background="Transparent"
+      UseLayoutRounding="True"
+      d:DesignWidth="300" Width="Auto" MinWidth="300" MinHeight="120" MaxWidth="400">
+    <Grid x:Name="GCard">
+        <Border CornerRadius="10" Background="Transparent" BorderBrush="#E0E0E0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="RHeader" Height="0"/>
+                    <RowDefinition x:Name="RName" Height="26"/>
+                    <RowDefinition x:Name="RAge"  Height="26"/>
+                    <RowDefinition x:Name="RMian" Height="Auto"/>
+                    <RowDefinition x:Name="RSummary" Height="Auto"/>
+                    <RowDefinition x:Name="RBottom" Height="0"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="26"/>
+                        <ColumnDefinition Width="26"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="名称" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox x:Name="TbTitle" Background="Transparent" Text="{Binding Title}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="30,0,5,0"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="诞年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox x:Name="TbBornYear" Background="Transparent" Text="{Binding PointX}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="30,0,5,0"/>
+                    <Label Content="实年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="1" IsEnabled="False"/>
+                    <TextBox x:Name="TbAge" Background="Transparent" Text="{Binding PointY}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="30,0,5,0" Grid.Column="1" IsEnabled="False"/>
+                </Grid>
+                <ScrollViewer Grid.Row="3" x:Name="GMainLines" >
+                    <ItemsControl VirtualizingPanel.IsVirtualizing="True" DataContext="{Binding Card}" ItemsSource="{Binding Lines}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Visibility="{Binding Visibility, Converter={StaticResource BoolConvertToVisibility}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="30" Width="Auto"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="26"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="{Binding Title}" BorderThickness="0" Padding="0" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                                    <ItemsControl VirtualizingPanel.IsVirtualizing="True" Grid.Column="1" ItemsSource="{Binding Tips}" MinWidth="242" MinHeight="18" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBox Background="Transparent" Text="{Binding Content}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="0,3,3,0" MinWidth="30"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel x:Name="MainWrapPanel" Orientation="Horizontal" VirtualizingStackPanel.IsVirtualizing="True"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" VirtualizingStackPanel.IsVirtualizing="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Grid x:Name="GSummary" Grid.Row="4" >
+                    <Label Content="备注" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                    <TextBox x:Name="TbSummary" Background="Transparent" Text="{Binding Summary}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="30,0,5,0"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

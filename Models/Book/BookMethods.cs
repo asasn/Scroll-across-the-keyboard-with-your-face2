@@ -22,7 +22,7 @@ namespace RootNS.Models
             {
                 var enumName = Enum.GetName(typeof(TypeNameEnum), i);
                 string guid = String.Format("{0}-0000-0000-0000-000000000000", i.ToString().PadLeft(8, '0'));
-                Node node = new Node() { TypeName = enumName, Guid = new Guid(guid) };
+                Node node = new Node() { IsDir = true, Owner = this, TypeName = enumName, Guid = new Guid(guid) };
                 TreeRoot.ChildNodes.Add(node);
             }
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
@@ -76,6 +76,10 @@ namespace RootNS.Models
         /// </summary>
         public void UpdataSyntax()
         {
+            if (Gval.Views.CurrentEditorkernel == null)
+            {
+                return;
+            }
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();
@@ -84,25 +88,22 @@ namespace RootNS.Models
             {
                 return;
             }
-            foreach (Node node in this.TreeRoot.ChildNodes[7].ChildNodes)
+            foreach (Node node in this.TreeRoot.ChildNodes[7].GetHeirsList())
             {
-                if (node.Attachment == null)
-                {
-                    continue;
-                }
-                Card card = JsonHelper.Jto<RootNS.Models.Card>(node.Attachment.ToString());
-                if (card == null)
+                if (node.Attachment == null ||
+                    node.Card == null)
                 {
                     continue;
                 }
                 HighlightingRule rule = NewRule(node.Title.Trim(), "角色");
                 this.Syntax.MainRuleSet.Rules.Add(rule);
-                foreach (Card.Line.Tip tip in card.Lines[0].Tips)
+                foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
                 {
                     HighlightingRule ruleTip = NewRule(tip.Content.Trim(), "角色");
                     this.Syntax.MainRuleSet.Rules.Add(ruleTip);
                 }
             }
+            Gval.Views.CurrentEditorkernel.ThisTextEditor.SyntaxHighlighting = this.Syntax;
         }
 
 
@@ -131,6 +132,8 @@ namespace RootNS.Models
             {
                 Node node = new Node
                 {
+                    //在创建的时候就预设Owner，防止后面Attachment属性变动时出错
+                    Owner = this,
                     Guid = Guid.Parse(reader["Guid"].ToString()),
                     Index = Convert.ToInt32(reader["Index"]),
                     Title = reader["Title"] == DBNull.Value ? null : reader["Title"].ToString(),

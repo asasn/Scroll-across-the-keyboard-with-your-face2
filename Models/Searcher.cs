@@ -148,11 +148,11 @@ namespace RootNS.Models
                 //搜索资料库（选中/全部）
                 if (CbSelected == true)
                 {
-                    nodes = Gval.MaterialBook.SelectedNode.GetChildNodesList();
+                    nodes = Gval.MaterialBook.SelectedNode.GetHeirsList();
                 }
                 else
                 {
-                    nodes = Gval.MaterialBook.TreeRoot.ChildNodes[8].GetChildNodesList();
+                    nodes = Gval.MaterialBook.TreeRoot.ChildNodes[8].GetHeirsList();
                 }
             }
             else
@@ -160,13 +160,13 @@ namespace RootNS.Models
                 //搜索当前书籍（选中/全部）
                 if (CbSelected == true)
                 {
-                    nodes = Gval.CurrentBook.SelectedNode.GetChildNodesList();
+                    nodes = Gval.CurrentBook.SelectedNode.GetHeirsList();
                 }
                 else
                 {
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[0].GetChildNodesList());
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[1].GetChildNodesList());
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[2].GetChildNodesList());
+                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[0].GetHeirsList());
+                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[1].GetHeirsList());
+                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[2].GetHeirsList());
                 }
             }
             return nodes;
@@ -423,7 +423,7 @@ namespace RootNS.Models
             tEdit.Options.InheritWordWrapIndentation = false;
             string lines = GetStrOnLines(node.Text);
             tEdit.Text = lines;
-            //TODO：根据匹配的lbItem.Matches对象，对this.Syntax进行修改
+            //ToDo：根据匹配的lbItem.Matches对象，对this.Syntax进行修改
             tEdit.SyntaxHighlighting = this.Syntax;
             return new ToolTip() { Content = tEdit };
         }
