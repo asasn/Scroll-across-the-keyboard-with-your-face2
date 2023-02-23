@@ -422,13 +422,13 @@ namespace RootNS.Models
             string sqlImport = string.Empty;
             foreach (string srcFullFileName in files)
             {
-                string[] rets = Regex.Split(FileIO.ReadFromTxt(srcFullFileName), "(第.+?章.*?\n)");
+                string[] rets = Regex.Split(FileIO.ReadFromTxt(srcFullFileName), "(\n第.+?章.*?\n)");
 
                 string title = string.Empty;
                 string content = string.Empty;
                 foreach (string str in rets)
                 {
-                    Match match = Regex.Match(str, "(第.+?章.*?\n)");
+                    Match match = Regex.Match(str, "(\n第.+?章.*?\n)");
                     if (match.Success)
                     {
                         title = match.Value;

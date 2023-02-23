@@ -274,7 +274,7 @@ namespace RootNS.Models
             {
                 node.Matches = Matches;
                 node.TempTitle = strTitle + " >> " + ListItemName;
-                node.ToolTip = SetItemToolTip(node);
+                node.ToolTip = SetItemToolTip(node).Content;
                 Results.Add(node);
             }
         }
