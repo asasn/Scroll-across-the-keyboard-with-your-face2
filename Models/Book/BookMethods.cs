@@ -36,9 +36,10 @@ namespace RootNS.Models
             {
                 new Regex(keyword);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 keyword = "\\" + keyword;
+                throw new Exception(string.Format("高亮规则添加关键词时发生错误！\n{0}", ex));
             }
             HighlightingRule rule = new HighlightingRule
             {
@@ -83,11 +84,6 @@ namespace RootNS.Models
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();
-
-            if (this.TreeRoot.ChildNodes[7].ChildNodes.Count == 0)
-            {
-                return;
-            }
             foreach (Node node in this.TreeRoot.ChildNodes[7].GetHeirsList())
             {
                 if (node.Attachment == null ||

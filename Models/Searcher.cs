@@ -194,10 +194,9 @@ namespace RootNS.Models
                 {
                     matchRets = Regex.Matches("", KeyWords);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    FunctionsPack.ShowMessageBox("正则表达式错误！");
-                    return;
+                    throw new Exception(string.Format("正则表达式错误{0}", ex));
                 }
             }
             ArrayList nodes = InitSearch();
@@ -292,10 +291,9 @@ namespace RootNS.Models
             {
                 matchRets = Regex.Matches(nodeText, KeyWords);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("正则表达式错误！");
-                return null;
+                throw new Exception(string.Format("正则表达式错误{0}", ex));
             }
 
             if (string.IsNullOrEmpty(nodeText))

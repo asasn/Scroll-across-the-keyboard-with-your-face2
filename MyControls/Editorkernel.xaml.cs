@@ -90,8 +90,7 @@ namespace RootNS.MyControls
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(thread.ManagedThreadId + " - 失败 -" + thread.ThreadState);
-                Console.WriteLine(string.Format("保存命令失败！\n{0}", ex));
+                throw new Exception(string.Format("保存命令失败！\n{0}", ex));
             }
         }
         ///// <summary>
@@ -123,8 +122,7 @@ namespace RootNS.MyControls
             }
             catch (Exception ex)
             {
-                //HandyControl.Controls.Growl.WarningGlobal(String.Format("本次保存失败！\n{0}", ex));
-                Console.WriteLine(string.Format("本次保存失败！\n{0}", ex));
+                throw new Exception(string.Format("本次保存失败！\n{0}", ex));
             }
         }
 
@@ -355,6 +353,10 @@ namespace RootNS.MyControls
         /// <param name="e"></param>
         private void ThisTextEditor_MouseHover(object sender, MouseEventArgs e)
         {
+            if (ThisTextEditor.SyntaxHighlighting == null)
+            {
+                return;
+            }
             TextViewPosition? pos = ThisTextEditor.GetPositionFromPoint(e.GetPosition(ThisTextEditor));
             if (pos != null)
             {

@@ -333,9 +333,9 @@ namespace RootNS.MyControls
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new Exception(string.Format("节点移动失败！\n{0}", ex));
             }
         }
 

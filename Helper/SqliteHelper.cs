@@ -112,7 +112,7 @@ namespace RootNS.Helper
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(string.Format("关闭数据库失败！\n{0}", ex));
+                    throw new Exception(string.Format("关闭数据库失败！\n{0}", ex));
                 }
             }
         }
