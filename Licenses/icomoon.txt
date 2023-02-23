@@ -9,3 +9,9 @@ Glyphs Available	297
 Grid Size	20
 Designer	Steve Schoger
 License		CC BY 4.0
+
+Feather
+Glyphs Available	282
+Grid Size	24
+Designer	Cole Bemis
+License		MIT

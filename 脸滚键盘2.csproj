@@ -261,8 +261,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\icons\ic_action_book_xxhdpi.ico" />
-    <Resource Include="Licenses\icomoon.txt" />
-    <Resource Include="Licenses\Sqlite.txt" />
+    <Content Include="Licenses\icomoon.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licenses\Sqlite.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\voices\dida.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
