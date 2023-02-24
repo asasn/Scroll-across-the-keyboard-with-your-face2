@@ -45,13 +45,13 @@
                             </hc:ComboBox.ItemTemplate>
                         </hc:ComboBox>
                         <TabControl IsEnabled="{Binding SelectedItem, Converter={StaticResource Object2BooleanConverter}, ElementName=TreeBox}" Grid.Row="4" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}" Style="{DynamicResource TabControlStyle}" SelectionChanged="TabControl_SelectionChanged">
-                            <TabItem Header="草稿" DataContext="{Binding TreeRoot.ChildNodes[0]}" Uid="{Binding Guid}">
-                                <mycontrols:MyTree Loaded="MyTree_Loaded"/>
+                            <TabItem Header="草稿" DataContext="{Binding TabRoot.ChildNodes[0]}" Uid="{Binding Guid}">
+                                <mycontrols:MyTree x:Name="ChapterTree" Tag="Chapters"  Loaded="ChapterTree_Loaded"/>
                             </TabItem>
-                            <TabItem Header="作品相关" DataContext="{Binding TreeRoot.ChildNodes[1]}" Uid="{Binding Guid}">
+                            <TabItem Header="作品相关" DataContext="{Binding TabRoot.ChildNodes[1]}" Uid="{Binding Guid}">
                                 <mycontrols:MyTree/>
                             </TabItem>
-                            <TabItem Header="已发布" DataContext="{Binding TreeRoot.ChildNodes[2]}" Uid="{Binding Guid}">
+                            <TabItem Header="已发布" DataContext="{Binding TabRoot.ChildNodes[2]}" Uid="{Binding Guid}">
                                 <mycontrols:MyTree/>
                             </TabItem>
                         </TabControl>
@@ -93,7 +93,7 @@
                     <ColumnDefinition Width="20*"/>
                 </Grid.ColumnDefinitions>
                 <Border x:Name="BorderL" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
-                    <mycontrols:MyTree x:Name="Notes" Tag="Notes"/>
+                    <mycontrols:MyTree x:Name="NotesTree" Tag="NotesTree" Loaded="NotesTree_Loaded" />
                 </Border>
                 <Border x:Name="BorderTool" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="0" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}">
                     <StackPanel>
@@ -125,7 +125,7 @@
         </GroupBox>
         <GroupBox x:Name="GboxMaterial" Header="资料栏" DataContext="{Binding MaterialBook, Source={StaticResource Gval}}" Style="{StaticResource BaseStyle}" Grid.Column="4" Width="{Binding ActualWidth, ElementName=GboxTree, Mode=OneWay}" Grid.RowSpan="2">
             <Border x:Name="BorderM" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
-                <mycontrols:MyTree x:Name="Materials" Tag="Materials"/>
+                <mycontrols:MyTree x:Name="MaterialsTree" Tag="MaterialsTree" Loaded="MaterialsTree_Loaded"/>
             </Border>
         </GroupBox>
         <GroupBox Header="资料库" Style="{StaticResource BaseStyle}" Grid.Column="6" Width="60" Grid.RowSpan="2">

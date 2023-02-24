@@ -18,13 +18,13 @@ namespace RootNS.Models
     {
         public Searcher()
         {
-            this.InitSyntax();
+            this.UpdataSyntax();
         }
 
         /// <summary>
         /// 初始化配色方案，填入本控件的语法对象
         /// </summary>
-        private void InitSyntax()
+        private void UpdataSyntax()
         {
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
@@ -152,7 +152,7 @@ namespace RootNS.Models
                 }
                 else
                 {
-                    nodes = Gval.MaterialBook.TreeRoot.ChildNodes[8].GetHeirsList();
+                    nodes = Gval.MaterialBook.TabRoot.ChildNodes[8].GetHeirsList();
                 }
             }
             else
@@ -164,9 +164,9 @@ namespace RootNS.Models
                 }
                 else
                 {
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[0].GetHeirsList());
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[1].GetHeirsList());
-                    nodes.AddRange(Gval.CurrentBook.TreeRoot.ChildNodes[2].GetHeirsList());
+                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList());
+                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[1].GetHeirsList());
+                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList());
                 }
             }
             return nodes;
@@ -196,7 +196,8 @@ namespace RootNS.Models
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("正则表达式错误{0}", ex));
+                    FunctionsPack.ShowMessageBox(ex.Message);
+                    return;
                 }
             }
             ArrayList nodes = InitSearch();
@@ -209,8 +210,6 @@ namespace RootNS.Models
         /// <param name="baseNode"></param>
         private void GetResultMain(ArrayList nodes)
         {
-
-
             foreach (Node node in nodes)
             {
                 AddToListBox(node);
@@ -265,7 +264,7 @@ namespace RootNS.Models
 
             if (Matches.Length > 99)
             {
-                Console.WriteLine("匹配结果太多，无意义，所以丢弃结果不用");
+                FunctionsPack.ShowMessageBox("匹配结果太多，无意义，所以丢弃结果不用");
                 return;
             }
 
@@ -293,7 +292,8 @@ namespace RootNS.Models
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("正则表达式错误{0}", ex));
+                FunctionsPack.ShowMessageBox(string.Format("正则表达式错误{0}", ex));
+                return new List<string>().ToArray();
             }
 
             if (string.IsNullOrEmpty(nodeText))
@@ -414,13 +414,11 @@ namespace RootNS.Models
             {
                 Width = 300,
                 WordWrap = true,
-
                 FontFamily = new FontFamily("宋体")
             };
             tEdit.Options.WordWrapIndentation = 4;
             tEdit.Options.InheritWordWrapIndentation = false;
-            string lines = GetStrOnLines(node.Text);
-            tEdit.Text = lines;
+            tEdit.Text = GetStrOnLines(node.Text);
             //ToDo：根据匹配的lbItem.Matches对象，对this.Syntax进行修改
             tEdit.SyntaxHighlighting = this.Syntax;
             return new ToolTip() { Content = tEdit };
@@ -445,6 +443,10 @@ namespace RootNS.Models
                     {
                         if (line.Contains(mystr))
                         {
+                            if (counter > 0)
+                            {
+                                lines += "\n-------------------------------\n";
+                            }
                             lines += line + "\n";
                             counter++;
                             break;
@@ -470,6 +472,10 @@ namespace RootNS.Models
                     }
                     if (isAll == true)
                     {
+                        if (counter > 0)
+                        {
+                            lines += "\n-------------------------------\n";
+                        }
                         lines += line + "\n";
                         counter++;
                     }
@@ -486,6 +492,10 @@ namespace RootNS.Models
                     {
                         if (line.Contains(mystr))
                         {
+                            if (counter > 0)
+                            {
+                                lines += "-------------------------------\n";
+                            }
                             lines += line + "\n";
                             counter++;
                             break;

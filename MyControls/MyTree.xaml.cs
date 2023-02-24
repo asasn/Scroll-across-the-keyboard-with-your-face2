@@ -133,7 +133,7 @@ namespace RootNS.MyControls
             {
                 return;
             }
-            Node dstNode = selectedNode.Owner.TreeRoot.ChildNodes[1];
+            Node dstNode = selectedNode.Owner.TabRoot.ChildNodes[1];
             if (dstNode.ChildNodes.Count > 0 && dstNode.ChildNodes.Last<Node>().IsDir == true)
             {
                 selectedNode.MoveTo(dstNode.ChildNodes.Last<Node>());
@@ -151,7 +151,7 @@ namespace RootNS.MyControls
             {
                 return;
             }
-            selectedNode.MoveTo(selectedNode.Owner.TreeRoot.ChildNodes[2]);
+            selectedNode.MoveTo(selectedNode.Owner.TabRoot.ChildNodes[2]);
         }
         private void Command_Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -370,7 +370,7 @@ namespace RootNS.MyControls
             (this.DataContext as Node).Owner.SelectedNode = TreeNodes.SelectedItem as Node;
             Node selectedNode = TreeNodes.SelectedItem as Node;
 
-            if ((TreeNodes.DataContext as Node) == selectedNode.Owner.TreeRoot.ChildNodes[2])
+            if ((TreeNodes.DataContext as Node) == selectedNode.Owner.TabRoot.ChildNodes[2])
             {
                 if (selectedNode.IsDir == true)
                 {
@@ -483,7 +483,7 @@ namespace RootNS.MyControls
             {
                 BtnSend.IsEnabled = false;
             }
-            if (this.Tag != null)
+            if (this.Tag != null && !this.Tag.Equals("Chapters"))
             {
                 BtnKeep.Visibility = Visibility.Hidden;
                 BtnSend.Visibility = Visibility.Hidden;

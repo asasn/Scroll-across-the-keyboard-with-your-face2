@@ -33,32 +33,32 @@ namespace RootNS.Models
 
 
 
-        //private Guid _treeRootGuid;
+        //private Guid _tabRootGuid;
         ///// <summary>
         ///// 根节点Guidid
         ///// </summary>
-        //public Guid TreeRootGuid
+        //public Guid TabRootGuid
         //{
-        //    get { return _treeRootGuid; }
+        //    get { return _tabRootGuid; }
         //    set
         //    {
-        //        _treeRootGuid = value;
-        //        RaisePropertyChanged(nameof(TreeRootGuid));
+        //        _tabRootGuid = value;
+        //        RaisePropertyChanged(nameof(TabRootGuid));
         //    }
         //}
 
 
-        private Node _treeRoot = new Node() { Guid = new Guid(), TypeName="根节点"};
+        private Node _tabRoot = new Node() { Guid = new Guid(), TypeName="根节点"};
         /// <summary>
         /// 书籍目录树的最顶部根节点
         /// </summary>
-        public Node TreeRoot
+        public Node TabRoot
         {
-            get { return _treeRoot; }
+            get { return _tabRoot; }
             set
             {
-                _treeRoot = value;
-                RaisePropertyChanged(nameof(TreeRoot));
+                _tabRoot = value;
+                RaisePropertyChanged(nameof(TabRoot));
             }
         }
 

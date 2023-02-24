@@ -83,9 +83,18 @@ namespace RootNS
         {
             Gval.Views.UcSearcher = sender as UcSearcher;
         }
-        private void MyTree_Loaded(object sender, RoutedEventArgs e)
+        private void ChapterTree_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void NotesTree_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.UcNotesTree = sender as MyTree;
+        }
+
+        private void MaterialsTree_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.UcMaterials = sender as MyTree;
         }
 
         /// <summary>

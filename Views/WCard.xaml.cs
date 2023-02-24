@@ -35,33 +35,19 @@ namespace RootNS.Views
             {
                 (this.DataContext as Node).Attachment = string.Empty;
             }
-            //Hack：简化卡片对象的绑定方式，使用(this.DataContext as Node).Card
-            ThisCard = JsonHelper.Jto<RootNS.Models.Card>((this.DataContext as Node).Attachment.ToString());
-            if (ThisCard == null)
-            {
-                ThisCard = new Card();
-            }
-            HiddenNullLines();
+            (this.DataContext as Node).Card.HiddenNullLines();
             TbTitle.Text = (this.DataContext as Node).Title;
             TbSummary.Text = (this.DataContext as Node).Summary;
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
+            TbTag.Text = (this.DataContext as Node).Parent.Title;
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
-            (this.DataContext as Node).HasChange = false;
+            (this.DataContext as Node).Card.HasChange = false;
+            //获取鼠标位置以设置窗口
+            Point point = Mouse.GetPosition(Gval.Views.MainWindow);
+            this.Left = point.X - this.ActualWidth * 0.5;
+            this.Top = point.Y - 26;
         }
-
-        public Card ThisCard
-        {
-            get { return (Card)GetValue(ThisCardProperty); }
-            set { SetValue(ThisCardProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ThisCard.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ThisCardProperty =
-            DependencyProperty.Register("ThisCard", typeof(Card), typeof(WCard), new PropertyMetadata(null));
-
-
-
 
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -74,11 +60,12 @@ namespace RootNS.Views
         private void UpdataCard()
         {
             //ToDo：这里可以进行一些sql语句的优化
+            (this.DataContext as Node).Card.Tag = TbTag.Text;
             (this.DataContext as Node).Title = TbTitle.Text;
             (this.DataContext as Node).PointX = Convert.ToInt64(TbBornYear.Text);
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).Summary = TbSummary.Text;
-            (this.DataContext as Node).Attachment = JsonHelper.Otj<RootNS.Models.Card>(ThisCard);
+            (this.DataContext as Node).Attachment = JsonHelper.Otj<RootNS.Models.Card>((this.DataContext as Node).Card);
             (this.DataContext as Node).UpdateNodeProperty("内容", "Title", (this.DataContext as Node).Title);
             (this.DataContext as Node).UpdateNodeProperty("内容", "PointX", (this.DataContext as Node).PointX.ToString());
             (this.DataContext as Node).UpdateNodeProperty("内容", "PointY", (this.DataContext as Node).PointY.ToString());
@@ -119,8 +106,8 @@ namespace RootNS.Views
             {
                 return;
             }
-            ClaerNullLines();
-            (this.DataContext as Node).HasChange = false;
+            (this.DataContext as Node).Card.ClaerNullTips();
+            (this.DataContext as Node).Card.HasChange = false;
             UpdataCard();
             UpDataHilgliting();
         }
@@ -146,76 +133,13 @@ namespace RootNS.Views
             this.Close();
         }
 
-        /// <summary>
-        /// 清除空行
-        /// </summary>
-        private void ClaerNullLines()
-        {
-            foreach (Card.Line line in ThisCard.Lines)
-            {
-                //当移除完元素之后，数组大小发生了变更，会抛出异常，所以在这里使用逆序遍历来进行
-                for (int i = line.Tips.Count - 1; i >= 0; i--)
-                {
-                    if (string.IsNullOrEmpty(line.Tips[i].Content))
-                    {
-                        line.Tips.Remove(line.Tips[i]);
-                    }
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 隐藏一部分行
-        /// </summary>
-        private void HiddenNullLines()
-        {
-            foreach (Card.Line line in ThisCard.Lines)
-            {
-                bool allNull = true;//假设全部为空，只要有一个反例就可以跳出循环
-                foreach (Card.Line.Tip tip in line.Tips)
-                {
-                    if (string.IsNullOrEmpty(tip.Content) == false)
-                    {
-                        allNull = false;
-                        break;
-                    }
-                }
-                if (allNull)
-                {
-                    line.Visibility = false;
-                }
-                else
-                {
-                    line.Visibility = true;
-                }
-            }
-            //if (BtnSeeMore.Visibility == Visibility.Visible)
-            //{
-            //    //隐藏模式时，进行一些处理
-            //    bool allLineNull = true;
-            //    foreach (Card.Line line in ThisCard.Lines)
-            //    {
-            //        if (line.Visibility)
-            //        {
-            //            allLineNull = false;
-            //            break;
-            //        }
-            //        if (allLineNull)
-            //        {
-            //            GMainLines.Visibility = Visibility.Collapsed;
-            //        }
-            //    }
-            //}
-        }
-
 
         private void BtnSeeLess_Click(object sender, RoutedEventArgs e)
         {
             //从全模式转变为隐藏模式
             BtnSeeLess.Visibility = Visibility.Hidden;
             BtnSeeMore.Visibility = Visibility.Visible;
-            HiddenNullLines();
+            (this.DataContext as Node).Card.HiddenNullLines();
         }
 
         private void BtnSeeMore_Click(object sender, RoutedEventArgs e)
@@ -223,7 +147,7 @@ namespace RootNS.Views
             //从隐藏模式转变为全模式
             BtnSeeLess.Visibility = Visibility.Visible;
             BtnSeeMore.Visibility = Visibility.Hidden;
-            foreach (Card.Line line in ThisCard.Lines)
+            foreach (Card.Line line in (this.DataContext as Node).Card.Lines)
             {
                 line.Visibility = true;
             }
@@ -231,11 +155,11 @@ namespace RootNS.Views
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as Node).HasChange = true;
+            (this.DataContext as Node).Card.HasChange = true;
         }
         private void TbBornYear_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as Node).HasChange = true;
+            (this.DataContext as Node).Card.HasChange = true;
             TbBornYear.Text = InputCheck(TbBornYear.Text);
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
         }

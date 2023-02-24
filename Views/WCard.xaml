@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:RootNS.Views" xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:models="clr-namespace:RootNS.Models" d:DataContext="{d:DesignInstance Type=models:Card}"
+      xmlns:local="clr-namespace:RootNS.Views" xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:models="clr-namespace:RootNS.Models" d:DataContext="{d:DesignInstance Type=models:Node}"
         mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
       UseLayoutRounding="True" AllowsTransparency="True" Effect="{StaticResource EffectShadow3}" 
       d:DesignWidth="400" MinHeight="200" MinWidth="300" MaxWidth="400"
@@ -34,7 +34,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="名称" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
                     <TextBox x:Name="TbTitle" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
-                    <Button Grid.Row="1" Grid.Column="1" IsEnabled="{Binding HasChange, Mode=TwoWay}" Padding="0" x:Name="BtnSave" ToolTip="保存信息卡内容" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSave_Click" Width="26" Height="26" />
+                    <Button Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Card.HasChange, Mode=TwoWay}" Padding="0" x:Name="BtnSave" ToolTip="保存信息卡内容" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSave_Click" Width="26" Height="26" />
                     <Button Visibility="Hidden" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeLess" ToolTip="点击隐藏部分（当前为全模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xe932;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeLess_Click" Width="26" Height="26"/>
                     <Button Visibility="Visible" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeMore" ToolTip="点击查看更多（当前为简略模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xe934;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeMore_Click" Width="26" Height="26"/>
                 </Grid>
@@ -48,9 +48,11 @@
                     <TextBox x:Name="TbBornYear" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TbBornYear_TextChanged" Margin="30,0,5,0"/>
                     <Label Content="实年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="1" IsEnabled="False"/>
                     <TextBox x:Name="TbAge" Background="Transparent" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" Grid.Column="1" IsEnabled="False"/>
+                    <Label Content="类型" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="2"/>
+                    <TextBox x:Name="TbTag" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" Grid.Column="2"/>
                 </Grid>
                 <ScrollViewer Grid.Row="3" x:Name="GMainLines" >
-                    <ItemsControl x:Name="itemsControl" VirtualizingPanel.IsVirtualizing="True" ItemsSource="{Binding ThisCard.Lines, ElementName=ThisWindow}">
+                    <ItemsControl x:Name="itemsControl" VirtualizingPanel.IsVirtualizing="True" ItemsSource="{Binding Card.Lines}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Visibility="{Binding Visibility, Converter={StaticResource BoolConvertToVisibility}}">

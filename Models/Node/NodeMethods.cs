@@ -39,9 +39,15 @@ namespace RootNS.Models
                 stuff.Index = this.ChildNodes.IndexOf(stuff);
                 this.ChildsCount += 1;
                 this.Count += 1;
-                if (this != this.Owner.TreeRoot)//根节点之下的第一层tabRoot才是需要的目录树，所以排除总树根
+                if (this != this.Owner.TabRoot)//根节点之下的第一层tabRoot才是需要的目录树，所以排除总树根
                 {
                     stuff.TypeName = this.TypeName;
+                }
+                //注意，这里要防止初始化加载的时候触发事件，需要加入Gval.FlagLoadingCompleted标记或者TabRoot.ChildNodes.Count的判断
+                if (stuff.Owner.TabRoot.ChildNodes.Count > 7 && 
+                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[7].TypeName)
+                {
+                    stuff.GenerateNewCard();
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -49,9 +55,9 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
-                if (this.TypeName == this.Owner.TreeRoot.ChildNodes[7].TypeName)
+                if (stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[7].TypeName)
                 {
-                    this.Owner.UpdataSyntax();
+                    stuff.Owner.UpdataSyntax();
                 }
             }
         }
@@ -63,14 +69,6 @@ namespace RootNS.Models
         /// <exception cref="NotImplementedException"></exception>
         private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Attachment) &&
-                this.Attachment != null &&
-                string.IsNullOrEmpty(this.Attachment.ToString()) == false)
-            {
-                this.Card = JsonHelper.Jto<RootNS.Models.Card>(this.Attachment.ToString());
-                this.ToolTip = new MyControls.CardShower(this);
-            }
-
             if (Gval.FlagLoadingCompleted == false) //重要：忽略载入过程当中的变化
             {
                 return;
@@ -149,6 +147,41 @@ namespace RootNS.Models
         {
 
         }
+
+        /// <summary>
+        /// 生成一张附属卡片（供信息卡管理页面使用）
+        /// </summary>
+        public void GenerateNewCard()
+        {
+            if (this.Attachment == null || string.IsNullOrEmpty(this.Attachment.ToString()))
+            {
+                this.Card = new Card();
+                this.Attachment = JsonHelper.Otj<RootNS.Models.Card>(this.Card);
+            }
+            {
+                this.Card = JsonHelper.Jto<RootNS.Models.Card>(this.Attachment.ToString());
+            }
+            this.ToolTip = new MyControls.CardShower(this);
+        }
+
+        /// <summary>
+        /// 在目录树上的根节点（页面上显示的）
+        /// </summary>
+        public Node TreeRoot
+        {
+            get { return GetTreeRoot(); }
+        }
+
+        private Node GetTreeRoot()
+        {
+            Node root = this;
+            while (this.Owner.TabRoot.ChildNodes.Contains(root.Parent) == false)
+            {
+                root = root.Parent;
+            };
+            return root;
+        }
+
 
         /// <summary>
         /// 新建节点至表中（插入或忽略）
@@ -298,7 +331,7 @@ namespace RootNS.Models
                 CommitReName();
                 HasNameChange = false;
                 //提交之后，节点的标题改变，这个时候再来应用刷新高亮的方法
-                if (this.TypeName == this.Owner.TreeRoot.ChildNodes[7].TypeName)
+                if (this.TypeName == this.Owner.TabRoot.ChildNodes[7].TypeName)
                 {
                     this.Owner.UpdataSyntax();
                 }

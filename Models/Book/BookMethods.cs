@@ -15,15 +15,15 @@ namespace RootNS.Models
     {
         public Book()
         {
-            TreeRoot.Owner = this;
+            TabRoot.Owner = this;
             this.PropertyChanged += Book_PropertyChanged;
-            this.TreeRoot.ChildNodes.CollectionChanged += ChildNodes_CollectionChanged;
+            this.TabRoot.ChildNodes.CollectionChanged += ChildNodes_CollectionChanged;
             for (int i = 0; i < (int)TypeNameEnum.Count; i++)
             {
                 var enumName = Enum.GetName(typeof(TypeNameEnum), i);
                 string guid = String.Format("{0}-0000-0000-0000-000000000000", i.ToString().PadLeft(8, '0'));
                 Node node = new Node() { IsDir = true, Owner = this, TypeName = enumName, Guid = new Guid(guid) };
-                TreeRoot.ChildNodes.Add(node);
+                TabRoot.ChildNodes.Add(node);
             }
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
         }
@@ -52,18 +52,18 @@ namespace RootNS.Models
 
         private void ChildNodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            //this.CGuidList = TreeRoot.CGuidList;
+            //this.CGuidList = TabRoot.CGuidList;
         }
 
         private void Book_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //if (e.PropertyName == nameof(Guid))
             //{
-            //    TreeRoot.OwnerGuid = this.Guid;
+            //    TabRoot.OwnerGuid = this.Guid;
             //}
-            //if (e.PropertyName == nameof(TreeRoot))
+            //if (e.PropertyName == nameof(TabRoot))
             //{
-            //    TreeRoot.Guid = TreeRootGuid;
+            //    TabRoot.Guid = TabRootGuid;
             //}
         }
 
@@ -84,18 +84,18 @@ namespace RootNS.Models
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();
-            foreach (Node node in this.TreeRoot.ChildNodes[7].GetHeirsList())
+            foreach (Node node in this.TabRoot.ChildNodes[7].GetHeirsList())
             {
-                if (node.Attachment == null ||
+                if (node.Attachment == null || string.IsNullOrEmpty(node.Attachment.ToString()) ||
                     node.Card == null)
                 {
                     continue;
                 }
-                HighlightingRule rule = NewRule(node.Title.Trim(), "角色");
+                HighlightingRule rule = NewRule(node.Title.Trim(), node.Card.Tag);
                 this.Syntax.MainRuleSet.Rules.Add(rule);
                 foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
                 {
-                    HighlightingRule ruleTip = NewRule(tip.Content.Trim(), "角色");
+                    HighlightingRule ruleTip = NewRule(tip.Content.Trim(), node.Card.Tag);
                     this.Syntax.MainRuleSet.Rules.Add(ruleTip);
                 }
             }
@@ -105,14 +105,14 @@ namespace RootNS.Models
 
 
         /// <summary>
-        /// 从TreeRoot开始，载入整本书的所有节点内容
+        /// 从TabRoot开始，载入整本书的所有节点内容
         /// </summary>
         public void Load()
         {
             TableHelper.TryToBuildDatabaseForBook(this);
             SqliteHelper.PoolOperate.Add(this);
             Gval.FlagLoadingCompleted = false;
-            foreach (var item in this.TreeRoot.ChildNodes)
+            foreach (var item in this.TabRoot.ChildNodes)
             {
                 item.ChildNodes.Clear();//载入之前先清空
                 RecursiveReLoad(item);
@@ -145,10 +145,16 @@ namespace RootNS.Models
                     IsDel = (bool)reader["IsDel"],
                 };
                 pNode.ChildNodes.Add(node);
+                if (node.TypeName == node.Owner.TabRoot.ChildNodes[7].TypeName)
+                {
+                    node.GenerateNewCard();
+                }
                 RecursiveReLoad(node);
             }
             reader.Close();
         }
+
+
 
     }
 }

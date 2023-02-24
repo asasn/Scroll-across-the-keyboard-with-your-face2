@@ -7,7 +7,7 @@
       d:DataContext="{d:DesignInstance Type=models:Node}"
       mc:Ignorable="d" Background="Transparent"
       UseLayoutRounding="True"
-      d:DesignWidth="300" Width="Auto" MinWidth="300" MinHeight="120" MaxWidth="400">
+      d:DesignWidth="200" MinWidth="200" MaxWidth="400" MinHeight="120" >
     <Grid x:Name="GCard">
         <Border CornerRadius="10" Background="Transparent" BorderBrush="#E0E0E0">
             <Grid>
@@ -38,6 +38,8 @@
                     <TextBox x:Name="TbBornYear" Background="Transparent" Text="{Binding PointX}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="30,0,5,0"/>
                     <Label Content="实年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="1" IsEnabled="False"/>
                     <TextBox x:Name="TbAge" Background="Transparent" Text="{Binding PointY}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="30,0,5,0" Grid.Column="1" IsEnabled="False"/>
+                    <Label Content="类型" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="2"/>
+                    <TextBox x:Name="TbTag" Background="Transparent" Text="{Binding Card.Tag, Mode=OneWay}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="30,0,5,0" Grid.Column="2"/>
                 </Grid>
                 <ScrollViewer Grid.Row="3" x:Name="GMainLines" >
                     <ItemsControl VirtualizingPanel.IsVirtualizing="True" DataContext="{Binding Card}" ItemsSource="{Binding Lines}">

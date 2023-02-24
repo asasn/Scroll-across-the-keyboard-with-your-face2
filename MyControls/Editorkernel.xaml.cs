@@ -118,7 +118,6 @@ namespace RootNS.MyControls
                 Console.WriteLine(string.Format("本次保存成功！"));
                 canSaveFlag = false;
                 BtnSaveDoc.IsEnabled = false;
-                (this.DataContext as Node).HasChange = false;
             }
             catch (Exception ex)
             {
@@ -313,7 +312,6 @@ namespace RootNS.MyControls
         private void ThisTextEditor_TextChanged(object sender, EventArgs e)
         {
             BtnSaveDoc.IsEnabled = true;
-            (this.DataContext as Node).HasChange = true;
             //文字变更之后，刷新展示区
             RefreshShowContent(textCount);
         }
@@ -373,7 +371,7 @@ namespace RootNS.MyControls
                         {
                             if (match.Index <= lineOffset && lineOffset - match.Index <= match.Value.Length)
                             {
-                                foreach (Node node in (this.DataContext as Node).Owner.TreeRoot.ChildNodes[7].GetHeirsList())
+                                foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[7].GetHeirsList())
                                 {
                                     if (node.Attachment == null || node.Card == null)
                                     {

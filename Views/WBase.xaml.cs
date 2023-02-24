@@ -31,6 +31,7 @@ namespace RootNS.Views
             {
                 return;
             }
+            LightEditor.ThisTextEditor.TextChanged += ThisTextEditor_TextChanged;
             LightEditor.Column1.Width = new GridLength(0);
             LightEditor.Row1.Height = new GridLength(0);
             LightEditor.ThisTextEditor.ShowLineNumbers = false;
@@ -45,10 +46,15 @@ namespace RootNS.Views
             {
                 LightEditor.ThisTextEditor.Text = (this.DataContext as Node).Text;
             }
-            (this.DataContext as Node).HasChange = false;
             this.Focus();
             LightEditor.ThisTextEditor.TextArea.Focus();
+            BtnSave.IsEnabled = false;
+            //获取鼠标位置以设置窗口
+            Point point = Mouse.GetPosition(Gval.Views.MainWindow);
+            this.Left = point.X - this.ActualWidth * 0.618;
+            this.Top = point.Y - 26;
         }
+
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -58,7 +64,11 @@ namespace RootNS.Views
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            (this.DataContext as Node).HasChange = true;
+            BtnSave.IsEnabled = true;
+        }
+        private void ThisTextEditor_TextChanged(object sender, EventArgs e)
+        {
+            BtnSave.IsEnabled = true;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -66,7 +76,7 @@ namespace RootNS.Views
             (this.DataContext as Node).Title = TbTitle.Text;
             (this.DataContext as Node).Summary = TbSummary.Text;
             LightEditor.BtnSaveText_Click(null, null);
-            (this.DataContext as Node).HasChange = false;
+            BtnSave.IsEnabled = false;
         }
 
 

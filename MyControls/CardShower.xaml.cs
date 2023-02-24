@@ -25,6 +25,7 @@ namespace RootNS.MyControls
         {
             InitializeComponent();
             this.DataContext = node;
+            node.Card.HiddenNullLines();
         }
     }
 }

@@ -43,19 +43,7 @@ namespace RootNS.Models
             }
         }
 
-        private bool _hasChange;
-        /// <summary>
-        /// 运行时变量：供信息卡使用
-        /// </summary>
-        public bool HasChange
-        {
-            get { return _hasChange; }
-            set
-            {
-                _hasChange = value;
-                RaisePropertyChanged(nameof(HasChange));
-            }
-        }
+
 
         private Visibility _visibility;
         /// <summary>

@@ -40,6 +40,22 @@ namespace RootNS.Models
 
 
         #region 番茄时间
+
+        private int _ringCount;
+        /// <summary>
+        /// 成功响铃次数
+        /// </summary>
+        public int RingCount
+        {
+            get { return _ringCount; }
+            set
+            {
+                _ringCount = value;
+                RaisePropertyChanged(nameof(RingCount));
+            }
+        }
+
+
         private string _showTimeText;
 
         public string ShowTimeText
@@ -102,7 +118,9 @@ namespace RootNS.Models
         }
 
         private int _progressValue = 0;
-
+        /// <summary>
+        /// 进度条
+        /// </summary>
         public int ProgressValue
         {
             get { return _progressValue; }
@@ -166,6 +184,7 @@ namespace RootNS.Models
 
             if ((int)StopWatch.Elapsed.TotalMinutes >= TimeSetTotalMinutes)
             {
+                RingCount += 1;
                 MeRing.Play();
                 Start();
             }

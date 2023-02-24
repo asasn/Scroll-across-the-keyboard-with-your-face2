@@ -74,60 +74,60 @@ namespace RootNS
 
         private void RbHistory_Checked(object sender, RoutedEventArgs e)
         {
-            Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[3];
-            Notes.BtnFolder.IsEnabled = true;
+            NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[3];
+            NotesTree.BtnFolder.IsEnabled = true;
         }
 
         private void RbStory_Checked(object sender, RoutedEventArgs e)
         {
-            Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[4];
-            Notes.BtnFolder.IsEnabled = true;
+            NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[4];
+            NotesTree.BtnFolder.IsEnabled = true;
         }
 
         private void RbSnippetsInBook_Checked(object sender, RoutedEventArgs e)
         {
-            Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[5];
-            Notes.BtnFolder.IsEnabled = true;
+            NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[5];
+            NotesTree.BtnFolder.IsEnabled = true;
         }
 
         private void RbPlotDesignInBook_Checked(object sender, RoutedEventArgs e)
         {
-            Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[6];
-            Notes.BtnFolder.IsEnabled = true;
+            NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[6];
+            NotesTree.BtnFolder.IsEnabled = true;
         }
 
         private void RbCardsInBook_Checked(object sender, RoutedEventArgs e)
         {
-            Notes.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[7];
+            NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[7];
         }
 
 
 
         private void RbMaterial_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[8];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[8];
         }
         private void RbTopic_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[9];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[9];
         }
         private void RbSnippets_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[10];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[10];
         }
 
         private void RbPlotDesign_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[11];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[11];
         }
         private void RbCards_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[12];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[12];
         }
 
         private void RbInspiration_Checked(object sender, RoutedEventArgs e)
         {
-            Materials.DataContext = Gval.CurrentBook.TreeRoot.ChildNodes[13];
+            MaterialsTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[13];
         }
 
 
