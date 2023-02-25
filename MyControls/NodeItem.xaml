@@ -29,7 +29,8 @@
                 <MultiBinding Converter="{StaticResource Bool2IconString}">
                     <Binding Path="IsDir" />
                     <Binding Path="IsExpanded" />
-                    <Binding Path="{}"/>
+                    <Binding Path="Count"/>
+                    <Binding Path="TypeName"/>
                 </MultiBinding>
             </Label.Content>
         </Label>
@@ -53,7 +54,7 @@
                 </MultiBinding>
             </ContentControl.Visibility>-->
         </CheckBox>
-        <Label x:Name="Icon2" Grid.Column="4" Content="&#xe96b;" Padding="0" FontSize="16" BorderThickness="0" FontFamily="../Resources/icons/#icomoon" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" >
+        <!--<Label x:Name="Icon2" Grid.Column="4" Content="&#xe96b;" Padding="0" FontSize="16" BorderThickness="0" FontFamily="../Resources/icons/#icomoon" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" >
             <Label.Visibility>
                 <MultiBinding Converter="{StaticResource Count2CheckBoxVisibility}">
                     <Binding Path="Count" />
@@ -61,6 +62,6 @@
                     <Binding Path="TypeName"/>
                 </MultiBinding>
             </Label.Visibility>
-        </Label>
+        </Label>-->
     </Grid>
 </UserControl>

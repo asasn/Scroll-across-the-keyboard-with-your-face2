@@ -98,7 +98,7 @@ namespace RootNS.Models
 
 
         /// <summary>
-        /// 从TabRoot开始，载入整本书的所有节点内容
+        /// 从TabRoot开始，递归载入整本书的所有节点内容
         /// </summary>
         public void Load()
         {

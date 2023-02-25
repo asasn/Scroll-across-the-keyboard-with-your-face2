@@ -151,8 +151,13 @@ namespace RootNS.MyControls
             {
                 return;
             }
-            selectedNode.MoveTo(selectedNode.Owner.TabRoot.ChildNodes[2]);
+            Node pNode = selectedNode.Owner.TabRoot.ChildNodes[2];
+            Node finalNode = pNode.GetFinalDirNode();
+            selectedNode.MoveTo(finalNode);
         }
+
+
+
         private void Command_Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Node selectedNode = TreeNodes.SelectedItem as Node;

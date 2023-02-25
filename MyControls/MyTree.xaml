@@ -99,7 +99,7 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding ChildNodes}">
-                    <Border Margin="0" Padding="0" Height="26">
+                    <Border Margin="0" Padding="0">
                         <ContentControl Content="{Binding Converter={StaticResource NodeConvertToNodeTemplate}}" DataContext="{Binding}"/>
                     </Border>
                 </HierarchicalDataTemplate>

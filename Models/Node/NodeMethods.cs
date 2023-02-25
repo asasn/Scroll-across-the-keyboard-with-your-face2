@@ -44,7 +44,7 @@ namespace RootNS.Models
                     stuff.TypeName = this.TypeName;
                 }
                 //注意，这里要防止初始化加载的时候触发事件，需要加入Gval.FlagLoadingCompleted标记或者TabRoot.ChildNodes.Count的判断
-                if (stuff.Owner.TabRoot.ChildNodes.Count > 5 && 
+                if (stuff.Owner.TabRoot.ChildNodes.Count > 5 &&
                     stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
                 {
                     stuff.GenerateNewCard();
@@ -300,8 +300,8 @@ namespace RootNS.Models
         public ArrayList GetHeirsList()
         {
             ArrayList arrayList = new ArrayList();
-            RecursiveTraversalChilds(this, arrayList);
             arrayList.Add(this);
+            RecursiveTraversalChilds(this, arrayList);
             return arrayList;
         }
 
@@ -401,7 +401,6 @@ namespace RootNS.Models
         }
 
 
-
         /// <summary>
         /// 更新一条节点记录
         /// </summary>
@@ -413,6 +412,29 @@ namespace RootNS.Models
             string sql = string.Format("UPDATE {0} SET [{1}]='{2}' WHERE Guid='{3}';", tableName, fieldName, value.Replace("'", "''"), this.Guid);
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sql);
         }
+
+
+        /// <summary>
+        /// 获取最后一个目录型的节点
+        /// </summary>
+        /// <param name="pNode"></param>
+        /// <returns></returns>
+        public Node GetFinalDirNode()
+        {
+            ArrayList aList = this.GetHeirsList();
+            //倒转，从最后开始遍历
+            aList.Reverse();
+            foreach (Node node in aList)
+            {
+                if (node.IsDir == true)
+                {
+                    return node;
+                }
+            }
+            return null;
+        }
+
+
 
         /// <summary>
         /// 从文本文档当中导入至章节

@@ -8,43 +8,43 @@
       d:DataContext="{d:DesignInstance Type={x:Type models:Node}}"
         mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
       UseLayoutRounding="True" AllowsTransparency="True" 
-      d:DesignWidth="485" MinWidth="485" MinHeight="300" MaxWidth="600"
+      d:DesignWidth="485" MinWidth="485" MinHeight="300" MaxWidth="600" Width="485" Height="300"
       MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
     <Border Effect="{StaticResource EffectShadow3}" Margin="5" CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
-            <Grid Margin="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition x:Name="RHeader" Height="26"/>
-                    <RowDefinition MinHeight="26" Height="Auto"/>
-                    <RowDefinition MinHeight="300" Height="100*"/>
-                    <RowDefinition MinHeight="26" Height="Auto"/>
-                    <RowDefinition x:Name="RBottom" Height="40"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="26"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xEA10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="26"/>
-                        <ColumnDefinition Width="26"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="标题" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
-                    <TextBox x:Name="TbTitle" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="NoWrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
-                    <Button Grid.Row="1" Grid.Column="1" Padding="0" x:Name="BtnSave" ToolTip="保存信息卡内容" FontFamily="../Resources/icons/#icomoon" Content="&#xE9C9;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSave_Click" Width="26" Height="26" />
-                    <Button Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeLess" ToolTip="点击隐藏部分（当前为全模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xE932;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeLess_Click" Width="26" Height="26"/>
-                    <Button Visibility="Visible" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeMore" ToolTip="点击查看更多（当前为简略模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xE934;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeMore_Click" Width="26" Height="26"/>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <MyControls:Editorkernel x:Name="LightEditor" Margin="2"/>
-                </Grid>
-                <Grid Grid.Row="3" x:Name="GSummary" Visibility="Collapsed">
-                    <Label Content="备注" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
-                    <TextBox x:Name="TbSummary" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="NoWrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
-                </Grid>
+        <Grid Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="RHeader" Height="26"/>
+                <RowDefinition MinHeight="26" Height="Auto"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition MinHeight="26" Height="Auto"/>
+                <RowDefinition x:Name="RBottom" Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="26"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xEA10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
             </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="26"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="标题" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                <TextBox x:Name="TbTitle" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" TextWrapping="Wrap"/>
+                <Button Grid.Row="1" Grid.Column="1" Padding="0" x:Name="BtnSave" ToolTip="保存信息卡内容" FontFamily="../Resources/icons/#icomoon" Content="&#xE9C9;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSave_Click" Width="26" Height="26" />
+                <Button Visibility="Visible" Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeLess" ToolTip="点击隐藏部分（当前为全模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xE932;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeLess_Click" Width="26" Height="26"/>
+                <Button Visibility="Collapsed"  Grid.Row="1" Grid.Column="2" Padding="0" x:Name="BtnSeeMore" ToolTip="点击查看更多（当前为简略模式）" FontFamily="../Resources/icons/#icomoon" Content="&#xE934;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  BorderThickness="0" Click="BtnSeeMore_Click" Width="26" Height="26"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <MyControls:Editorkernel x:Name="LightEditor" Margin="2"/>
+            </Grid>
+            <Grid Grid.Row="3" x:Name="GSummary" >
+                <Label Content="备注" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
+                <TextBox x:Name="TbSummary" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0"/>
+            </Grid>
+        </Grid>
     </Border>
 </Window>

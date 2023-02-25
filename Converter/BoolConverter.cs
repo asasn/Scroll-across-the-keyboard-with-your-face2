@@ -23,6 +23,39 @@ namespace RootNS.Converter
             }
             try
             {
+                if (values[3].ToString() == Book.TypeNameEnum.事件记录.ToString()||
+                    values[3].ToString() == Book.TypeNameEnum.全局情节设计.ToString())
+                {
+                    if ((bool)values[0] == true)
+                    {
+                        return "\ue96c";
+                    }
+                    else
+                    {
+                        if (System.Convert.ToBoolean(values[2]) == true)
+                        {
+                            return "\ue96b";
+                        }
+                        else
+                        {
+                            return "\ue909";
+                        }
+                    }
+
+                }
+                if (values[3].ToString() == Book.TypeNameEnum.信息卡.ToString() ||
+                    values[3].ToString() == Book.TypeNameEnum.全局信息卡.ToString())
+                {
+                    if ((bool)values[0] == true)
+                    {
+                        return "\ue96c";
+                    }
+                    else
+                    {
+                       return "\ue97a";
+                    }
+
+                }
                 if ((bool)values[0] == true)
                 {
                     if ((bool)values[1] == true)
