@@ -44,8 +44,8 @@ namespace RootNS.Models
                     stuff.TypeName = this.TypeName;
                 }
                 //注意，这里要防止初始化加载的时候触发事件，需要加入Gval.FlagLoadingCompleted标记或者TabRoot.ChildNodes.Count的判断
-                if (stuff.Owner.TabRoot.ChildNodes.Count > 7 && 
-                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[7].TypeName)
+                if (stuff.Owner.TabRoot.ChildNodes.Count > 5 && 
+                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
                 {
                     stuff.GenerateNewCard();
                 }
@@ -55,7 +55,7 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
-                if (stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[7].TypeName)
+                if (stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
                 {
                     stuff.Owner.UpdataSyntax();
                 }
@@ -331,7 +331,7 @@ namespace RootNS.Models
                 CommitReName();
                 HasNameChange = false;
                 //提交之后，节点的标题改变，这个时候再来应用刷新高亮的方法
-                if (this.TypeName == this.Owner.TabRoot.ChildNodes[7].TypeName)
+                if (this.TypeName == this.Owner.TabRoot.ChildNodes[5].TypeName)
                 {
                     this.Owner.UpdataSyntax();
                 }

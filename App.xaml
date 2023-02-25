@@ -24,6 +24,7 @@
             <converter:TypeName2ShowText x:Key="TypeName2ShowText"/>
             <converter:TypeName2CountVisibility x:Key="TypeName2CountVisibility"/>
             <converter:TypeName2CheckBoxVisibility x:Key="TypeName2CheckBoxVisibility"/>
+            <converter:Count2CheckBoxVisibility x:Key="Count2CheckBoxVisibility"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

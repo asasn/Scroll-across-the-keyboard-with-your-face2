@@ -33,6 +33,10 @@ namespace RootNS.MyControls
         public Editorkernel()
         {
             InitializeComponent();
+            if (FunctionsPack.IsInDesignMode(this))
+            {
+                return;
+            }
             ThisTextEditor.TextArea.SelectionChanged += TextArea_SelectionChanged;
             ThisTextEditor.Document.Changing += Document_Changing;
 
@@ -50,6 +54,10 @@ namespace RootNS.MyControls
 
         private void ThisTextEditor_Loaded(object sender, RoutedEventArgs e)
         {
+            if (FunctionsPack.IsInDesignMode(this))
+            {
+                return;
+            }
             Gval.Views.CurrentEditorkernel = this;
             ThisTextEditor.TextArea.Focus();
             //因为在TabControl中，每次切换的时候都会触发这个事件，故而一些初始化步骤放在父容器，不要放在这里
@@ -371,7 +379,7 @@ namespace RootNS.MyControls
                         {
                             if (match.Index <= lineOffset && lineOffset - match.Index <= match.Value.Length)
                             {
-                                foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[7].GetHeirsList())
+                                foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[5].GetHeirsList())
                                 {
                                     if (node.Attachment == null || node.Card == null)
                                     {

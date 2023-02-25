@@ -22,7 +22,7 @@ namespace RootNS.Models
             {
                 var enumName = Enum.GetName(typeof(TypeNameEnum), i);
                 string guid = String.Format("{0}-0000-0000-0000-000000000000", i.ToString().PadLeft(8, '0'));
-                Node node = new Node() { IsDir = true, Owner = this, TypeName = enumName, Guid = new Guid(guid) };
+                Node node = new Node() { IsDir = true, TypeName = enumName, Guid = new Guid(guid) };
                 TabRoot.ChildNodes.Add(node);
             }
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
@@ -57,14 +57,7 @@ namespace RootNS.Models
 
         private void Book_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName == nameof(Guid))
-            //{
-            //    TabRoot.OwnerGuid = this.Guid;
-            //}
-            //if (e.PropertyName == nameof(TabRoot))
-            //{
-            //    TabRoot.Guid = TabRootGuid;
-            //}
+
         }
 
         public void Insert()
@@ -84,7 +77,7 @@ namespace RootNS.Models
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();
-            foreach (Node node in this.TabRoot.ChildNodes[7].GetHeirsList())
+            foreach (Node node in this.TabRoot.ChildNodes[5].GetHeirsList())
             {
                 if (node.Attachment == null || string.IsNullOrEmpty(node.Attachment.ToString()) ||
                     node.Card == null)
@@ -109,9 +102,9 @@ namespace RootNS.Models
         /// </summary>
         public void Load()
         {
+            Gval.FlagLoadingCompleted = false;
             TableHelper.TryToBuildDatabaseForBook(this);
             SqliteHelper.PoolOperate.Add(this);
-            Gval.FlagLoadingCompleted = false;
             foreach (var item in this.TabRoot.ChildNodes)
             {
                 item.ChildNodes.Clear();//载入之前先清空
@@ -145,7 +138,7 @@ namespace RootNS.Models
                     IsDel = (bool)reader["IsDel"],
                 };
                 pNode.ChildNodes.Add(node);
-                if (node.TypeName == node.Owner.TabRoot.ChildNodes[7].TypeName)
+                if (node.TypeName == node.Owner.TabRoot.ChildNodes[5].TypeName)
                 {
                     node.GenerateNewCard();
                 }
@@ -154,7 +147,17 @@ namespace RootNS.Models
             reader.Close();
         }
 
-
+        /// <summary>
+        /// 关闭本书
+        /// </summary>
+        public void Close()
+        {
+            //当移除完元素之后，数组大小发生了变更，会抛出异常，所以在这里使用逆序遍历来进行删除
+            for (int i = Gval.Views.EditorTabControl.Items.Count - 1; i >= 0; i--)
+            {
+                Gval.Views.EditorTabControl.Items.Remove(Gval.Views.EditorTabControl.Items[i]);
+            }
+        }
 
     }
 }

@@ -21,7 +21,7 @@ namespace RootNS.Helper
             {
                 FileIO.TryToCreateFolder(Gval.Path.DataDirectory);
             }
-            TableHelper.TryToBuildDatabaseForBook(Gval.MaterialBook);
+            Gval.MaterialBook.Load();
             Gval.FlagLoadingCompleted = true;
         }
 
@@ -63,7 +63,6 @@ namespace RootNS.Helper
                     Gval.CurrentBook.Load();
                 }
                 Gval.BooksBank.Add(book);
-                SqliteHelper.PoolOperate.Add(Gval.CurrentBook);
             }
             reader.Close();
             Gval.FlagLoadingCompleted = true;

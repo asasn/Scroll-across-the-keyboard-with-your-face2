@@ -44,13 +44,23 @@
                 </MultiBinding>
             </ContentControl.Content>
         </Label>
-        <CheckBox Grid.Column="4" IsChecked="{Binding IsChecked}" Click="CheckBox_Click" Padding="0,0,0,0">
-            <ContentControl.Visibility>
-                <MultiBinding Converter="{StaticResource TypeName2CheckBoxVisibility}">
-                    <Binding Path="TypeName"/>
+        <CheckBox Grid.Column="4" Visibility="Hidden" IsChecked="{Binding IsChecked}" Click="CheckBox_Click" Padding="0,0,0,0">
+            <!--<ContentControl.Visibility>
+                <MultiBinding Converter="{StaticResource Count2CheckBoxVisibility}">
+                    <Binding Path="Count"/>
                     <Binding Path="IsDir" />
+                    <Binding Path="TypeName" />
                 </MultiBinding>
-            </ContentControl.Visibility>
+            </ContentControl.Visibility>-->
         </CheckBox>
+        <Label x:Name="Icon2" Grid.Column="4" Content="&#xe96b;" Padding="0" FontSize="16" BorderThickness="0" FontFamily="../Resources/icons/#icomoon" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" >
+            <Label.Visibility>
+                <MultiBinding Converter="{StaticResource Count2CheckBoxVisibility}">
+                    <Binding Path="Count" />
+                    <Binding Path="IsDir" />
+                    <Binding Path="TypeName"/>
+                </MultiBinding>
+            </Label.Visibility>
+        </Label>
     </Grid>
 </UserControl>

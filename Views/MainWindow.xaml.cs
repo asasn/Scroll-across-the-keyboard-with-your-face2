@@ -24,18 +24,6 @@ namespace RootNS
     public partial class MainWindow : Window
     {
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, Gval.CurrentBook.Guid);
-            Gval.CurrentBook.Load();
-        }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
-
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (Gval.Views.EditorTabControl != null)

@@ -54,6 +54,40 @@ namespace RootNS.Converter
         }
     }
 
+    /// <summary>
+    /// Count和是否文件夹决定是否显现CheckBox
+    /// </summary>
+    public class Count2CheckBoxVisibility : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values == null)
+            {
+                return Visibility.Collapsed;
+            }
+            try
+            {
+                if (System.Convert.ToBoolean(values[0]) == true && (bool)values[1] == false &&
+                    values[2].ToString() == Book.TypeNameEnum.事件记录.ToString())
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Collapsed;
+            }
+            catch
+            {
+                return Visibility.Collapsed;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object[] ConvertBack(object value, Type[] targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
     ///// <summary>
     ///// TypeName决定按钮是否显现
     ///// </summary>

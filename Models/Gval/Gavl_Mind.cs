@@ -30,7 +30,10 @@ namespace RootNS.Models
 
         private void Gval_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
+            if (e.PropertyName == nameof(CurrentBook))
+            {
+                CurrentBook.Close();
+            }
         }
 
         private string _mainWindowTitle;

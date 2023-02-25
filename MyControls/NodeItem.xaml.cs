@@ -29,29 +29,23 @@ namespace RootNS.MyControls
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           
+
         }
         private void ThisControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Node node = this.DataContext as Node;
-            if (node.IsChecked == true)
+            if (node.IsChecked == true ||
+                node.IsDir == true)
             {
                 return;
             }
-            if (node.TypeName == Book.TypeNameEnum.全局题材管理.ToString())
-            {
-                if (node.IsDir == true) { return; }
-                WBase wBase = new WBase() { DataContext = node };
-                wBase.Show();
-            }
-            if (node.TypeName == Book.TypeNameEnum.大事记.ToString() ||
-                node.TypeName == Book.TypeNameEnum.故事大纲.ToString())
+            if (node.TypeName == Book.TypeNameEnum.事件记录.ToString())
             {
                 WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
-            if (node.TypeName == Book.TypeNameEnum.情节设计.ToString() ||
-                node.TypeName == Book.TypeNameEnum.全局情节设计.ToString())
+            if (node.TypeName == Book.TypeNameEnum.文章片段.ToString() ||
+                node.TypeName == Book.TypeNameEnum.全局文章片段.ToString())
             {
                 WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
@@ -59,27 +53,35 @@ namespace RootNS.MyControls
             if (node.TypeName == Book.TypeNameEnum.信息卡.ToString() ||
                 node.TypeName == Book.TypeNameEnum.全局信息卡.ToString())
             {
-                if (node.IsDir == true) { return; }
                 WCard wCard = new WCard();
                 wCard.DataContext = node;
                 wCard.Show();
             }
-            if (node.TypeName == Book.TypeNameEnum.文章片段.ToString() ||
-                node.TypeName == Book.TypeNameEnum.全局文章片段.ToString()||
-                node.TypeName == Book.TypeNameEnum.全局资料管理.ToString() ||
-                node.TypeName == Book.TypeNameEnum.全局灵感管理.ToString())
+            if (node.TypeName == Book.TypeNameEnum.全局情节设计.ToString())
             {
-                if (node.IsDir == true) { return; }
                 WBase wBase = new WBase() { DataContext = node };
                 wBase.Show();
             }
-
-
+            if (node.TypeName == Book.TypeNameEnum.全局题材管理.ToString())
+            {
+                WBase wBase = new WBase() { DataContext = node };
+                wBase.Show();
+            }
+            if (node.TypeName == Book.TypeNameEnum.全局资料管理.ToString())
+            {
+                WBase wBase = new WBase() { DataContext = node };
+                wBase.Show();
+            }
+            if (node.TypeName == Book.TypeNameEnum.全局灵感管理.ToString())
+            {
+                WBase wBase = new WBase() { DataContext = node };
+                wBase.Show();
+            }
             if (node.TypeName == Book.TypeNameEnum.草稿.ToString() ||
                 node.TypeName == Book.TypeNameEnum.作品相关.ToString() ||
                 node.TypeName == Book.TypeNameEnum.已发布.ToString())
             {
-                if (node.IsDir == true) { return; }
+                //if (node.IsDir == true) { return; }
                 Gval.PreviousText = String.Empty;
                 if (Gval.OpeningDocList.Contains(node) == false)
                 {

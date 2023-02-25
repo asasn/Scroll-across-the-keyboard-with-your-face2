@@ -91,7 +91,7 @@ namespace RootNS.Converter
 
 
     /// <summary>
-    /// 布尔值决定是否显现
+    /// 布尔值决定是否Collapsed（卡片缩起）
     /// </summary>
     public class BoolConvertToVisibility : IValueConverter
     {
@@ -125,7 +125,7 @@ namespace RootNS.Converter
     }
 
     /// <summary>
-    /// 布尔值决定是否显现
+    /// 布尔值决定是否Collapsed（卡片缩起）
     /// </summary>
     public class BoolConvertToReVisibility : IValueConverter
     {

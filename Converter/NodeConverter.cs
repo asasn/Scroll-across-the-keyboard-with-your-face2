@@ -109,9 +109,7 @@ namespace RootNS.Converter
             }
             try
             {
-                if (value.ToString() == Book.TypeNameEnum.大事记.ToString() ||
-                    value.ToString() == Book.TypeNameEnum.故事大纲.ToString() ||
-                    value.ToString() == Book.TypeNameEnum.情节设计.ToString() ||
+                if (value.ToString() == Book.TypeNameEnum.事件记录.ToString() ||
                     value.ToString() == Book.TypeNameEnum.信息卡.ToString() ||
                     value.ToString() == Book.TypeNameEnum.全局题材管理.ToString() ||
                     value.ToString() == Book.TypeNameEnum.全局情节设计.ToString() ||
@@ -137,7 +135,7 @@ namespace RootNS.Converter
     }
 
     /// <summary>
-    /// TypeName和是否文件夹决定CheckBox是否显现
+    /// TypeName和是否文件夹决定是否显现CheckBox
     /// </summary>
     public class TypeName2CheckBoxVisibility : IMultiValueConverter
     {
@@ -149,10 +147,10 @@ namespace RootNS.Converter
             }
             try
             {
-                if (values[0].ToString() == Book.TypeNameEnum.故事大纲.ToString() && (bool)values[1] == false)
-                {
-                    return Visibility.Visible;
-                }
+                //if (values[0].ToString() == Book.TypeNameEnum.事件记录.ToString() && (bool)values[1] == false)
+                //{
+                //    return Visibility.Visible;
+                //}
                 return Visibility.Collapsed;
             }
             catch
