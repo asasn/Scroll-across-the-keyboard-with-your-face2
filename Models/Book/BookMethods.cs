@@ -110,7 +110,6 @@ namespace RootNS.Models
                 item.ChildNodes.Clear();//载入之前先清空
                 RecursiveReLoad(item);
             }
-            Gval.FlagLoadingCompleted = true;
         }
 
         private void RecursiveReLoad(Node pNode)

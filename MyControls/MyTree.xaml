@@ -37,7 +37,8 @@
         <TreeView Margin="2" x:Name="TreeNodes" hc:ScrollViewer.IsPenetrating="False"  TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded" DragOver="TreeNodes_DragOver" Grid.RowSpan="2" MouseEnter="TreeNodes_MouseEnter" MouseLeave="TreeNodes_MouseLeave">
             <TreeView.Resources>
                 <RoutedUICommand x:Key="AddFolder" Text="添加目录"/>
-                <RoutedUICommand x:Key="AddDoc" Text="添加文档"/>
+                <RoutedUICommand x:Key="AddDoc" Text="添加节点"/>
+                <RoutedUICommand x:Key="InsertDoc" Text="插入节点"/>
                 <RoutedUICommand x:Key="DelNode" Text="删除节点"/>
                 <RoutedUICommand x:Key="ReName" Text="重命名"/>
                 <RoutedUICommand x:Key="MoveUp" Text="向上移动节点"/>
@@ -53,7 +54,8 @@
             <TreeView.ContextMenu>
                 <ContextMenu x:Name="TreeViewMenu" Opened="TreeViewMenu_Opened">
                     <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="添加目录" IsEnabled="True" Command="{StaticResource AddFolder}" InputGestureText="Add"/>
-                    <MenuItem Header="添加文档" IsEnabled="False" Command="{StaticResource AddDoc}" InputGestureText="Enter"/>
+                    <MenuItem Header="添加节点" IsEnabled="False" Command="{StaticResource AddDoc}" InputGestureText="Enter"/>
+                    <MenuItem Header="插入节点" IsEnabled="False" Command="{StaticResource InsertDoc}" InputGestureText="Enter"/>
                     <MenuItem Header="删除节点" IsEnabled="False" Command="{StaticResource DelNode}" InputGestureText="Delete"/>
                     <MenuItem Header="重命名" IsEnabled="True" Command="{StaticResource ReName}" InputGestureText="F2"/>
                 </ContextMenu>
@@ -61,6 +63,7 @@
             <TreeView.CommandBindings>
                 <CommandBinding Command="{StaticResource AddFolder}" Executed="Command_AddFolder_Executed" CanExecute="CommandBinding_CanExecute_AddFolder"/>
                 <CommandBinding Command="{StaticResource AddDoc}" Executed="Command_AddDoc_Executed" />
+                <CommandBinding Command="{StaticResource InsertDoc}" Executed="Command_InsertDoc_Executed" />
                 <CommandBinding Command="{StaticResource DelNode}" Executed="Command_Delete_Executed" />
                 <CommandBinding Command="{StaticResource UnDel}" Executed="Command_UnDel_Executed" />
                 <CommandBinding Command="{StaticResource ReName}" Executed="Command_ReName_Executed" />
@@ -76,6 +79,7 @@
             <TreeView.InputBindings>
                 <KeyBinding Command="{StaticResource AddFolder}" Key="Add" CommandParameter="{Binding TypeName}"/>
                 <KeyBinding Command="{StaticResource AddDoc}" Key="Return" />
+                <KeyBinding Command="{StaticResource InsertDoc}" Modifiers="Ctrl" Key="Return" />
                 <KeyBinding Command="{StaticResource DelNode}" Key="Delete" />
                 <KeyBinding Command="{StaticResource UnDel}" Key="Z" Modifiers="Ctrl" />
                 <KeyBinding Command="{StaticResource ReName}" Key="F2" />

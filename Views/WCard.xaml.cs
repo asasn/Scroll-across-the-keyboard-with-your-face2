@@ -41,6 +41,10 @@ namespace RootNS.Views
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
             TbTag.Text = (this.DataContext as Node).Parent.Title;
+            if (TbTag.Text == "新节点")
+            {
+                TbTag.Text = "角色";
+            }
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).Card.HasChange = false;
             //获取鼠标位置以设置窗口
@@ -90,7 +94,7 @@ namespace RootNS.Views
             {
                 //标题相同，但是Guid不同时
                 if (TbTitle.Text.Trim() == node.Title &&
-                    node.Guid != (this.DataContext as Node).Guid)
+                    node.Guid != (this.DataContext as Node).Guid && node.Title != "新节点")
                 {
                     FunctionsPack.ShowMessageBox("存在同名节点，请使用其他名称！");
                     return true;

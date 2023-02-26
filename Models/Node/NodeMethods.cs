@@ -49,6 +49,56 @@ namespace RootNS.Models
                 {
                     stuff.GenerateNewCard();
                 }
+                if (Gval.FlagLoadingCompleted == true)
+                {
+                    int n = 0;
+                    int i = 0;
+                    if (stuff.Owner.TabRoot.ChildNodes.Count > 2 &&
+                        stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[0].TypeName)
+                    {
+                        Node finalDoc;
+                        if (stuff.Owner.TabRoot.ChildNodes[0].Count == 0 ||
+                            stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff) == 0)
+                        {
+                            Node pNode = stuff.Owner.TabRoot.ChildNodes[2];
+                            finalDoc = pNode.GetLastNode(false);
+                        }
+                        else
+                        {
+                            i = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff);
+                            finalDoc = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
+                        }
+                        Match match = Regex.Match(finalDoc.Title.Trim(), "第(.+?)章.*?");
+                        if (match.Success)
+                        {
+                            n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
+                        }
+                        stuff.Title = string.Format("第{0}章", n + 1);
+                        string cTitle = string.Empty;
+                        for (int ii = i + 1; ii < stuff.Parent.ChildNodes.Count; ii++)
+                        {
+                            string[] rets = Regex.Split(stuff.Parent.ChildNodes[ii].Title.Trim(), "第(.+?)章(.*?)");
+                            if (rets.Length == 4)
+                            {
+                                if (string.IsNullOrEmpty(rets[1].ToString()) == false)
+                                {
+                                    try
+                                    {
+                                        n = Convert.ToInt32(rets[1].ToString());
+                                        cTitle = rets[3].ToString().Trim();
+                                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", n + 1, cTitle);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        FunctionsPack.ShowMessageBox("自动重命名错误！");
+                                    }
+                                }
+                            }
+                        }
+                        stuff.ChangeBrothersIndex(i);
+                        stuff.ChangeBrothersTitle(i);
+                    }
+                }
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -235,18 +285,34 @@ namespace RootNS.Models
         /// 移除或者插入之后，改变兄弟节点的索引
         /// </summary>
         /// <param name="pn">改变处的索引位置</param>
-        private void ChangeBrothersIndex(int pn)
+        public void ChangeBrothersIndex(int pn)
         {
             string sqlindex = String.Empty;
             for (int i = pn; i < this.Parent.ChildNodes.Count; i++)
             {
-                //改变索引（被删除节点后面的节点统统前移一位）
-                this.Parent.ChildNodes[i].Index = i;
-                sqlindex += string.Format("UPDATE 节点 SET [Index]='{0}' WHERE Guid='{1}';", i, this.Parent.ChildNodes[i].Guid);
+                if (i != this.Parent.ChildNodes[i].Index)
+                {
+                    //改变索引（被删除节点后面的节点统统前移一位）
+                    this.Parent.ChildNodes[i].Index = i;
+                    sqlindex += string.Format("UPDATE 节点 SET [Index]='{0}' WHERE Guid='{1}';", i, this.Parent.ChildNodes[i].Guid);
+                }
             }
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlindex);
         }
 
+        /// <summary>
+        /// 移除或者插入之后，改变兄弟节点的章节名
+        /// </summary>
+        /// <param name="pn">改变处的索引位置</param>
+        public void ChangeBrothersTitle(int pn)
+        {
+            string sqlindex = String.Empty;
+            for (int i = pn; i < this.Parent.ChildNodes.Count; i++)
+            {
+                sqlindex += string.Format("UPDATE 内容 SET [Title]='{0}' WHERE Guid='{1}';", this.Parent.ChildNodes[i].Title, this.Parent.ChildNodes[i].Guid);
+            }
+            SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlindex);
+        }
 
         /// <summary>
         /// 删除当前节点值后重新选择新节点
@@ -415,25 +481,24 @@ namespace RootNS.Models
 
 
         /// <summary>
-        /// 获取最后一个目录型的节点
+        /// 向下获取最后一个节点
         /// </summary>
-        /// <param name="pNode"></param>
+        /// <param name="isDir">结果是否目录</param>
         /// <returns></returns>
-        public Node GetFinalDirNode()
+        public Node GetLastNode(bool isDir = true)
         {
             ArrayList aList = this.GetHeirsList();
             //倒转，从最后开始遍历
             aList.Reverse();
             foreach (Node node in aList)
             {
-                if (node.IsDir == true)
+                if (node.IsDir == isDir)
                 {
                     return node;
                 }
             }
             return null;
         }
-
 
 
         /// <summary>

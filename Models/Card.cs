@@ -12,8 +12,11 @@ namespace RootNS.Models
 {
     public class Card : NotificationObject
     {
+
         public Card()
         {
+            this.PropertyChanged += Card_PropertyChanged;
+
             //ToDo：可能需要优化一下卡片模型的设计，把散乱的属性整合打包
             string[] ls = new string[] { "别称", "身份", "外观", "阶级", "所属", "物品", "能力", "经历" };
             foreach (string lineTitle in ls)
@@ -23,6 +26,13 @@ namespace RootNS.Models
                     Title = lineTitle
                 };
                 Lines.Add(line);
+            }
+        }
+
+        private void Card_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Tag))
+            {
             }
         }
 

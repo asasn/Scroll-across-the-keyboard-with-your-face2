@@ -119,6 +119,7 @@
     <Compile Include="MyControls\CardShower.xaml.cs">
       <DependentUpon>CardShower.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MyControls\MyTreeCommand.cs" />
     <Compile Include="MyControls\VirtualizingWrapPanel.cs" />
     <Compile Include="Views\MainWindowLoad.cs" />
     <Compile Include="Views\MainWindowOperation.cs" />

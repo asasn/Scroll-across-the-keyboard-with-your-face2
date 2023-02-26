@@ -16,13 +16,11 @@ namespace RootNS.Helper
         /// </summary>
         public static void Start()
         {
-            Gval.FlagLoadingCompleted = false;
             if (FileIO.IsFolderExists(Gval.Path.DataDirectory) == false)
             {
                 FileIO.TryToCreateFolder(Gval.Path.DataDirectory);
             }
             Gval.MaterialBook.Load();
-            Gval.FlagLoadingCompleted = true;
         }
 
 
@@ -65,7 +63,6 @@ namespace RootNS.Helper
                 Gval.BooksBank.Add(book);
             }
             reader.Close();
-            Gval.FlagLoadingCompleted = true;
         }
     }
 }

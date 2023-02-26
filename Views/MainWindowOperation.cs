@@ -24,6 +24,7 @@ namespace RootNS
         {
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, Gval.CurrentBook.Guid);
             Gval.CurrentBook.Load();
+            Gval.FlagLoadingCompleted = true;
             RbEvents.IsChecked = false;
             RbEvents.IsChecked = true;
         }
