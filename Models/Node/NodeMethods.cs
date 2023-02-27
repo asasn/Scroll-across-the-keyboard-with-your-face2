@@ -105,10 +105,6 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
-                if (stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
-                {
-                    stuff.Owner.UpdataSyntax();
-                }
             }
         }
         /// <summary>
@@ -357,6 +353,8 @@ namespace RootNS.Models
                 sqlDel += string.Format("UPDATE 节点 SET IsDel='{0}' WHERE Guid='{1}';", this.IsDel, this.Guid);
             }
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlDel);
+
+            this.Owner.UpdataSyntax();
         }
 
         /// <summary>

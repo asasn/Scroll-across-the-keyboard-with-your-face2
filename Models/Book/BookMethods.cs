@@ -80,7 +80,7 @@ namespace RootNS.Models
             foreach (Node node in this.TabRoot.ChildNodes[5].GetHeirsList())
             {
                 if (node.Attachment == null || string.IsNullOrEmpty(node.Attachment.ToString()) ||
-                    node.Card == null)
+                    node.Card == null || node.IsDir == true || node.IsDel == true)
                 {
                     continue;
                 }
