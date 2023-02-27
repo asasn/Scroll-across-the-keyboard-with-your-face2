@@ -146,7 +146,8 @@ namespace RootNS.MyControls
             FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(ThisTextEditor);
             this.SetPreviousText();
             FindReplaceDialog.theDialog.TabFind.IsSelected = true;
-            FindReplaceDialog.theDialog.TbFindNext.Focus();
+            FindReplaceDialog.theDialog.txtFind.SelectAll();
+            FindReplaceDialog.theDialog.txtFind.Focus();
         }
 
         private void Command_Replace_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -154,6 +155,7 @@ namespace RootNS.MyControls
             FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(ThisTextEditor);
             this.SetPreviousText();
             FindReplaceDialog.theDialog.TabReplace.IsSelected = true;
+            FindReplaceDialog.theDialog.txtFind2.SelectAll();
             FindReplaceDialog.theDialog.txtFind2.Focus();
         }
 
@@ -161,11 +163,8 @@ namespace RootNS.MyControls
         {
             if (string.IsNullOrEmpty(ThisTextEditor.TextArea.Selection.GetText()) == true)
             {
-                if (string.IsNullOrEmpty(Gval.PreviousText) == true)
-                {
-                    //ToDo：另行实现，上次搜索文字的保留
-                    //Gval.PreviousText = Gval.Views.UcSearch.TbKeyWords.Text;
-                }
+                Gval.PreviousText = Gval.Views.UcSearcher.TbKeyWords.Text;
+
             }
             else
             {
@@ -350,7 +349,7 @@ namespace RootNS.MyControls
             LbValueValue.Content = string.Format("{0:F}/{1:F}", sValue, vValue);
         }
 
-        ToolTip toolTip = new ToolTip() { Background = Brushes.Transparent, BorderBrush=Brushes.Transparent };
+        ToolTip toolTip = new ToolTip() { Background = Brushes.Transparent, BorderBrush = Brushes.Transparent };
 
         /// <summary>
         /// 鼠标悬浮提示

@@ -57,12 +57,12 @@
                             <DataTemplate>
                                 <Grid Visibility="{Binding Visibility, Converter={StaticResource BoolConvertToVisibility}}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition MinWidth="30" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="30"/>
                                         <ColumnDefinition Width="100*"/>
                                         <ColumnDefinition Width="26"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Content="{Binding Title}" BorderThickness="0" Padding="0" Background="Gainsboro" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26"/>
-                                    <ItemsControl Width="{Binding Width, ElementName=ThisWindow}" VirtualizingPanel.IsVirtualizing="True" Grid.Column="1" ItemsSource="{Binding Tips}" MinWidth="242" MinHeight="18" VerticalContentAlignment="Bottom">
+                                    <ItemsControl VirtualizingPanel.IsVirtualizing="True" Grid.Column="1" ItemsSource="{Binding Tips}" MinWidth="242" MinHeight="18" VerticalContentAlignment="Bottom">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBox Background="Transparent" Text="{Binding Content}" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="0,3,3,0" MinWidth="30"/>
