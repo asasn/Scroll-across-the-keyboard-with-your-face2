@@ -1,0 +1,21 @@
+﻿<UserControl x:Name="userControl" x:Class="RootNS.MyControls.NameTool"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RootNS.MyControls"
+             mc:Ignorable="d" ToolTip="起名工具" Margin="5"
+             d:DesignHeight="40" d:DesignWidth="180">
+    <Border BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BtnOpenToolWindow" FontFamily="../Resources/icons/#icomoon"  Content="&#xea04;" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" FontSize="24" BorderThickness="0" Padding="0" Background="Transparent" ToolTip="打开取名工具窗口"  Height="30" Width="30" Margin="0,4,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="BtnOpenToolWindow_Click"/>
+            <Button x:Name="BtnResult" Focusable="False" Background="Transparent" BorderBrush="Transparent" ToolTipService.ShowDuration="60000" Content="{Binding Nameer.OneName, ElementName=userControl}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnResult_Click"/>
+            <Button x:Name="BtnRandomGenerate" FontFamily="../Resources/icons/#icomoon"  Content="&#xe9c3;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="随机取一个名字（点击结果文字，可以复制到剪贴板）" Height="30" Width="30" Grid.Column="3" Click="BtnRandomGenerate_Click" Margin="0,4,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+        </Grid>
+    </Border>
+</UserControl>

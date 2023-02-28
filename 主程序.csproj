@@ -115,14 +115,27 @@
     <Compile Include="Models\Gval\Gval_Common.cs" />
     <Compile Include="Models\Gval\Gval_ControlObject.cs" />
     <Compile Include="Models\Gval\Gval_Path.cs" />
+    <Compile Include="Models\Name.cs" />
     <Compile Include="Models\Node\NodeFields.cs" />
     <Compile Include="MyControls\CardShower.xaml.cs">
       <DependentUpon>CardShower.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyControls\MyTreeCommand.cs" />
+    <Compile Include="MyControls\NameBankBox.xaml.cs">
+      <DependentUpon>NameBankBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\NameSetBox.xaml.cs">
+      <DependentUpon>NameSetBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\NameTool.xaml.cs">
+      <DependentUpon>NameTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyControls\VirtualizingWrapPanel.cs" />
     <Compile Include="Views\MainWindowLoad.cs" />
     <Compile Include="Views\MainWindowOperation.cs" />
+    <Compile Include="Views\NameToolWindow.xaml.cs">
+      <DependentUpon>NameToolWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WCard.xaml.cs">
       <DependentUpon>WCard.xaml</DependentUpon>
     </Compile>
@@ -146,6 +159,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MyControls\MyTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\NameBankBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\NameSetBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControls\NameTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +236,10 @@
     <Page Include="Style\TreeViewItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NameToolWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WCard.xaml">
       <SubType>Designer</SubType>

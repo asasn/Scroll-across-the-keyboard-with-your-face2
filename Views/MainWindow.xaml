@@ -110,11 +110,14 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="100"/>
                         </Grid.RowDefinitions>
                         <mycontrols:UcShower Loaded="UcShower_Loaded"/>
                         <mycontrols:UcSearcher Grid.Row="1" Loaded="UcSearcher_Loaded"/>
-                        <mycontrols:TomatoClock  Grid.Row="2"/>
+                        <StackPanel Grid.Row="2">
+                            <mycontrols:NameTool/>
+                            <mycontrols:TomatoClock  />
+                        </StackPanel>
                     </Grid>
                 </Border>
                 <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" Loaded="Editor_Loaded" />
