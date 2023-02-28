@@ -51,53 +51,7 @@ namespace RootNS.Models
                 }
                 if (Gval.FlagLoadingCompleted == true)
                 {
-                    int n = 0;
-                    int i = 0;
-                    if (stuff.Owner.TabRoot.ChildNodes.Count > 2 &&
-                        stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[0].TypeName)
-                    {
-                        Node finalDoc;
-                        if (stuff.Owner.TabRoot.ChildNodes[0].Count == 0 ||
-                            stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff) == 0)
-                        {
-                            Node pNode = stuff.Owner.TabRoot.ChildNodes[2];
-                            finalDoc = pNode.GetLastNode(false);
-                        }
-                        else
-                        {
-                            i = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff);
-                            finalDoc = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
-                        }
-                        Match match = Regex.Match(finalDoc.Title.Trim(), "第(.+?)章.*?");
-                        if (match.Success)
-                        {
-                            n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
-                        }
-                        stuff.Title = string.Format("第{0}章", n + 1);
-                        string cTitle = string.Empty;
-                        for (int ii = i + 1; ii < stuff.Parent.ChildNodes.Count; ii++)
-                        {
-                            string[] rets = Regex.Split(stuff.Parent.ChildNodes[ii].Title.Trim(), "第(.+?)章(.*?)");
-                            if (rets.Length == 4)
-                            {
-                                if (string.IsNullOrEmpty(rets[1].ToString()) == false)
-                                {
-                                    try
-                                    {
-                                        n = Convert.ToInt32(rets[1].ToString());
-                                        cTitle = rets[3].ToString().Trim();
-                                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", n + 1, cTitle);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        FunctionsPack.ShowMessageBox("自动重命名错误！");
-                                    }
-                                }
-                            }
-                        }
-                        stuff.ChangeBrothersIndex(i);
-                        stuff.ChangeBrothersTitle(i);
-                    }
+                    UpdataBrothers(stuff);
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -105,8 +59,84 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
+                if (Gval.FlagLoadingCompleted == true)
+                {
+                    UpdataBrothers(stuff);
+                }
             }
         }
+
+        /// <summary>
+        /// 更新下方的兄弟节点
+        /// </summary>
+        private void UpdataBrothers(Node stuff)
+        {
+            if (Gval.FlagLoadingCompleted == true)
+            {
+                if (stuff.Owner.TabRoot.ChildNodes.Count > 2 &&
+                stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[0].TypeName)
+                {
+                    int n = 0;
+                    int i = 0;
+                    Node finalDoc;
+                    if (stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.Count == 0 ||
+                        stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff) == 0)
+                    {
+                        Node pNode = stuff.Owner.TabRoot.ChildNodes[2];
+                        finalDoc = pNode.GetLastNode(false);
+                    }
+                    else
+                    {
+                        i = stuff.Index;
+                        if (i == 0)
+                        {
+                            i = 1;
+                        }
+                        finalDoc = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
+                    }
+                    Match match = Regex.Match(finalDoc.Title.Trim(), "第(.+?)章.*?");
+                    if (match.Success)
+                    {
+                        n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
+                    }
+                    stuff.Title = string.Format("第{0}章", n + 1);
+                    string cTitle = string.Empty;
+                    for (int ii = i; ii < stuff.Parent.ChildNodes.Count; ii++)
+                    {
+                        if (ii == 0)
+                        {
+                            ii = 1;
+                        }
+                        string[] rets = Regex.Split(stuff.Parent.ChildNodes[ii-1].Title.Trim(), "第(.+?)章(.*?)");
+                        if (rets.Length == 4)
+                        {
+                            if (string.IsNullOrEmpty(rets[1].ToString()) == false)
+                            {
+                                try
+                                {
+                                    n = Convert.ToInt32(rets[1].ToString());
+                                    if (stuff.Parent.ChildNodes.Count > 1)
+                                    {
+                                        string[] rets1 = Regex.Split(stuff.Parent.ChildNodes[ii].Title.Trim(), "第(.+?)章(.*?)");
+                                        cTitle = rets1[3].ToString().Trim(); 
+                                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", n + 1, cTitle);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    FunctionsPack.ShowMessageBox("其他节点自动重命名错误！");
+                                }
+                            }
+                        }
+                    }
+                    stuff.ChangeBrothersIndex(i);
+                    stuff.ChangeBrothersTitle(i);
+                }
+            }
+        }
+
+
+
         /// <summary>
         /// 节点属性变化事件
         /// </summary>
