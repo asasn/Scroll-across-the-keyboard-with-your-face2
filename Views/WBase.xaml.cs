@@ -65,10 +65,12 @@ namespace RootNS.Views
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             BtnSave.IsEnabled = true;
+            LightEditor.BtnSaveDoc.IsEnabled = true;
         }
         private void ThisTextEditor_TextChanged(object sender, EventArgs e)
         {
-            BtnSave.IsEnabled = true;
+            BtnSave.IsEnabled = true; 
+            LightEditor.BtnSaveDoc.IsEnabled = true;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
