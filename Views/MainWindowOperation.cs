@@ -27,6 +27,8 @@ namespace RootNS
             Gval.FlagLoadingCompleted = true;
             RbEvents.IsChecked = false;
             RbEvents.IsChecked = true;
+            Gval.Views.UcSearcher.TbKeyWords.Clear();
+            Gval.Views.UcSearcher.ThisSearcher.Start();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

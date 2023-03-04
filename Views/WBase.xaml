@@ -8,7 +8,7 @@
       d:DataContext="{d:DesignInstance Type={x:Type models:Node}}"
         mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
       UseLayoutRounding="True" AllowsTransparency="True" 
-      d:DesignWidth="485" MinWidth="485" MinHeight="300" MaxWidth="600" Width="485" Height="300"
+      d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720"
       MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
     <Border Effect="{StaticResource EffectShadow3}" Margin="5" CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
         <Grid Margin="2">

@@ -11,6 +11,9 @@
 	<Color name="敏感" foreground="Red"/>
 	<Color name="角色" foreground="Blue" fontFamily="宋体" />
 	<Color name="物品" foreground="#FF9800"/>
+	<Color name="道具" foreground="#FF9800"/>
+	<Color name="机构" foreground="#2196F3"/>
+	<Color name="组织" foreground="#2196F3"/>
 	<Color name="其他" foreground="Orange"/>
 	<Color name="世界" foreground="Violet"/>
 	<!-- This is the main ruleset. -->

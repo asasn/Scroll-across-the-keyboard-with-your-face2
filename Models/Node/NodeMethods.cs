@@ -94,6 +94,11 @@ namespace RootNS.Models
                         }
                         finalDoc = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
                     }
+                    if (finalDoc == null)
+                    {
+                        stuff.Title = "第1章";
+                        return;
+                    }
                     Match match = Regex.Match(finalDoc.Title.Trim(), "第(.+?)章.*?");
                     if (match.Success)
                     {
