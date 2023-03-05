@@ -35,7 +35,7 @@
         <KeyBinding Command="{StaticResource MoveNext}" Key="F3"/>
         <KeyBinding Command="{StaticResource MovePrevious}" Key="F4"/>
         <KeyBinding Command="{StaticResource CloseTabItem}" Key="W" Modifiers="Ctrl"/>
-        <KeyBinding Command="{StaticResource EditCard}" Key="F5"/>
+        <KeyBinding Command="{StaticResource EditCard}" Key="F2"/>
     </UserControl.InputBindings>
     <Grid Background="#FFFAFAFA" >
         <Grid.ColumnDefinitions>

@@ -35,7 +35,6 @@ namespace RootNS.Views
             {
                 (this.DataContext as Node).Attachment = string.Empty;
             }
-            (this.DataContext as Node).Card.HiddenNullLines();
             TbTitle.Text = (this.DataContext as Node).Title;
             TbSummary.Text = (this.DataContext as Node).Summary;
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
@@ -51,6 +50,7 @@ namespace RootNS.Views
             Point point = Mouse.GetPosition(Gval.Views.MainWindow);
             this.Left = point.X - this.ActualWidth * 0.5;
             this.Top = point.Y - 26;
+            BtnSeeMore_Click(null, null);
         }
 
 
@@ -134,6 +134,7 @@ namespace RootNS.Views
                     return;
                 }
             }
+            (this.DataContext as Node).Card.HiddenNullLines();
             this.Close();
         }
 

@@ -22,6 +22,7 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Search;
 using RootNS.Helper;
 using RootNS.Models;
+using RootNS.Views;
 
 namespace RootNS.MyControls
 {
@@ -215,6 +216,38 @@ namespace RootNS.MyControls
             //        }
             //    }
             //}
+
+
+            foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[5].GetHeirsList())
+            {
+                if (node.Attachment == null || node.Card == null)
+                {
+                    continue;
+                }
+                bool isMatch = false;
+                if (ThisTextEditor.SelectedText.Equals(node.Title.Trim()))
+                {
+                    isMatch = true;
+                }
+                else
+                {
+                    foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
+                    {
+                        if (ThisTextEditor.SelectedText.Equals(tip.Content.Trim()))
+                        {
+                            isMatch = true;
+                        }
+                    }
+                }
+                if (isMatch)
+                {
+                    //在生成窗口对象之后，展现界面之前赋值给DataContext
+                    WCard wCard = new WCard();
+                    wCard.DataContext = node;
+                    wCard.Show();
+                    return;
+                }
+            }
         }
         #endregion
 
