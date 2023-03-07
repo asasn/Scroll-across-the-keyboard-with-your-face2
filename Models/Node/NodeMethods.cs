@@ -67,6 +67,78 @@ namespace RootNS.Models
         }
 
         /// <summary>
+        /// 获取上一个操作的节点
+        /// </summary>
+        private Node GetPreviousNode()
+        {
+            Node previousNode;
+            if (this.Owner.TabRoot.ChildNodes[0].ChildNodes.Count == 0 || this.Index == 0)
+            {
+                //草稿栏为空或者当前指向的项目索引为零时
+                previousNode = this.Owner.TabRoot.ChildNodes[2].GetLastNode(false);
+            }
+            else
+            {
+                int i = this.Index;
+                previousNode = this.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
+            }
+            return previousNode;
+        }
+
+        /// <summary>
+        /// 获取上一个操作的节点在草稿栏目的索引
+        /// </summary>
+        private int GetPreviousIndex()
+        {
+            int pi = 0;
+            if (this.Owner.TabRoot.ChildNodes[0].ChildNodes.Count == 0 || this.Index == 0)
+            {
+
+            }
+            else
+            {
+                pi = this.Index;
+            }
+            return pi;
+        }
+
+
+        /// <summary>
+        /// 从章节标题当中获取序号
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private int GetNumberFromTitle()
+        {
+            int n = 0;
+            Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
+            if (match.Success)
+            {
+                n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
+            }
+            return n;
+        }
+
+        /// <summary>
+        /// 从章节标题当中获取名称（不包含序号的章节名）
+        /// </summary>
+        /// <returns></returns>
+        private string GetNameFromTitle()
+        {
+            //标题的名称（排除序号）
+            string cTitle = string.Empty;
+            string[] rets;
+            rets = Regex.Split(this.Title.Trim(), "第(.+?)章(.*?)");
+            if (rets.Length == 4)
+            {
+                cTitle = rets[3].ToString().Trim();
+            }
+            return cTitle;
+        }
+
+
+
+        /// <summary>
         /// 更新下方的兄弟节点
         /// </summary>
         private void UpdataBrothers(Node stuff)
@@ -76,66 +148,23 @@ namespace RootNS.Models
                 if (stuff.Owner.TabRoot.ChildNodes.Count > 2 &&
                 stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[0].TypeName)
                 {
-                    int n = 0;
-                    int i = 0;
-                    Node finalDoc;
-                    if (stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.Count == 0 ||
-                        stuff.Owner.TabRoot.ChildNodes[0].ChildNodes.IndexOf(stuff) == 0)
+                    Node previousNode = stuff.GetPreviousNode();
+                    int pi = stuff.GetPreviousIndex();//前一个索引
+                    //获取标题的基准序号
+                    if (previousNode == null)
                     {
-                        Node pNode = stuff.Owner.TabRoot.ChildNodes[2];
-                        finalDoc = pNode.GetLastNode(false);
+                        previousNode = new Node();
                     }
-                    else
+                    int fn = previousNode.GetNumberFromTitle();
+                    //当前操作节点相对于finalDoc的偏移量
+                    int off = 0;
+                    for (int ii = pi; ii < stuff.Parent.ChildNodes.Count; ii++)
                     {
-                        i = stuff.Index;
-                        if (i == 0)
-                        {
-                            i = 1;
-                        }
-                        finalDoc = stuff.Owner.TabRoot.ChildNodes[0].ChildNodes[i - 1];
+                        off++;
+                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", fn + off, stuff.Parent.ChildNodes[ii].GetNameFromTitle());
                     }
-                    if (finalDoc == null)
-                    {
-                        stuff.Title = "第1章";
-                        return;
-                    }
-                    Match match = Regex.Match(finalDoc.Title.Trim(), "第(.+?)章.*?");
-                    if (match.Success)
-                    {
-                        n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
-                    }
-                    stuff.Title = string.Format("第{0}章", n + 1);
-                    string cTitle = string.Empty;
-                    for (int ii = i; ii < stuff.Parent.ChildNodes.Count; ii++)
-                    {
-                        if (ii == 0)
-                        {
-                            ii = 1;
-                        }
-                        string[] rets = Regex.Split(stuff.Parent.ChildNodes[ii-1].Title.Trim(), "第(.+?)章(.*?)");
-                        if (rets.Length == 4)
-                        {
-                            if (string.IsNullOrEmpty(rets[1].ToString()) == false)
-                            {
-                                try
-                                {
-                                    n = Convert.ToInt32(rets[1].ToString());
-                                    if (stuff.Parent.ChildNodes.Count > 1)
-                                    {
-                                        string[] rets1 = Regex.Split(stuff.Parent.ChildNodes[ii].Title.Trim(), "第(.+?)章(.*?)");
-                                        cTitle = rets1[3].ToString().Trim(); 
-                                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", n + 1, cTitle);
-                                    }
-                                }
-                                catch (Exception)
-                                {
-                                    FunctionsPack.ShowMessageBox("其他节点自动重命名错误！");
-                                }
-                            }
-                        }
-                    }
-                    stuff.ChangeBrothersIndex(i);
-                    stuff.ChangeBrothersTitle(i);
+                    stuff.ChangeBrothersIndex(pi + 1);
+                    stuff.ChangeBrothersTitle(pi + 1);
                 }
             }
         }
@@ -456,6 +485,7 @@ namespace RootNS.Models
             {
                 return;
             }
+            Gval.FlagLoadingCompleted = false;
             int pn = this.Parent.ChildNodes.IndexOf(this);//变动之前的索引位置
             this.Parent.ChildNodes.Remove(this);
             this.ChangeBrothersIndex(pn);//要在拥有新的父节点之前进行处理
@@ -463,6 +493,7 @@ namespace RootNS.Models
             this.UpdateNodeProperty("节点", "Puid", this.Parent.Guid.ToString());
             this.UpdateNodeProperty("节点", "Index", this.Index.ToString());
             this.UpdateNodeProperty("节点", "TypeName", this.TypeName);
+            Gval.FlagLoadingCompleted = true;
         }
 
         /// <summary>

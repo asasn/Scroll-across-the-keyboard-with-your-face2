@@ -492,6 +492,14 @@ namespace RootNS.MyControls
             slider.Value = 12;
         }
 
+        private void MenuItem0_Click(object sender, RoutedEventArgs e)
+        {
+            FunctionsPack.ShowMessageBox("新增信息卡（施工中）！");
+        }
 
+        private void MenuItem1_Click(object sender, RoutedEventArgs e)
+        {
+            FunctionsPack.ShowMessageBox("加入文章片段（剪切的方式）（施工中）！");
+        }
     }
 }

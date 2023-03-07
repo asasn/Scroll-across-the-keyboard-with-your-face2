@@ -54,7 +54,8 @@
             FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" KeyDown="ThisTextEditor_KeyDown" TextChanged="ThisTextEditor_TextChanged">
             <avalonEdit:TextEditor.ContextMenu>
                 <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
-                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="测试" IsEnabled="True"/>
+                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
+                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
                 </ContextMenu>
             </avalonEdit:TextEditor.ContextMenu>
             <avalonEdit:TextEditor.Options>
