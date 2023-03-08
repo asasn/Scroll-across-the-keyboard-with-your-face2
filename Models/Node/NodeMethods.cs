@@ -163,8 +163,8 @@ namespace RootNS.Models
                         off++;
                         stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", fn + off, stuff.Parent.ChildNodes[ii].GetNameFromTitle());
                     }
-                    stuff.ChangeBrothersIndex(pi + 1);
-                    stuff.ChangeBrothersTitle(pi + 1);
+                    stuff.ChangeBrothersIndex(pi);
+                    stuff.ChangeBrothersTitle(pi);
                 }
             }
         }
