@@ -20,6 +20,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Search;
+using JiebaNet.Analyser;
 using RootNS.Helper;
 using RootNS.Models;
 using RootNS.Views;
@@ -499,7 +500,25 @@ namespace RootNS.MyControls
 
         private void MenuItem1_Click(object sender, RoutedEventArgs e)
         {
-            FunctionsPack.ShowMessageBox("加入文章片段（剪切的方式）（施工中）！");
+            //把选中的文字加入文章片段的功能
+            if (string.IsNullOrEmpty(ThisTextEditor.SelectedText))
+            {
+                return;
+            }
+            var extractor = new TfidfExtractor();
+            IEnumerable strs = extractor.ExtractTags(ThisTextEditor.SelectedText, 10, null);
+            string title = string.Empty;
+            foreach (string s in strs)
+            {
+                title += s  + " ";
+            }
+            Node newNode = new Node
+            {
+                Title = title.Trim(),
+                Text = ThisTextEditor.SelectedText
+            };
+            (this.DataContext as Node).Owner.TabRoot.ChildNodes[4].ChildNodes.Add(newNode);
+            ThisTextEditor.SelectedText = "";
         }
     }
 }
