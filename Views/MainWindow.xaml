@@ -96,12 +96,21 @@
                     <mycontrols:MyTree x:Name="NotesTree" Tag="NotesTree" Loaded="NotesTree_Loaded" IsEnabled="{Binding SelectedItem, Converter={StaticResource Object2BooleanConverter}, ElementName=TreeBox}" />
                 </Border>
                 <Border x:Name="BorderTool" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="0" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}">
-                    <StackPanel>
-                        <RadioButton x:Name="RbEvents" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe92d;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="事件记录（时间事件表的方式来设置本书大纲和相关情节）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbEvents_Checked" IsChecked="True"/>
-                        <RadioButton x:Name="RbSnippetsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe963;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="文章片段（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbSnippetsInBook_Checked"/>
-                        <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
-                        <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <RadioButton x:Name="RbEvents" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe92d;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="事件记录（时间事件表的方式来设置本书大纲和相关情节）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbEvents_Checked" IsChecked="True"/>
+                            <RadioButton x:Name="RbSnippetsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe963;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="文章片段（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbSnippetsInBook_Checked"/>
+                            <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
+                            <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2">
+                            <Button x:Name="BtnPackage" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ab;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的卡片名称和别名（用于高亮匹配或者语音输入）" Width="30" Height="30" Click="BtnPackage_Click"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
                 <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" Background="Ivory"/>
                 <GridSplitter Grid.Column="5" HorizontalAlignment="Stretch" Background="Ivory"/>

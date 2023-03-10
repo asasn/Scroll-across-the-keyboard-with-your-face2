@@ -412,27 +412,12 @@ namespace RootNS.MyControls
                         {
                             if (match.Index <= lineOffset && lineOffset - match.Index <= match.Value.Length)
                             {
-                                foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[5].GetHeirsList())
+                                Node card = Workflow.GetMatchCard(match, (this.DataContext as Node).Owner);
+                                if (card != null)
                                 {
-                                    if (node.Attachment == null || node.Card == null)
-                                    {
-                                        continue;
-                                    }
-                                    if (match.Value.Equals(node.Title.Trim()))
-                                    {
-                                        toolTip.Content = new CardShower(node);
-                                        toolTip.IsOpen = true;
-                                        return;
-                                    }
-                                    foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
-                                    {
-                                        if (match.Value.Equals(tip.Content.Trim()))
-                                        {
-                                            toolTip.Content = new CardShower(node);
-                                            toolTip.IsOpen = true;
-                                            return;
-                                        }
-                                    }
+                                    toolTip.Content = new CardShower(card);
+                                    toolTip.IsOpen = true;
+                                    return;
                                 }
                             }
                         }
@@ -506,7 +491,7 @@ namespace RootNS.MyControls
                 return;
             }
             var extractor = new TfidfExtractor();
-            IEnumerable strs = extractor.ExtractTags(ThisTextEditor.SelectedText, 10, null);
+            IEnumerable strs = extractor.ExtractTags(ThisTextEditor.SelectedText, 6, null);
             string title = string.Empty;
             foreach (string s in strs)
             {

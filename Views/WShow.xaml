@@ -1,0 +1,18 @@
+﻿<Window x:Class="RootNS.Views.WShow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RootNS.Views"
+        mc:Ignorable="d" Title="WShow" Loaded="Window_Loaded"
+        d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720">
+    <Grid>
+        <avalonEdit:TextEditor 
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            Grid.Row="0"
+            x:Name="ThisTextEditor" ShowLineNumbers="True" IsReadOnly="True"
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
+            FontSize="12pt">
+        </avalonEdit:TextEditor>
+    </Grid>
+</Window>

@@ -52,7 +52,7 @@ namespace RootNS.Views
             //获取鼠标位置以设置窗口
             Point point = Mouse.GetPosition(Gval.Views.MainWindow);
             this.Left = point.X - this.ActualWidth * 0.618;
-            this.Top = point.Y - 26;
+            //this.Top = point.Y - 26;
         }
 
 

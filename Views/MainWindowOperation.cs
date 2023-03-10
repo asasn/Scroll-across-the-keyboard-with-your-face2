@@ -137,5 +137,26 @@ namespace RootNS
         {
 
         }
+
+
+        private void BtnPackage_Click(object sender, RoutedEventArgs e)
+        {
+            string content = string.Empty;
+            foreach (Node card in Gval.CurrentBook.TabRoot.ChildNodes[5].GetHeirsList())
+            {
+                if (card.Attachment == null || card.Card == null || card.IsDir == true)
+                {
+                    continue;
+                }
+                content += card.Title.Trim() + "\n";
+                foreach (Card.Line.Tip tip in card.Card.Lines[0].Tips)
+                {
+                    content += tip.Content.Trim() + "\n";
+                }
+            }
+            Views.WShow wShow = new Views.WShow();
+            wShow.ThisTextEditor.Text = content;
+            wShow.Show();
+        }
     }
 }

@@ -35,6 +35,36 @@ namespace RootNS.Helper
         }
 
 
+        /// <summary>
+        /// 获取匹配的信息卡片
+        /// </summary>
+        /// <param name="match"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static Node GetMatchCard(System.Text.RegularExpressions.Match match, Book book)
+        {
+            foreach (Node card in book.TabRoot.ChildNodes[5].GetHeirsList())
+            {
+                if (card.Attachment == null || card.Card == null || card.IsDir == true)
+                {
+                    continue;
+                }
+                if (match.Value.Equals(card.Title.Trim()))
+                {
+                    return card;
+                }
+                foreach (Card.Line.Tip tip in card.Card.Lines[0].Tips)
+                {
+                    if (match.Value.Equals(tip.Content.Trim()))
+                    {
+                        return card;
+                    }
+                }
+            }
+            return null;
+        }
+
+
         //-----------------------------------------------以下为私有方法-----------------------------------------------
 
 

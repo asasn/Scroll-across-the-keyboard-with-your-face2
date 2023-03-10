@@ -151,6 +151,9 @@
     <Compile Include="Views\WBase.xaml.cs">
       <DependentUpon>WBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WShow.xaml.cs">
+      <DependentUpon>WShow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MyControls\CardShower.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WShow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
