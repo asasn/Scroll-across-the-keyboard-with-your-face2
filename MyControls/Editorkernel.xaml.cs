@@ -491,7 +491,7 @@ namespace RootNS.MyControls
                 return;
             }
             var extractor = new TfidfExtractor();
-            IEnumerable strs = extractor.ExtractTags(ThisTextEditor.SelectedText, 6, null);
+            IEnumerable strs = extractor.ExtractTags(ThisTextEditor.SelectedText, 5, null);
             string title = string.Empty;
             foreach (string s in strs)
             {
@@ -500,9 +500,11 @@ namespace RootNS.MyControls
             Node newNode = new Node
             {
                 Title = title.Trim(),
-                Text = ThisTextEditor.SelectedText
+                Text = ThisTextEditor.SelectedText,
+                Count = EditorHelper.CountWords(ThisTextEditor.SelectedText),
             };
             (this.DataContext as Node).Owner.TabRoot.ChildNodes[4].ChildNodes.Add(newNode);
+            newNode.Insert();
             ThisTextEditor.SelectedText = "";
         }
     }
