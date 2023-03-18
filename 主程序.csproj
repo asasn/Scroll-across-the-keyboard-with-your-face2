@@ -100,6 +100,7 @@
     <Compile Include="Converter\BoolConverter.cs" />
     <Compile Include="Converter\NodeConverter.cs" />
     <Compile Include="Converter\ValueConverter.cs" />
+    <Compile Include="Helper\CommonHelper.cs" />
     <Compile Include="Helper\ControlHelper.cs" />
     <Compile Include="Helper\EditorHelper.cs" />
     <Compile Include="Helper\FileIO.cs" />

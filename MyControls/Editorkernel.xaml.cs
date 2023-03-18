@@ -346,8 +346,8 @@ namespace RootNS.MyControls
         private void Document_Changing(object sender, ICSharpCode.AvalonEdit.Document.DocumentChangeEventArgs e)
         {
             //更改过程，获得增删的文字
-            textCount += EditorHelper.CountWords(e.InsertedText.Text);
-            textCount -= EditorHelper.CountWords(e.RemovedText.Text);
+            textCount += CommonHelper.Count.QiDianCount(e.InsertedText.Text);
+            textCount -= CommonHelper.Count.QiDianCount(e.RemovedText.Text);
         }
 
         private void ThisTextEditor_TextChanged(object sender, EventArgs e)
@@ -376,7 +376,7 @@ namespace RootNS.MyControls
         /// <param name="textCount"></param>
         private void RefreshSelectionContent(int textCount)
         {
-            int sTextCount = EditorHelper.CountWords(ThisTextEditor.SelectedText);
+            int sTextCount = CommonHelper.Count.QiDianCount(ThisTextEditor.SelectedText);
             LbWorksCount.Content = string.Format("{0}/{1}", sTextCount, textCount);
             double sValue = Math.Round(Convert.ToDouble(sTextCount) * Gval.CurrentBook.Price / 1000, 2, MidpointRounding.AwayFromZero);
             double vValue = Math.Round(Convert.ToDouble(textCount) * Gval.CurrentBook.Price / 1000, 2, MidpointRounding.AwayFromZero);
@@ -501,7 +501,7 @@ namespace RootNS.MyControls
             {
                 Title = title.Trim(),
                 Text = ThisTextEditor.SelectedText,
-                Count = EditorHelper.CountWords(ThisTextEditor.SelectedText),
+                Count = CommonHelper.Count.QiDianCount(ThisTextEditor.SelectedText),
             };
             (this.DataContext as Node).Owner.TabRoot.ChildNodes[4].ChildNodes.Add(newNode);
             newNode.Insert();

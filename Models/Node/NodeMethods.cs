@@ -634,7 +634,7 @@ namespace RootNS.Models
                         Title = title.Trim(),
                         Text = "　　" + content.Trim(),
                     };
-                    newNode.Count = EditorHelper.CountWords(newNode.Text);
+                    newNode.Count = CommonHelper.Count.QiDianCount(newNode.Text);
                     parent.ChildNodes.Add(newNode);
                     sqlImport += string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", newNode.Index, newNode.Guid, newNode.Parent.Guid, newNode.TypeName, newNode.IsDir, newNode.IsExpanded, newNode.IsChecked, newNode.IsDel);
                     sqlImport += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", newNode.Guid, newNode.Title.Replace("'", "''"), newNode.Text.Replace("'", "''"), newNode.Summary.Replace("'", "''"), newNode.Count, newNode.PointX, newNode.PointY, newNode.Attachment);
