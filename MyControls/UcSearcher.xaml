@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
-             mc:Ignorable="d" 
-             d:DesignHeight="485" d:DesignWidth="290" DataContext="{Binding ThisSearcher, ElementName=ThisControl}" Loaded="ThisControl_Loaded">
+             mc:Ignorable="d" DataContext="{Binding ThisSearcher, ElementName=ThisControl}"
+             d:DesignHeight="485" d:DesignWidth="290" Loaded="ThisControl_Loaded">
     <Grid Background="#FFFAFAFA" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -14,32 +14,62 @@
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="5,0,5,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33*"/>
-                <ColumnDefinition Width="33*"/>
-                <ColumnDefinition Width="33*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="50*"/>
+                <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
-            <CheckBox x:Name="CbSelected" Content="只搜选中" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbSelected}"/>
-            <CheckBox x:Name="CbTitle" Content="只搜标题" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbTitle}" IsThreeState="True"/>
-            <CheckBox x:Name="CbMaterial" Content="资料库" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbMaterial}"/>
-            <RadioButton x:Name="RbAnd" Content="与模式" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbAnd}"/>
-            <RadioButton x:Name="RbOr" Content="或模式" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbOr}"/>
-            <RadioButton x:Name="RbRegex" Content="正则模式" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbRegex}"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <CheckBox x:Name="CbSelected" Content="只搜选中" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbSelected}" Margin="0,0,5,0"/>
+                <CheckBox x:Name="CbMaterial" Content="资料库" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbMaterial}" Click="CbMaterial_CheckBoxChanged" Margin="0,0,5,0"/>
+                <CheckBox x:Name="CbTitle" Content="当前只搜内容" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbTitle}" IsThreeState="True" Margin="0,0,5,0" Click="CbTitle_CheckBoxChanged"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <CheckBox x:Name="CbChapters" Content="情节" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbChapters}" Margin="0,0,5,0"/>
+                <CheckBox x:Name="CbEvents" Content="事件"  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbEvents}" Margin="0,0,5,0"/>
+                <CheckBox x:Name="CbSnippets" Content="片段"  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbSnippets}" Margin="0,0,5,1"/>
+                <CheckBox x:Name="CbCards" Content="卡片" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbCards}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <RadioButton x:Name="RbAnd" Content="与模式" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbAnd}" Margin="0,0,20,0"/>
+                <RadioButton x:Name="RbOr" Content="或模式" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbOr}" Margin="0,0,20,0"/>
+                <RadioButton x:Name="RbRegex" Content="正则模式" HorizontalAlignment="Stretch" VerticalAlignment="Center" GroupName="mode" IsChecked="{Binding RbRegex}" Margin="0,0,20,0"/>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="5">
             <TextBox Padding="0" Text="{Binding KeyWords, UpdateSourceTrigger=PropertyChanged}" hc:BorderElement.CornerRadius="0" BorderBrush="DodgerBlue" BorderThickness="0,0,0,1" x:Name="TbKeyWords" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="TbKeyWords_KeyDown"/>
             <Button ToolTip="搜索" x:Name="BtnSearch" FontFamily="../Resources/icons/#icomoon" Content="&#xe9cb;" FontSize="16" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  Grid.Column="1" BorderThickness="0" Padding="0" Click="BtnSearch_Click" Background="Transparent" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="30"></Button>
         </Grid>
         <ListBox x:Name="ListBoxOfResults" ItemsSource="{Binding Results}" Grid.Row="2" Margin="5,0,5,5">
+            <ListBox.Resources>
+                <RoutedUICommand x:Key="DelNode" Text="删除节点"/>
+                <RoutedUICommand x:Key="UnDel" Text="撤销删除"/>
+            </ListBox.Resources>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="ListBoxMenu" Opened="ListBoxMenu_Opened">
+                    <MenuItem Header="删除节点" IsEnabled="False" Command="{StaticResource DelNode}" InputGestureText="Delete"/>
+                    <MenuItem Header="撤销删除" IsEnabled="False" Command="{StaticResource UnDel}" InputGestureText="UnDel"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.CommandBindings>
+                <CommandBinding Command="{StaticResource DelNode}" Executed="Command_Delete_Executed" />
+                <CommandBinding Command="{StaticResource UnDel}" Executed="Command_UnDel_Executed" />
+            </ListBox.CommandBindings>
+            <ListBox.InputBindings>
+                <KeyBinding Command="{StaticResource DelNode}" Key="Delete" />
+                <KeyBinding Command="{StaticResource UnDel}" Key="Z" Modifiers="Ctrl" />
+            </ListBox.InputBindings>
             <ListBox.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding ChildNodes}" >
+                <HierarchicalDataTemplate>
                     <ContentControl Content="{Binding Converter={StaticResource NodeConvertToNodeTemplate}}" DataContext="{Binding}"/>
                 </HierarchicalDataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="Opacity" Value="{Binding IsDel, Converter={StaticResource IsDelConvertOpacity}}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
     </Grid>
 </UserControl>

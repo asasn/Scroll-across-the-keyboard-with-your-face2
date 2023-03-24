@@ -425,10 +425,13 @@ namespace RootNS.Models
         /// 获取包括自身在内的后代列表（递归遍历子孙节点）
         /// </summary>
         /// <returns></returns>
-        public ArrayList GetHeirsList()
+        public ArrayList GetHeirsList(bool includeSelf = true)
         {
             ArrayList arrayList = new ArrayList();
-            arrayList.Add(this);
+            if (includeSelf == true)
+            {
+                arrayList.Add(this);
+            }
             RecursiveTraversalChilds(this, arrayList);
             return arrayList;
         }
@@ -528,6 +531,25 @@ namespace RootNS.Models
             this.Parent.ChildNodes[b].Index = b;
             this.Parent.ChildNodes[a].UpdateNodeProperty("节点", "Index", a.ToString());
             this.Parent.ChildNodes[b].UpdateNodeProperty("节点", "Index", b.ToString());
+        }
+
+        /// <summary>
+        /// 获取节点全文
+        /// </summary>
+        /// <returns></returns>
+        public string GetAllContent()
+        {
+            string strTitle = this.Title.ToString();
+            string strText = this.Text.ToString();
+            string strSummary = this.Summary.ToString();
+            string age = this.PointX.ToString() + " " + this.PointY.ToString();
+            string strCard = strTitle + " " + strText + " " + strSummary + " " + age + " ";
+            if (this.Attachment != null)
+            {
+                strCard += this.Attachment.ToString();
+            }
+            string strContent = strTitle + " " + strText + " " + strSummary + " " + strCard;
+            return strContent;
         }
 
 

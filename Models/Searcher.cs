@@ -56,6 +56,54 @@ namespace RootNS.Models
             }
         }
 
+        private bool _cbChapters = true;
+
+        public bool CbChapters
+        {
+            get { return _cbChapters; }
+            set
+            {
+                _cbChapters = value;
+                RaisePropertyChanged(nameof(CbChapters));
+            }
+        }
+
+        private bool _cbEvents = true;
+
+        public bool CbEvents
+        {
+            get { return _cbEvents; }
+            set
+            {
+                _cbEvents = value;
+                RaisePropertyChanged(nameof(CbEvents));
+            }
+        }
+
+        private bool _cbSnippets = true;
+
+        public bool CbSnippets
+        {
+            get { return _cbSnippets; }
+            set
+            {
+                _cbSnippets = value;
+                RaisePropertyChanged(nameof(CbSnippets));
+            }
+        }
+
+        private bool _cbCards = true;
+
+        public bool CbCards
+        {
+            get { return _cbCards; }
+            set
+            {
+                _cbCards = value;
+                RaisePropertyChanged(nameof(CbCards));
+            }
+        }
+
 
         private bool _cbMaterial;
 
@@ -140,6 +188,10 @@ namespace RootNS.Models
             正则模式,
         }
 
+        /// <summary>
+        /// 开始搜索，获取节点列表
+        /// </summary>
+        /// <returns></returns>
         private ArrayList InitSearch()
         {
             ArrayList nodes = new ArrayList();
@@ -148,11 +200,28 @@ namespace RootNS.Models
                 //搜索资料库（选中/全部）
                 if (CbSelected == true)
                 {
-                    nodes = Gval.MaterialBook.SelectedNode.GetHeirsList();
+                    nodes = Gval.MaterialBook.SelectedNode.GetHeirsList(false);
                 }
                 else
                 {
-                    nodes = Gval.MaterialBook.TabRoot.ChildNodes[8].GetHeirsList();
+                    if (CbChapters == true)
+                    {
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[9].GetHeirsList(false));
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[10].GetHeirsList(false));
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[11].GetHeirsList(false));
+                    }
+                    if (CbEvents == true)
+                    {
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[6].GetHeirsList(false));
+                    }
+                    if (CbSnippets == true)
+                    {
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[7].GetHeirsList(false));
+                    }
+                    if (CbCards == true)
+                    {
+                        nodes.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[8].GetHeirsList(false));
+                    }
                 }
             }
             else
@@ -164,9 +233,24 @@ namespace RootNS.Models
                 }
                 else
                 {
-                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList());
-                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[1].GetHeirsList());
-                    nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList());
+                    if (CbChapters == true)
+                    {
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList(false));
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList(false));
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[1].GetHeirsList(false));
+                    }
+                    if (CbEvents == true)
+                    {
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[3].GetHeirsList(false));
+                    }
+                    if (CbSnippets == true)
+                    {
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[4].GetHeirsList(false));
+                    }
+                    if (CbCards == true)
+                    {
+                        nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[5].GetHeirsList(false));
+                    }
                 }
             }
             return nodes;
@@ -224,18 +308,28 @@ namespace RootNS.Models
         {
             string strTitle = node.Title.ToString();
             string strText = node.Text.ToString();
-            string strContent = string.Empty;
-            if (CbTitle == true)
+            string strSummary = node.Summary.ToString();
+            string age = node.PointX.ToString() + " " + node.PointY.ToString();
+            string strCard = strTitle + " " + strText + " " + strSummary + " " + age + " ";
+            if (node.Attachment != null)
             {
-                strContent = strTitle;
+                strCard += node.Attachment.ToString();
             }
+            string strContent = string.Empty;
             if (CbTitle == false)
             {
-                strContent = strText;
+                //只搜内容
+                strContent = strText + " " + strSummary + " " + strCard;
+            }
+            if (CbTitle == true)
+            {
+                //只搜标题
+                strContent = strTitle;
             }
             if (CbTitle == null)
             {
-                strContent = strTitle + strText;
+                //一起搜索
+                strContent = node.GetAllContent();
             }
             string[] Matches = new string[] { };
             string ListItemName = String.Empty;

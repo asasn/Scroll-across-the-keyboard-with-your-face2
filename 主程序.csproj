@@ -118,6 +118,7 @@
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\Book\BookMethods.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\ChatGPT.cs" />
     <Compile Include="Models\EditorItem.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Gval\Gavl_Mind.cs" />
@@ -151,6 +152,9 @@
     </Compile>
     <Compile Include="Views\WBase.xaml.cs">
       <DependentUpon>WBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WChatAI.xaml.cs">
+      <DependentUpon>WChatAI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WShow.xaml.cs">
       <DependentUpon>WShow.xaml</DependentUpon>
@@ -259,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WChatAI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

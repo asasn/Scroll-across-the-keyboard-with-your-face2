@@ -158,5 +158,11 @@ namespace RootNS
             wShow.ThisTextEditor.Text = content;
             wShow.Show();
         }
+
+        private void BtnChatAI_Click(object sender, RoutedEventArgs e)
+        {
+            Views.WChatAI chatAI = new Views.WChatAI();
+            chatAI.Show();
+        }
     }
 }

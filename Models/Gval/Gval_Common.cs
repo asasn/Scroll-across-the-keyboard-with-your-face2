@@ -84,6 +84,36 @@ namespace RootNS.Models
             }
         }
 
+        private static string _chatGpt_apikey;
+        /// <summary>
+        /// ChatGPT的apikey
+        /// </summary>
+        public static string ChatGpt_apikey
+        {
+            get { return _chatGpt_apikey; }
+            set
+            {
+                _chatGpt_apikey = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(ChatGpt_apikey)));
+            }
+        }
+
+        private static string _chatGpt_input;
+        /// <summary>
+        /// ChatGPT的用户输入
+        /// </summary>
+        public static string ChatGpt_input
+        {
+            get { return _chatGpt_input; }
+            set
+            {
+                _chatGpt_input = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(ChatGpt_input)));
+            }
+        }
+
+
+
         private static string _previousText = string.Empty;
         /// <summary>
         /// 搜索查找的文字（上一个）

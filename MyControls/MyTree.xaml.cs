@@ -39,7 +39,7 @@ namespace RootNS.MyControls
             ((sender as ContextMenu).Items[1] as MenuItem).IsEnabled = true;
             ((sender as ContextMenu).Items[2] as MenuItem).IsEnabled = true;
         }
-    
+
 
         #region 按钮点击事件
 
@@ -357,12 +357,10 @@ namespace RootNS.MyControls
 
         private void SearchBar_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
-            //ToDo：该功能暂时未能向下遍历，只能取第一层子节点
             BtnClearSearch.Visibility = Visibility.Visible;
-            foreach (Node node in TreeNodes.Items)
+            foreach (Node node in (TreeNodes.DataContext as Node).GetHeirsList())
             {
-                if (node.Title.ToLower().Contains(e.Info.ToLower()) ||
-                    node.Text.ToLower().Contains(e.Info.ToLower()))
+                if (node.GetAllContent().Contains(e.Info.ToLower()))
                 {
                     node.Visibility = Visibility.Visible;
                 }
@@ -371,18 +369,25 @@ namespace RootNS.MyControls
                     node.Visibility = Visibility.Collapsed;
                 }
             }
+            //把父节点也显示
+            foreach (Node node in (TreeNodes.DataContext as Node).GetHeirsList())
+            {
+                if (node.Visibility == Visibility.Visible)
+                {
+                    node.Parent.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void BtnClearSearch_Click(object sender, RoutedEventArgs e)
         {
-            //UnDone：对应向下遍历的恢复暂未实现
             if (string.IsNullOrEmpty(SearchBar.Text))
             {
                 return;
             }
             BtnClearSearch.Visibility = Visibility.Hidden;
             SearchBar.Clear();
-            foreach (Node node in TreeNodes.Items)
+            foreach (Node node in (TreeNodes.DataContext as Node).GetHeirsList())
             {
                 node.Visibility = Visibility.Visible;
             }
