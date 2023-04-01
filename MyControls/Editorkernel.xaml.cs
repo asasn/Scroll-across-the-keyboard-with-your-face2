@@ -503,7 +503,7 @@ namespace RootNS.MyControls
                 Text = ThisTextEditor.SelectedText,
                 Count = CommonHelper.Count.QiDianCount(ThisTextEditor.SelectedText),
             };
-            (this.DataContext as Node).Owner.TabRoot.ChildNodes[4].ChildNodes.Add(newNode);
+            (this.DataContext as Node).Owner.TabRoot.ChildNodes[4].GetLastNode(true).ChildNodes.Add(newNode);
             newNode.Insert();
             ThisTextEditor.SelectedText = "";
         }
