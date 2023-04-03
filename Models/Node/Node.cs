@@ -61,7 +61,6 @@ namespace RootNS.Models
 
 
 
-
         private Node _parent;
         /// <summary>
         /// 父节点对象

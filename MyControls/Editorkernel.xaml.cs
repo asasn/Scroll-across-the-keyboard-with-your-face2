@@ -118,7 +118,8 @@ namespace RootNS.MyControls
             {
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
-                node.Count = textCount;
+                textCount = node.Count = CommonHelper.Count.QiDianCount(ThisTextEditor.Text);
+                RefreshShowContent(textCount);
                 string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].ExecuteNonQuery(sql);
                 //保持连接会导致文件占用，不能及时同步和备份，过多重新连接则是不必要的开销。

@@ -53,14 +53,26 @@ namespace RootNS.Helper
             /// </summary>
             /// <param name="content"></param>
             /// <returns></returns>
-            public static int QiDianCount(string content)
+            public static int QiDianCount(string input)
             {
-                if (string.IsNullOrEmpty(content))
+                if (string.IsNullOrEmpty(input))
                 {
                     return 0;
                 }
-                int total = Regex.Matches(content, @"\S").Count;
-                return total;
+                // 将特定符号替换为一个■
+                input = Regex.Replace(input, @"(——)|[…]", "■", RegexOptions.Multiline);
+
+                // 将连续的英文单词替换为一个■
+                input = Regex.Replace(input, @"([a-zA-Z\p{P}][a-zA-Z\p{P}]+)", "■", RegexOptions.Multiline);
+
+                // 将连续的数字替换为一个■
+                input = Regex.Replace(input, @"([0-9\p{P}][0-9\p{P}]+)", "■", RegexOptions.Multiline);
+
+                // 去除不可见符号和全角/半角空格
+                input = Regex.Replace(input, @"[\s]", "", RegexOptions.Multiline);
+
+                // 返回字符串中空格的数量加1
+                return input.Length;
             }
 
             /// <summary>
