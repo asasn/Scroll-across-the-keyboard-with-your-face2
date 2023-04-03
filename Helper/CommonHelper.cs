@@ -63,10 +63,10 @@ namespace RootNS.Helper
                 input = Regex.Replace(input, @"(——)|[…]", "■", RegexOptions.Multiline);
 
                 // 将连续的英文单词替换为一个■
-                input = Regex.Replace(input, @"([a-zA-Z\p{P}][a-zA-Z\p{P}]+)", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"([a-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F][a-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]+)", "■", RegexOptions.Multiline);
 
                 // 将连续的数字替换为一个■
-                input = Regex.Replace(input, @"([0-9\p{P}][0-9\p{P}]+)", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"([0-9\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F][0-9\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]+)", "■", RegexOptions.Multiline);
 
                 // 去除不可见符号和全角/半角空格
                 input = Regex.Replace(input, @"[\s]", "", RegexOptions.Multiline);
