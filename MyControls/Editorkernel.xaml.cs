@@ -202,27 +202,11 @@ namespace RootNS.MyControls
 
         private void Command_EditCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //ToDo：在文档当中编辑卡片的功能，暂未考虑清楚是否应该有这个功能
-            //Card[] CardBoxs = { Gval.CurrentBook.CardRole, Gval.CurrentBook.CardOther, Gval.CurrentBook.CardWorld };
-            //foreach (Card rootCard in CardBoxs)
-            //{
-            //    foreach (Card card in rootCard.ChildNodes)
-            //    {
-            //        if (ThisTextEditor.SelectedText.Equals(card.Title) == true || card.IsEqualsNickNames(ThisTextEditor.SelectedText, card.NickNames))
-            //        {
-            //            CardWindow cw = new CardWindow(card);
-            //            cw.Left = ThisTextEditor.TranslatePoint(Mouse.GetPosition(this), Gval.View.MainWindow).X - 150;
-            //            cw.Top = ThisTextEditor.TranslatePoint(Mouse.GetPosition(this), Gval.View.MainWindow).Y + 20;
-            //            cw.ShowDialog();
-            //            return;
-            //        }
-            //    }
-            //}
-
-
             foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[5].GetHeirsList())
             {
-                if (node.Attachment == null || node.Card == null)
+                if (node.Attachment == null || node.Card == null ||
+                    node.IsDel == true || node.IsDir == true ||
+                    string.IsNullOrEmpty(node.Title.Trim()) )
                 {
                     continue;
                 }
