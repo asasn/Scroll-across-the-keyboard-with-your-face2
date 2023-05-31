@@ -166,6 +166,11 @@ namespace RootNS.Models
         private bool HasNameChange = false;
 
         /// <summary>
+        /// 节点是否在数据库中的标志，配合在编辑器中新增信息卡的功能来使用
+        /// </summary>
+        public bool HasSave = false;
+
+        /// <summary>
         /// （供搜索功能使用的临时变量）匹配的字符串数组
         /// </summary>
         public string[] Matches { get; set; }

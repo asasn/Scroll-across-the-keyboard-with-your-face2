@@ -49,7 +49,7 @@
                     <Label Content="实年" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="1" IsEnabled="False"/>
                     <TextBox x:Name="TbAge" Background="Transparent" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" TextWrapping="Wrap" MinHeight="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" Grid.Column="1" IsEnabled="False"/>
                     <Label Content="类型" BorderThickness="0" Padding="0" Background="Khaki" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,4,2,2" Height="20" Width="26" Grid.Column="2"/>
-                    <TextBox x:Name="TbTag" Background="Transparent" Text="" Padding="1" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinHeight="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Margin="30,0,5,0" Grid.Column="2" TextWrapping="Wrap"/>
+                    <ComboBox x:Name="TbTag" IsEnabled="False" ItemsSource="{Binding TreeRoot.Parent.DirCollection}" DisplayMemberPath="Title" Background="Transparent" Padding="1"  hc:BorderElement.CornerRadius="0" MinHeight="20" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="30,0,5,0" Grid.Column="2" SelectionChanged="TbTag_SelectionChanged" />
                 </Grid>
                 <ScrollViewer Grid.Row="3" x:Name="GMainLines" >
                     <ItemsControl x:Name="itemsControl" VirtualizingPanel.IsVirtualizing="True" ItemsSource="{Binding Card.Lines}">

@@ -163,6 +163,7 @@ namespace RootNS.Models
                     IsExpanded = (bool)reader["IsExpanded"],
                     IsChecked = (bool)reader["IsChecked"],
                     IsDel = (bool)reader["IsDel"],
+                    HasSave = true
                 };
                 pNode.ChildNodes.Add(node);
                 if (node.TypeName == node.Owner.TabRoot.ChildNodes[5].TypeName)

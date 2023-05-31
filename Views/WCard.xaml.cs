@@ -39,7 +39,7 @@ namespace RootNS.Views
             TbSummary.Text = (this.DataContext as Node).Summary;
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
-            TbTag.Text = (this.DataContext as Node).Card.Tag;
+            TbTag.SelectedItem = (this.DataContext as Node).Parent;
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).Card.HasChange = false;
             //获取鼠标位置以设置窗口
@@ -47,6 +47,7 @@ namespace RootNS.Views
             this.Left = point.X - this.ActualWidth * 0.5;
             this.Top = point.Y - 26;
             BtnSeeMore_Click(null, null);
+
         }
 
 
@@ -56,7 +57,9 @@ namespace RootNS.Views
             DragMove();
         }
 
-
+        /// <summary>
+        /// 更新信息卡
+        /// </summary>
         private void UpdataCard()
         {
             //ToDo：这里可以进行一些sql语句的优化
@@ -71,7 +74,8 @@ namespace RootNS.Views
             (this.DataContext as Node).UpdateNodeProperty("内容", "PointY", (this.DataContext as Node).PointY.ToString());
             (this.DataContext as Node).UpdateNodeProperty("内容", "Summary", (this.DataContext as Node).Summary);
             (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", (this.DataContext as Node).Attachment.ToString());
-
+            (this.DataContext as Node).UpdateNodeProperty("节点", "Puid", (this.DataContext as Node).Parent.Guid.ToString());
+            (this.DataContext as Node).UpdateNodeProperty("节点", "Index", (this.DataContext as Node).Index.ToString());
         }
 
 
@@ -84,6 +88,10 @@ namespace RootNS.Views
             (this.DataContext as Node).Owner.UpdataSyntax();
         }
 
+        /// <summary>
+        /// 是否存在同名节点
+        /// </summary>
+        /// <returns></returns>
         private bool HasDuplicateTitle()
         {
             foreach (Node node in (this.DataContext as Node).Parent.ChildNodes)
@@ -108,7 +116,14 @@ namespace RootNS.Views
             }
             (this.DataContext as Node).Card.ClaerNullTips();
             (this.DataContext as Node).Card.HasChange = false;
-            UpdataCard();
+            if ((this.DataContext as Node).HasSave == true)
+            {
+                UpdataCard();
+            }
+            else
+            {
+                (this.DataContext as Node).Insert();
+            }
             UpDataHilgliting();
         }
 
@@ -154,6 +169,18 @@ namespace RootNS.Views
             }
         }
 
+        private void TbTag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ComboBox).IsEnabled == false)
+            {
+                TbTag.IsEnabled = true;
+                return;
+            }
+            (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
+            (TbTag.SelectedItem as Node).ChildNodes.Add(this.DataContext as Node);
+            (this.DataContext as Node).Card.HasChange = true;
+        }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             (this.DataContext as Node).Card.HasChange = true;
@@ -175,7 +202,6 @@ namespace RootNS.Views
         {
             ((e.Source as Button).DataContext as Card.Line).Tips.Add(new Card.Line.Tip());
         }
-
 
     }
 }

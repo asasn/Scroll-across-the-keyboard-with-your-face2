@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.SQLite;
@@ -292,12 +293,33 @@ namespace RootNS.Models
             return root;
         }
 
-
         /// <summary>
-        /// 新建节点至表中（插入或忽略）
+        /// 获取子节点当中的目录集合
         /// </summary>
-        /// <param name="book"></param>
-        public void Insert()
+        public ObservableCollection<Node> DirCollection
+        {
+            get { return GetDirCollection(); }
+        }
+        private ObservableCollection<Node> GetDirCollection()
+        {
+            ObservableCollection<Node> dirList = new ObservableCollection<Node>();
+            foreach (Node node in this.ChildNodes)
+            {
+                if (node.IsDir == true)
+                {
+                    dirList.Add(node);
+                }
+            }
+            return dirList;
+        }
+
+
+
+            /// <summary>
+            /// 新建节点至表中（插入或忽略）
+            /// </summary>
+            /// <param name="book"></param>
+            public void Insert()
         {
             string sql = string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", this.Index, this.Guid, this.Parent.Guid, this.TypeName, this.IsDir, this.IsExpanded, this.IsChecked, this.IsDel);
             sql += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", this.Guid, this.Title.Replace("'", "''"), this.Text.Replace("'", "''"), this.Summary.Replace("'", "''"), this.Count, this.PointX, this.PointY, this.Attachment);

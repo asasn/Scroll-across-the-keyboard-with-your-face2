@@ -202,6 +202,7 @@ namespace RootNS.MyControls
 
         private void Command_EditCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            bool isMatch = false;
             foreach (Node node in (this.DataContext as Node).Owner.TabRoot.ChildNodes[5].GetHeirsList())
             {
                 if (node.Attachment == null || node.Card == null ||
@@ -210,7 +211,6 @@ namespace RootNS.MyControls
                 {
                     continue;
                 }
-                bool isMatch = false;
                 if (ThisTextEditor.SelectedText.Equals(node.Title.Trim()))
                 {
                     isMatch = true;
@@ -227,12 +227,23 @@ namespace RootNS.MyControls
                 }
                 if (isMatch)
                 {
+                    //匹配的情况
                     //在生成窗口对象之后，展现界面之前赋值给DataContext
                     WCard wCard = new WCard();
                     wCard.DataContext = node;
                     wCard.Show();
                     return;
                 }
+            }
+            if (isMatch == false && !string.IsNullOrWhiteSpace(ThisTextEditor.SelectedText))
+            {
+                //未匹配的情况
+                WCard wCard = new WCard();
+                Node newNode = new Node() { Title = ThisTextEditor.SelectedText};
+                Gval.CurrentBook.TabRoot.ChildNodes[5].ChildNodes.Add(newNode);
+                wCard.DataContext = newNode;
+                wCard.Show();
+                return;
             }
         }
         #endregion
