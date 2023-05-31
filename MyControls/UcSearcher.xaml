@@ -25,7 +25,7 @@
                 <CheckBox x:Name="CbTitle" Content="当前只搜内容" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbTitle}" IsThreeState="True" Margin="0,0,5,0" Click="CbTitle_CheckBoxChanged"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <CheckBox x:Name="CbChapters" Content="情节" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbChapters}" Margin="0,0,5,0"/>
+                <CheckBox x:Name="CbChapters" Content="章节" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbChapters}" Margin="0,0,5,0"/>
                 <CheckBox x:Name="CbEvents" Content="事件"  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbEvents}" Margin="0,0,5,0"/>
                 <CheckBox x:Name="CbSnippets" Content="片段"  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbSnippets}" Margin="0,0,5,1"/>
                 <CheckBox x:Name="CbCards" Content="卡片" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding CbCards}"/>
