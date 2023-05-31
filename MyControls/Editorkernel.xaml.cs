@@ -243,6 +243,7 @@ namespace RootNS.MyControls
                 Gval.CurrentBook.TabRoot.ChildNodes[5].ChildNodes.Add(newNode);
                 wCard.DataContext = newNode;
                 wCard.Show();
+                newNode.Card.HasChange = true; //需要添加进去之后才能生成卡片，以及Show之后再扳回True，所以，注意这条语句要在Add和Show之后；
                 return;
             }
         }

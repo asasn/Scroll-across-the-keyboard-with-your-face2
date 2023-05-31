@@ -138,7 +138,7 @@ namespace RootNS.Views
                 }
                 if (dr == MessageBoxResult.No)
                 {
-
+                    (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
                 }
                 if (dr == MessageBoxResult.Cancel)
                 {
