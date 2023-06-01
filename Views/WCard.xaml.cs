@@ -29,6 +29,8 @@ namespace RootNS.Views
 
         }
 
+        public Node OldParent { get; set; }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if ((this.DataContext as Node).Attachment == null)
@@ -39,6 +41,10 @@ namespace RootNS.Views
             TbSummary.Text = (this.DataContext as Node).Summary;
             TbBornYear.Text = (this.DataContext as Node).PointX.ToString();
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
+            if (string.IsNullOrEmpty((this.DataContext as Node).Card.Tag))
+            {
+                (this.DataContext as Node).Card.Tag = "其他";
+            }
             TbTag.SelectedItem = (this.DataContext as Node).Parent;
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
             (this.DataContext as Node).Card.HasChange = false;
@@ -63,7 +69,7 @@ namespace RootNS.Views
         private void UpdataCard()
         {
             //ToDo：这里可以进行一些sql语句的优化
-            (this.DataContext as Node).Card.Tag = TbTag.Text;
+            (this.DataContext as Node).Card.Tag = (this.DataContext as Node).Parent.Title;
             (this.DataContext as Node).Title = TbTitle.Text;
             (this.DataContext as Node).PointX = Convert.ToInt64(TbBornYear.Text);
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
@@ -79,14 +85,7 @@ namespace RootNS.Views
         }
 
 
-        private void UpDataHilgliting()
-        {
-            if (Gval.Views.CurrentEditorkernel == null)
-            {
-                return;
-            }
-            (this.DataContext as Node).Owner.UpdataSyntax();
-        }
+
 
         /// <summary>
         /// 是否存在同名节点
@@ -116,15 +115,12 @@ namespace RootNS.Views
             }
             (this.DataContext as Node).Card.ClaerNullTips();
             (this.DataContext as Node).Card.HasChange = false;
-            if ((this.DataContext as Node).HasSave == true)
-            {
-                UpdataCard();
-            }
-            else
+            if ((this.DataContext as Node).HasSave == false)
             {
                 (this.DataContext as Node).Insert();
             }
-            UpDataHilgliting();
+            UpdataCard();
+            Workflow.UpDataHilgliting(this.DataContext as Node);
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -139,6 +135,10 @@ namespace RootNS.Views
                 if (dr == MessageBoxResult.No)
                 {
                     (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
+                    if (OldParent != null)
+                    {
+                        OldParent.ChildNodes.Add(this.DataContext as Node);
+                    }
                 }
                 if (dr == MessageBoxResult.Cancel)
                 {
@@ -176,6 +176,7 @@ namespace RootNS.Views
                 TbTag.IsEnabled = true;
                 return;
             }
+            OldParent = (this.DataContext as Node).Parent;
             (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
             (TbTag.SelectedItem as Node).ChildNodes.Add(this.DataContext as Node);
             (this.DataContext as Node).Card.HasChange = true;
@@ -200,8 +201,23 @@ namespace RootNS.Views
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            ((e.Source as Button).DataContext as Card.Line).Tips.Add(new Card.Line.Tip());
+            Card.Line.Tip newTip = new Card.Line.Tip();
+            ((e.Source as Button).DataContext as Card.Line).Tips.Add(newTip);
+            _tipSwitch = true;
         }
 
+        /// <summary>
+        /// Tip生成的TextBox控件，焦点开关
+        /// </summary>
+        private bool _tipSwitch = false;
+
+        private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_tipSwitch == true)
+            {
+                (sender as TextBox).Focus();
+                _tipSwitch = false;
+            }
+        }
     }
 }

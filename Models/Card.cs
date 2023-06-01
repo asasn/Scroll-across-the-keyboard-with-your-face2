@@ -50,7 +50,7 @@ namespace RootNS.Models
             }
         }
 
-        private string _tag = "角色";
+        private string _tag = "其他";
         /// <summary>
         /// 卡片的类型标记
         /// </summary>

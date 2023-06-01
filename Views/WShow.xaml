@@ -12,7 +12,7 @@
             Grid.Row="0"
             x:Name="ThisTextEditor" ShowLineNumbers="True" IsReadOnly="True"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="12pt">
+            FontSize="10.5pt">
         </avalonEdit:TextEditor>
     </Grid>
 </Window>

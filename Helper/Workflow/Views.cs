@@ -39,5 +39,18 @@ namespace RootNS.Helper
         {
             thisWin.Top = 300 + offset;
         }
+
+        /// <summary>
+        /// 更新编辑器中的着色
+        /// </summary>
+        /// <param name="node"></param>
+        public static void UpDataHilgliting(Node node)
+        {
+            if (Gval.Views.CurrentEditorkernel == null)
+            {
+                return;
+            }
+            node.Owner.UpdataSyntax();
+        }
     }
 }
