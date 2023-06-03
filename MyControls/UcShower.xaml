@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RootNS.MyControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="300">
+    <UserControl.Resources>
+        <RoutedUICommand x:Key="Typesetting" Text="排版"/>
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource Typesetting}" Executed="Command_Typesetting_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{StaticResource Typesetting}" Key="F9"/>
+    </UserControl.InputBindings>
+        <Grid Margin="5">
+            <avalonEdit:TextEditor Visibility="Hidden"
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            x:Name="ThisTextEditor" ShowLineNumbers="False"
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
+            FontSize="10.5pt"                               
+            KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged">
+                <avalonEdit:TextEditor.Options>
+                    <avalonEdit:TextEditorOptions
+                    HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
+                    WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
+                </avalonEdit:TextEditor.Options>
+            </avalonEdit:TextEditor>
+        </Grid>
 </UserControl>

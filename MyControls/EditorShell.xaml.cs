@@ -68,6 +68,10 @@ namespace RootNS.MyControls
                 {
                     stuff.Text = "　　";
                 }
+                if (string.IsNullOrWhiteSpace(stuff.Summary) == true)
+                {
+                    stuff.Summary = "　　";
+                }
                 editorBase.ThisTextEditor.Text = stuff.Text;
                 editorBase.BtnSaveDoc.IsEnabled = false;
                 editorBase.ThisTextEditor.Select(editorBase.ThisTextEditor.Text.Length, 0);
@@ -95,6 +99,21 @@ namespace RootNS.MyControls
                 if (oldItem != null)
                 {
                     Gval.Views.EditorTabControl.Items.Remove(oldItem);
+                    if (Gval.Views.EditorTabControl.Items.Count == 0)
+                    {
+                        Gval.Views.CurrentEditorkernel = null;
+                    }
+                }
+                if (Gval.Views.CurrentEditorkernel != null)
+                {
+                    //关闭标签页的时候，更新Summary的文本
+                    Gval.Views.UcShower.Tag = null;
+                    Gval.Views.UcShower.ThisTextEditor.Text = (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary;
+                    Gval.Views.UcShower.Tag = true;
+                }
+                else
+                {
+                    Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Hidden;
                 }
                 //Console.WriteLine("关闭，从列表中删除");
             }

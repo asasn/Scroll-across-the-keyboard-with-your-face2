@@ -25,8 +25,8 @@ namespace RootNS
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, Gval.CurrentBook.Guid);
             Gval.CurrentBook.Load();
             Gval.FlagLoadingCompleted = true;
-            RbEvents.IsChecked = false;
-            RbEvents.IsChecked = true;
+            RbEventsInBook.IsChecked = false;
+            RbEventsInBook.IsChecked = true;
             Gval.Views.UcSearcher.TbKeyWords.Clear();
             Gval.Views.UcSearcher.ThisSearcher.Start();
         }
@@ -87,7 +87,7 @@ namespace RootNS
 
         }
 
-        private void RbEvents_Checked(object sender, RoutedEventArgs e)
+        private void RbEventsInBook_Checked(object sender, RoutedEventArgs e)
         {
             NotesTree.DataContext = Gval.CurrentBook.TabRoot.ChildNodes[3];
         }

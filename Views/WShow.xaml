@@ -8,11 +8,15 @@
         d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720">
     <Grid>
         <avalonEdit:TextEditor 
-            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-            Grid.Row="0"
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"            
             x:Name="ThisTextEditor" ShowLineNumbers="True" IsReadOnly="True"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
             FontSize="10.5pt">
+            <avalonEdit:TextEditor.Options>
+                <avalonEdit:TextEditorOptions
+                    HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
+                    WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
+            </avalonEdit:TextEditor.Options>
         </avalonEdit:TextEditor>
     </Grid>
 </Window>

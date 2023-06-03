@@ -68,7 +68,12 @@ namespace RootNS.MyControls
             {
                 (this.DataContext as Node).Owner.UpdataSyntax();
             }
+            Gval.Views.UcShower.Tag = null;
+            Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
+            Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
+            Gval.Views.UcShower.Tag = true;
         }
+
 
         private bool canSaveFlag;
         Stopwatch stopWatch = new Stopwatch();
@@ -118,6 +123,7 @@ namespace RootNS.MyControls
             {
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
+                node.Summary = Gval.Views.UcShower.ThisTextEditor.Text;
                 textCount = node.Count = CommonHelper.Count.QiDianCount(ThisTextEditor.Text);
                 RefreshShowContent(textCount);
                 string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
@@ -309,10 +315,6 @@ namespace RootNS.MyControls
                 Command_SaveText_Executed(null, null);
             }
         }
-        private void ThisTextEditor_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -475,6 +477,14 @@ namespace RootNS.MyControls
             slider.Value = 12;
         }
 
+        private void BtnSummary_Click(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.UcShower.Tag = null;
+            Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
+            Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
+            Gval.Views.UcShower.Tag = true;
+        }
+
         private void MenuItem0_Click(object sender, RoutedEventArgs e)
         {
             FunctionsPack.ShowMessageBox("新增信息卡（施工中）！");
@@ -504,5 +514,7 @@ namespace RootNS.MyControls
             newNode.Insert();
             ThisTextEditor.SelectedText = "";
         }
+
+
     }
 }

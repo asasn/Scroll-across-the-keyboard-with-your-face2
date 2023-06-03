@@ -324,7 +324,12 @@ namespace RootNS.Models
             public void Insert()
         {
             string sql = string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", this.Index, this.Guid, this.Parent.Guid, this.TypeName.Replace("'", "''"), this.IsDir, this.IsExpanded, this.IsChecked, this.IsDel);
-            sql += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", this.Guid, this.Title.Replace("'", "''"), this.Text.Replace("'", "''"), this.Summary.Replace("'", "''"), this.Count, this.PointX, this.PointY, this.Attachment.ToString().Replace("'", "''"));
+            string attachment = string.Empty;
+            if (this.Attachment != null)
+            {
+                attachment = this.Attachment.ToString().Replace("'", "''");
+            }
+            sql += string.Format("INSERT OR IGNORE INTO 内容 (Guid, Title, Text, Summary, Count, PointX, PointY, Attachment) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');", this.Guid, this.Title.Replace("'", "''"), this.Text.Replace("'", "''"), this.Summary.Replace("'", "''"), this.Count, this.PointX, this.PointY, attachment);
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sql);
         }
 
