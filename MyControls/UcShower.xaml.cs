@@ -35,6 +35,7 @@ namespace RootNS.MyControls
             {
                 return;
             }
+            (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary = ThisTextEditor.Text;
             Gval.Views.CurrentEditorkernel.BtnSaveDoc.IsEnabled = true;
         }
 

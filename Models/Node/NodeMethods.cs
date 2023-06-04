@@ -317,11 +317,11 @@ namespace RootNS.Models
 
 
 
-            /// <summary>
-            /// 新建节点至表中（插入或忽略）
-            /// </summary>
-            /// <param name="book"></param>
-            public void Insert()
+        /// <summary>
+        /// 新建节点至表中（插入或忽略）
+        /// </summary>
+        /// <param name="book"></param>
+        public void Insert()
         {
             string sql = string.Format("INSERT OR IGNORE INTO 节点 ([Index], Guid, Puid, TypeName, IsDir, IsExpanded, IsChecked, IsDel) VALUES ({0}, '{1}', '{2}', '{3}','{4}','{5}','{6}','{7}' );", this.Index, this.Guid, this.Parent.Guid, this.TypeName.Replace("'", "''"), this.IsDir, this.IsExpanded, this.IsChecked, this.IsDel);
             string attachment = string.Empty;

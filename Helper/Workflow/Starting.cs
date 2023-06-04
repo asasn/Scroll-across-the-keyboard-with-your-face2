@@ -21,9 +21,27 @@ namespace RootNS.Helper
                 FileIO.TryToCreateFolder(Gval.Path.DataDirectory);
             }
             Gval.MaterialBook.Load();
+            LoadWebdavInfo();
         }
 
-
+        private static void LoadWebdavInfo()
+        {
+            object url = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.WebdavUrl);
+            object userName = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.WebdavUserName);
+            object passWord = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.WebdavPassWord);
+            if (url != null)
+            {
+                Gval.Webdav.Url = url.ToString();
+            }
+            if (userName != null)
+            {
+                Gval.Webdav.UserName = userName.ToString();
+            }
+            if (passWord != null)
+            {
+                Gval.Webdav.PassWord = passWord.ToString();
+            }
+        }
 
         /// <summary>
         /// 将资料库和所有书籍载入BooksBank对象当中

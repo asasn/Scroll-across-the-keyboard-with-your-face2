@@ -106,8 +106,9 @@ namespace RootNS
         {
             //载入书籍数据
             Workflow.LoadBooksToBank();
-            Gval.FlagLoadingCompleted = true;
-        }
+            Gval.FlagLoadingCompleted = true;        }
+
+
 
     }
 }

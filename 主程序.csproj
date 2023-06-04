@@ -109,6 +109,7 @@
     <Compile Include="Helper\SqliteHelper.cs" />
     <Compile Include="Helper\SysHelper.cs" />
     <Compile Include="Helper\TableHelper.cs" />
+    <Compile Include="Helper\WebdavHelper.cs" />
     <Compile Include="Helper\Workflow\DataIn.cs" />
     <Compile Include="Helper\Workflow\DataOut.cs" />
     <Compile Include="Helper\Workflow\Starting.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Models\Gval\Gval_Common.cs" />
     <Compile Include="Models\Gval\Gval_ControlObject.cs" />
     <Compile Include="Models\Gval\Gval_Path.cs" />
+    <Compile Include="Models\Gval\Gval_Settings.cs" />
     <Compile Include="Models\Name.cs" />
     <Compile Include="Models\Node\NodeFields.cs" />
     <Compile Include="MyControls\CardShower.xaml.cs">
@@ -155,6 +157,9 @@
     </Compile>
     <Compile Include="Views\WChatAI.xaml.cs">
       <DependentUpon>WChatAI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WSettings.xaml.cs">
+      <DependentUpon>WSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WShow.xaml.cs">
       <DependentUpon>WShow.xaml</DependentUpon>
@@ -267,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WChatAI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

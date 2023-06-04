@@ -24,7 +24,7 @@
             KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged">
                 <avalonEdit:TextEditor.Options>
                     <avalonEdit:TextEditorOptions
-                    HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
+                    HighlightCurrentLine="False" ShowSpaces="True" ConvertTabsToSpaces="True"
                     WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
                 </avalonEdit:TextEditor.Options>
             </avalonEdit:TextEditor>

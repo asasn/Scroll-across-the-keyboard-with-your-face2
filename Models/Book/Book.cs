@@ -26,6 +26,7 @@ namespace RootNS.Models
             全局资料管理,
             全局题材管理,
             全局灵感管理,
+            云文档,
             Count,
         }
 

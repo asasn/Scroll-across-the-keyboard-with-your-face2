@@ -142,7 +142,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100*"/>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
                 <StackPanel >
                     <RadioButton x:Name="RbPlotDesign" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe95b;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="情节设计（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbPlotDesign_Checked"/>
@@ -150,13 +150,15 @@
                     <RadioButton x:Name="RbCards" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCards_Checked"/>
                     <RadioButton x:Name="RbMaterial" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe923;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="资料管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbMaterial_Checked" />
                     <RadioButton x:Name="RbTopic" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xe922;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="题材管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbTopic_Checked" />
-                   <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
+                    <!--<Button BorderBrush="Transparent" Background="Transparent" Content="" Width="30" Height="30" Margin="0,5,0,0"/>-->
                     <RadioButton x:Name="RbInspiration" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea15;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="灵感管理（全局）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbInspiration_Checked" IsChecked="True"/>
-                    <Button x:Name="BtnChatAI" FontFamily="../Resources/icons/#icomoon" Content="&#xe943;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="对话AI" Width="30" Height="30" Margin="0,5,0,0" Click="BtnChatAI_Click"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2">
+                    <Button x:Name="BtnCloudDocument" FontFamily="../Resources/icons/#icomoon" Content="&#xe93a;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="云文档" Width="30" Height="30" Click="BtnCloudDocument_Click"/>
+                    <Button x:Name="BtnChatAI" FontFamily="../Resources/icons/#icomoon" Content="&#xe943;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="对话AI" Width="30" Height="30" Click="BtnChatAI_Click"/>
                     <Button x:Name="BtnReLayout" FontFamily="../Resources/icons/#icomoon" Content="&#xe987;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="恢复默认的主面板布局" Width="30" Height="30" Click="BtnReLayout_Click"/>
                     <Button x:Name="BtnThemeColor" FontFamily="../Resources/icons/#icomoon" Content="&#xe90a;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="左键随机一个主题颜色，右键恢复默认" Width="30" Height="30" Click="BtnThemeColor_Click" MouseRightButtonDown="BtnThemeColor_MouseRightButtonDown"/>
+                    <Button x:Name="BtnSettings" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ce;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="设置" Width="30" Height="30" Click="BtnSettings_Click"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

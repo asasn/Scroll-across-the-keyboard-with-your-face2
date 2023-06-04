@@ -1,6 +1,7 @@
 ﻿using RootNS.Helper;
 using RootNS.Models;
 using RootNS.MyControls;
+using RootNS.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -163,6 +164,35 @@ namespace RootNS
         {
             Views.WChatAI chatAI = new Views.WChatAI();
             chatAI.Show();
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Views.WSettings chatAI = new Views.WSettings();
+            chatAI.Show();
+        }
+
+
+        private void BtnCloudDocument_Click(object sender, RoutedEventArgs e)
+        {
+            Node node = null;
+            if (Gval.MaterialBook.TabRoot.ChildNodes[12].ChildNodes.Count == 0)
+            {
+                node = new Node();
+                Gval.MaterialBook.TabRoot.ChildNodes[12].ChildNodes.Add(node);
+                node.Insert();
+            }
+            else
+            {
+                node = Gval.MaterialBook.TabRoot.ChildNodes[12].ChildNodes[0];
+            }
+            WBase wBase = new WBase() { DataContext = node };
+            WebdavHelper.DownloadWebDavFile(Gval.Webdav.Url + "\\" + node.TypeName + ".txt", Gval.Webdav.UserName, Gval.Webdav.PassWord);
+            if (FileIO.IsFileExists(Gval.Path.DataDirectory + node.TypeName + ".txt"))
+            {
+                node.Text = FileIO.ReadFromTxt(Gval.Path.DataDirectory + node.TypeName + ".txt");
+            }
+            wBase.Show();
         }
     }
 }

@@ -9,14 +9,14 @@
         mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
       UseLayoutRounding="True" AllowsTransparency="True" 
       d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720"
-      MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded">
+      MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Border Effect="{StaticResource EffectShadow3}" Margin="5" CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
         <Grid Margin="2">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RHeader" Height="26"/>
                 <RowDefinition MinHeight="26" Height="Auto"/>
                 <RowDefinition Height="100*"/>
-                <RowDefinition MinHeight="26" Height="Auto"/>
+                <RowDefinition x:Name="RSummary" Height="Auto"/>
                 <RowDefinition x:Name="RBottom" Height="40"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">

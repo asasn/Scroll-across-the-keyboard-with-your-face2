@@ -68,10 +68,14 @@ namespace RootNS.MyControls
             {
                 (this.DataContext as Node).Owner.UpdataSyntax();
             }
-            Gval.Views.UcShower.Tag = null;
-            Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
-            Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
-            Gval.Views.UcShower.Tag = true;
+            if (this.Tag == null)
+            {
+                //不是轻量编辑器时
+                Gval.Views.UcShower.Tag = null;
+                Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
+                Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
+                Gval.Views.UcShower.Tag = true;
+            }
         }
 
 
@@ -123,7 +127,6 @@ namespace RootNS.MyControls
             {
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
-                node.Summary = Gval.Views.UcShower.ThisTextEditor.Text;
                 textCount = node.Count = CommonHelper.Count.QiDianCount(ThisTextEditor.Text);
                 RefreshShowContent(textCount);
                 string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
@@ -135,6 +138,12 @@ namespace RootNS.MyControls
                 Console.WriteLine(string.Format("本次保存成功！"));
                 canSaveFlag = false;
                 BtnSaveDoc.IsEnabled = false;
+                if (node.TypeName == Book.TypeNameEnum.云文档.ToString())
+                {
+                    string localFilePath = Gval.Path.DataDirectory + node.TypeName + ".txt";
+                    FileIO.WriteToTxt(localFilePath, node.Text);
+                    WebdavHelper.UploadWebDavFile(Gval.Webdav.Url + "/" + node.TypeName + ".txt", localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+                }
             }
             catch (Exception ex)
             {

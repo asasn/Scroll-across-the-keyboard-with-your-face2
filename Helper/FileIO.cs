@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -11,6 +12,23 @@ namespace RootNS.Helper
 {
     public class FileIO
     {
+
+        /// <summary>
+        /// 获取文件哈希值
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        string GetHash(string path)
+        {
+            //var hash = SHA256.Create();
+            //var hash = MD5.Create();
+            var hash = SHA1.Create();
+            var stream = new FileStream(path, FileMode.Open);
+            byte[] hashByte = hash.ComputeHash(stream);
+            stream.Close();
+            return BitConverter.ToString(hashByte).Replace("-", "");
+        }
+
         /// <summary>
         /// 获取图像对象
         /// </summary>

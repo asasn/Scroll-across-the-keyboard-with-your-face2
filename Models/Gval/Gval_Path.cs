@@ -25,17 +25,6 @@ namespace RootNS.Models
         }
 
 
-        /// <summary>
-        /// 设置的键名
-        /// </summary>
-        public struct SettingsKeys
-        {
-            public static string CurrentBookGuid { get { return "CurrentBookGuid"; } }
-            public static string CurrentThemeColor { get { return "CurrentThemeColor"; } }
-            public static string TomatoTimeSetTotalMinutes { get { return "TomatoTimeSetTotalMinutes"; } }
-            public static string Scroll2End { get { return "Scroll2End"; } }
-            public static string FontSizeBypt { get { return "FontSizeBypt"; } }
-            
-        }
+
     }
 }
