@@ -187,7 +187,11 @@ namespace RootNS
                 node = Gval.MaterialBook.TabRoot.ChildNodes[12].ChildNodes[0];
             }
             WBase wBase = new WBase() { DataContext = node };
-            WebdavHelper.DownloadWebDavFile(Gval.Webdav.Url + "\\" + node.TypeName + ".txt", Gval.Webdav.UserName, Gval.Webdav.PassWord);
+            bool isSucceed = WebdavHelper.DownloadWebDavFile(Gval.Webdav.Url + "\\" + node.TypeName + ".txt", Gval.Webdav.UserName, Gval.Webdav.PassWord);
+            if (isSucceed == false)
+            {
+                HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+            }
             if (FileIO.IsFileExists(Gval.Path.DataDirectory + node.TypeName + ".txt"))
             {
                 node.Text = FileIO.ReadFromTxt(Gval.Path.DataDirectory + node.TypeName + ".txt");

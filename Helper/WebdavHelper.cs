@@ -10,27 +10,29 @@ namespace RootNS.Helper
 {
     internal class WebdavHelper
     {
-        public static byte[] DownloadWebDavFile(string remoteFile, string userName, string passWord)
+        public static bool DownloadWebDavFile(string remoteFile, string userName, string passWord)
         {
-            System.Net.WebProxy clsProxy = new System.Net.WebProxy();
-            clsProxy.BypassProxyOnLocal = true;
-            string strPassUrl = remoteFile.Substring(0, remoteFile.IndexOf(@"\"));
-            clsProxy.BypassList = new string[] { strPassUrl };
-            Uri clsUri = new Uri(remoteFile);
-            System.Net.WebRequest req = System.Net.WebRequest.Create(clsUri);
-            req.Proxy = clsProxy;
-            req.Method = "GET";
-            req.Credentials = new System.Net.NetworkCredential(userName, passWord);
             System.Net.WebResponse res = null;
+            System.IO.Stream inStream = null;
             try
             {
+                System.Net.WebProxy clsProxy = new System.Net.WebProxy();
+                clsProxy.BypassProxyOnLocal = true;
+                string strPassUrl = remoteFile.Substring(0, remoteFile.IndexOf(@"\"));
+                clsProxy.BypassList = new string[] { strPassUrl };
+                Uri clsUri = new Uri(remoteFile);
+                System.Net.WebRequest req = System.Net.WebRequest.Create(clsUri);
+                req.Proxy = clsProxy;
+                req.Method = "GET";
+                req.Timeout = 5000;
+                req.Credentials = new System.Net.NetworkCredential(userName, passWord);
                 res = req.GetResponse();
+                inStream = res.GetResponseStream();
             }
             catch (Exception ex)
             {
-                return null;
+                return false;
             }
-            System.IO.Stream inStream = res.GetResponseStream();
             BinaryReader reader = new BinaryReader(inStream);
             byte[] btyChunk = new byte[4096];
             byte[] buffer = new byte[(int)res.ContentLength];
@@ -46,7 +48,7 @@ namespace RootNS.Helper
             }
             catch (Exception ex)
             {
-                return null;
+                return false;
             }
             finally
             {
@@ -55,10 +57,10 @@ namespace RootNS.Helper
                     reader.Close();
                 }
             }
-            return buffer;
+            return true;
         }
 
-        public static int UploadWebDavFile(string _WebFileUrl, string _LocalFile, string _UserName, string _Password)
+        public static bool UploadWebDavFile(string _WebFileUrl, string _LocalFile, string _UserName, string _Password)
         {
             try
             {
@@ -66,6 +68,7 @@ namespace RootNS.Helper
                 req.Credentials = new NetworkCredential(_UserName, _Password);
                 req.PreAuthenticate = true;
                 req.Method = "PUT";
+                req.Timeout = 5000;
                 req.AllowWriteStreamBuffering = true;
                 Stream reqStream = req.GetRequestStream();
                 FileStream rdm = new FileStream(_LocalFile, FileMode.Open);
@@ -82,9 +85,9 @@ namespace RootNS.Helper
             }
             catch (Exception e)
             {
-                return 0;
+                return false;
             }
-            return 1;
+            return true;
         }
 
         public static int DeleteWebDavFile(string _WebFileUrl, string _UserName, string _Password)
@@ -95,6 +98,7 @@ namespace RootNS.Helper
                 req.Credentials = new NetworkCredential(_UserName, _Password);
                 req.PreAuthenticate = true;
                 req.Method = "DELETE";
+                req.Timeout = 5000;
                 req.AllowWriteStreamBuffering = true;
                 req.GetResponse();
             }

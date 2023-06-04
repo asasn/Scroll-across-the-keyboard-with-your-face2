@@ -142,7 +142,11 @@ namespace RootNS.MyControls
                 {
                     string localFilePath = Gval.Path.DataDirectory + node.TypeName + ".txt";
                     FileIO.WriteToTxt(localFilePath, node.Text);
-                    WebdavHelper.UploadWebDavFile(Gval.Webdav.Url + "/" + node.TypeName + ".txt", localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+                    bool isSucceed = WebdavHelper.UploadWebDavFile(Gval.Webdav.Url + "/" + node.TypeName + ".txt", localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+                    if (isSucceed == false)
+                    {
+                        HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                    }
                 }
             }
             catch (Exception ex)
@@ -463,6 +467,10 @@ namespace RootNS.MyControls
         bool isSliderLoaded = false;
         private void slider_Loaded(object sender, RoutedEventArgs e)
         {
+            if (this.Tag != null)
+            { 
+                return;
+            }
             double sizePt = Convert.ToDouble(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.FontSizeBypt));
             if (sizePt != 0)
             {
