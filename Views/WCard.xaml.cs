@@ -139,6 +139,7 @@ namespace RootNS.Views
                     {
                         OldParent.ChildNodes.Add(this.DataContext as Node);
                     }
+                    Workflow.UpDataHilgliting(this.DataContext as Node);
                 }
                 if (dr == MessageBoxResult.Cancel)
                 {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -51,8 +52,8 @@ namespace RootNS.MyControls
             Timer.Start();
 
             theDialog = new FindReplaceDialog(this.ThisTextEditor);
-
         }
+
 
         private void ThisTextEditor_Loaded(object sender, RoutedEventArgs e)
         {
@@ -138,16 +139,6 @@ namespace RootNS.MyControls
                 Console.WriteLine(string.Format("本次保存成功！"));
                 canSaveFlag = false;
                 BtnSaveDoc.IsEnabled = false;
-                if (node.TypeName == Book.TypeNameEnum.云文档.ToString())
-                {
-                    string localFilePath = Gval.Path.DataDirectory + node.TypeName + ".txt";
-                    FileIO.WriteToTxt(localFilePath, node.Text);
-                    bool isSucceed = WebdavHelper.UploadWebDavFile(Gval.Webdav.Url + "/" + node.TypeName + ".txt", localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord);
-                    if (isSucceed == false)
-                    {
-                        HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
-                    }
-                }
             }
             catch (Exception ex)
             {

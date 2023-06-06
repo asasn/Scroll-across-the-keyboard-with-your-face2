@@ -24,7 +24,7 @@ namespace RootNS.Helper
                 System.Net.WebRequest req = System.Net.WebRequest.Create(clsUri);
                 req.Proxy = clsProxy;
                 req.Method = "GET";
-                req.Timeout = 5000;
+                req.Timeout = 15000;
                 req.Credentials = new System.Net.NetworkCredential(userName, passWord);
                 res = req.GetResponse();
                 inStream = res.GetResponseStream();
@@ -68,7 +68,7 @@ namespace RootNS.Helper
                 req.Credentials = new NetworkCredential(_UserName, _Password);
                 req.PreAuthenticate = true;
                 req.Method = "PUT";
-                req.Timeout = 5000;
+                req.Timeout = 15000;
                 req.AllowWriteStreamBuffering = true;
                 Stream reqStream = req.GetRequestStream();
                 FileStream rdm = new FileStream(_LocalFile, FileMode.Open);
@@ -98,7 +98,7 @@ namespace RootNS.Helper
                 req.Credentials = new NetworkCredential(_UserName, _Password);
                 req.PreAuthenticate = true;
                 req.Method = "DELETE";
-                req.Timeout = 5000;
+                req.Timeout = 15000;
                 req.AllowWriteStreamBuffering = true;
                 req.GetResponse();
             }

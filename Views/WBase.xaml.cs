@@ -89,6 +89,17 @@ namespace RootNS.Views
             (LightEditor.DataContext as Node).Summary = TbSummary.Text;
             LightEditor.BtnSaveText_Click(null, null);
             BtnSave.IsEnabled = false;
+
+            if ((LightEditor.DataContext as Node).TypeName == Book.TypeNameEnum.云文档.ToString())
+            {
+                string localFilePath = Gval.Path.DataDirectory + (LightEditor.DataContext as Node).TypeName + ".txt";
+                FileIO.WriteToTxt(localFilePath, (LightEditor.DataContext as Node).Text);
+                bool isSucceed = WebdavHelper.UploadWebDavFile(Gval.Webdav.Url + "/" + (LightEditor.DataContext as Node).Guid + ".txt", localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+                if (isSucceed == false)
+                {
+                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                }
+            }
         }
 
 

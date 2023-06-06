@@ -192,9 +192,9 @@ namespace RootNS
             {
                 HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
             }
-            if (FileIO.IsFileExists(Gval.Path.DataDirectory + node.TypeName + ".txt"))
+            if (FileIO.IsFileExists(Gval.Path.DataDirectory + node.Guid + ".txt"))
             {
-                node.Text = FileIO.ReadFromTxt(Gval.Path.DataDirectory + node.TypeName + ".txt");
+                node.Text = FileIO.ReadFromTxt(Gval.Path.DataDirectory + node.Guid + ".txt");
             }
             wBase.Show();
         }
