@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -140,7 +141,29 @@ namespace RootNS
 
         }
 
-
+        private void BtnOutlines_Click(object sender, RoutedEventArgs e)
+        {
+            string text = string.Empty;
+            foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList())
+            {
+                Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
+                if (match.Success)
+                {
+                    text += match.Value + "：\n" + node.Summary + "\n　　\n　　";
+                }
+            }
+            foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList())
+            {
+                Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
+                if (match.Success)
+                {
+                    text += match.Value + "：\n" + node.Summary + "\n　　\n　　";
+                }
+            }
+            Views.WShow wShow = new Views.WShow();
+            wShow.ThisTextEditor.Text = text;
+            wShow.Show();
+        }
         private void BtnPackage_Click(object sender, RoutedEventArgs e)
         {
             string content = string.Empty;

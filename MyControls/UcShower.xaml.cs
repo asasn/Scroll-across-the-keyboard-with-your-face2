@@ -27,36 +27,9 @@ namespace RootNS.MyControls
             InitializeComponent();
         }
 
-
-
-        private void ThisTextEditor_TextChanged(object sender, EventArgs e)
-        {
-            if (Gval.Views.CurrentEditorkernel == null || Gval.Views.UcShower.Tag == null)
-            {
-                return;
-            }
-            (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary = ThisTextEditor.Text;
-            Gval.Views.CurrentEditorkernel.BtnSaveDoc.IsEnabled = true;
-        }
-
         private void Command_Typesetting_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            EditorHelper.TypeSetting(ThisTextEditor);
-        }
 
-        private void ThisTextEditor_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                ThisTextEditor.TextArea.Document.Insert(ThisTextEditor.CaretOffset, "\n　　");
-                ThisTextEditor.LineDown();
-            }
-            //逗号||句号的情况
-            if (e.Key == Key.OemComma ||
-                e.Key == Key.OemPeriod)
-            {
-
-            }
         }
     }
 }

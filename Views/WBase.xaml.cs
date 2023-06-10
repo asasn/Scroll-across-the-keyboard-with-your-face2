@@ -84,8 +84,6 @@ namespace RootNS.Views
             }
             LightEditor.BtnSaveDoc.IsEnabled = false;
             UpTag = false;
-            this.Focus();
-            LightEditor.ThisTextEditor.TextArea.Focus();
         }
 
         private void BtnSaveDoc_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -113,7 +111,7 @@ namespace RootNS.Views
         {
             BtnSave.IsEnabled = false;
             (LightEditor.DataContext as Node).Title = TbTitle.Text;
-            (LightEditor.DataContext as Node).Summary = TbSummary.Text;
+            (LightEditor.DataContext as Node).Summary = LightEditor.SummaryTextEditor.Text = TbSummary.Text; //利用SummaryTextEditor.Text保存！
             (LightEditor.DataContext as Node).Text = LightEditor.ThisTextEditor.Text;
             LightEditor.BtnSaveText_Click(null, null);
         }

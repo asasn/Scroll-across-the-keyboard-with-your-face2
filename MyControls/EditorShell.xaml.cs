@@ -73,17 +73,8 @@ namespace RootNS.MyControls
                     stuff.Summary = "　　";
                 }
                 editorBase.ThisTextEditor.Text = stuff.Text;
+                editorBase.SummaryTextEditor.Text = stuff.Summary;
                 editorBase.BtnSaveDoc.IsEnabled = false;
-                editorBase.ThisTextEditor.Select(editorBase.ThisTextEditor.Text.Length, 0);
-                //EditorHelper.SetColorRulesForCards(editorBase.ThisTextEditor);
-                //if (stuff.ToLineNum == 0)
-                //{
-                //    EditorHelper.MoveToEnd(editorBase.ThisTextEditor);
-                //}
-                //else
-                //{
-                //    EditorHelper.MoveToLine(editorBase.ThisTextEditor, stuff.ToLineNum);
-                //}
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -107,9 +98,9 @@ namespace RootNS.MyControls
                 if (Gval.Views.CurrentEditorkernel != null)
                 {
                     //关闭标签页的时候，更新Summary的文本
-                    Gval.Views.UcShower.Tag = null;
-                    Gval.Views.UcShower.ThisTextEditor.Text = (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary;
-                    Gval.Views.UcShower.Tag = true;
+                    //Gval.Views.UcShower.Tag = null;
+                    //Gval.Views.UcShower.ThisTextEditor.Text = (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary;
+                    //Gval.Views.UcShower.Tag = true;
                 }
                 else
                 {

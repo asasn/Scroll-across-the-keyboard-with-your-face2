@@ -52,6 +52,7 @@ namespace RootNS.MyControls
             Timer.Start();
 
             theDialog = new FindReplaceDialog(this.ThisTextEditor);
+            WorkingTextEditor = ThisTextEditor;
         }
 
 
@@ -61,10 +62,8 @@ namespace RootNS.MyControls
             {
                 return;
             }
-            Gval.Views.CurrentEditorkernel = this;
-            ThisTextEditor.TextArea.Focus();
             //因为在TabControl中，每次切换的时候都会触发这个事件，故而一些初始化步骤放在父容器，不要放在这里
-
+            Gval.Views.CurrentEditorkernel = this;
             if (ThisTextEditor.SyntaxHighlighting == null)
             {
                 (this.DataContext as Node).Owner.UpdataSyntax();
@@ -77,6 +76,13 @@ namespace RootNS.MyControls
                 Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
                 Gval.Views.UcShower.Tag = true;
             }
+            if ((this.DataContext as Node).PointX == 0)
+            {
+                (this.DataContext as Node).PointX = (this.DataContext as Node).Text.Length;
+            }
+            ThisTextEditor.ScrollToLine((int)(this.DataContext as Node).PointY);
+            ThisTextEditor.Select((int)(this.DataContext as Node).PointX, 0);
+            ThisTextEditor.TextArea.Focus();
         }
 
 
@@ -132,10 +138,14 @@ namespace RootNS.MyControls
                 }
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
-                this.DataContext  = node;
+                node.Summary = SummaryTextEditor.Text;
+                node.PointX = ThisTextEditor.CaretOffset;
+                ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = ThisTextEditor.Document.GetLineByOffset(ThisTextEditor.CaretOffset);
+                node.PointY = currentLine.LineNumber;
+                this.DataContext = node;
                 textCount = node.Count = CommonHelper.Count.QiDianCount(ThisTextEditor.Text);
                 RefreshShowContent(textCount);
-                string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
+                string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}', PointX={4}, PointY={5} WHERE Guid='{6}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.PointX, node.PointY, node.Guid);
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].ExecuteNonQuery(sql);
                 //保持连接会导致文件占用，不能及时同步和备份，过多重新连接则是不必要的开销。
                 //故此在数据库占用和重复连接之间选择了一个平衡，允许保存之后的数据库得以上传。
@@ -154,14 +164,14 @@ namespace RootNS.MyControls
 
         private void Command_Typesetting_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            EditorHelper.TypeSetting(ThisTextEditor);
+            EditorHelper.TypeSetting(WorkingTextEditor);
             Command_SaveText_Executed(null, null);
         }
 
 
         private void Command_Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(ThisTextEditor);
+            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(WorkingTextEditor);
             this.SetPreviousText();
             FindReplaceDialog.theDialog.TabFind.IsSelected = true;
             FindReplaceDialog.theDialog.txtFind.SelectAll();
@@ -170,7 +180,7 @@ namespace RootNS.MyControls
 
         private void Command_Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(ThisTextEditor);
+            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(WorkingTextEditor);
             this.SetPreviousText();
             FindReplaceDialog.theDialog.TabReplace.IsSelected = true;
             FindReplaceDialog.theDialog.txtFind2.SelectAll();
@@ -179,14 +189,14 @@ namespace RootNS.MyControls
 
         private void SetPreviousText()
         {
-            if (string.IsNullOrEmpty(ThisTextEditor.TextArea.Selection.GetText()) == true)
+            if (string.IsNullOrEmpty(WorkingTextEditor.TextArea.Selection.GetText()) == true)
             {
                 Gval.PreviousText = Gval.Views.UcSearcher.TbKeyWords.Text;
 
             }
             else
             {
-                Gval.PreviousText = ThisTextEditor.TextArea.Selection.GetText();
+                Gval.PreviousText = WorkingTextEditor.TextArea.Selection.GetText();
             }
         }
 
@@ -222,11 +232,11 @@ namespace RootNS.MyControls
             {
                 if (node.Attachment == null || node.Card == null ||
                     node.IsDel == true || node.IsDir == true ||
-                    string.IsNullOrEmpty(node.Title.Trim()) )
+                    string.IsNullOrEmpty(node.Title.Trim()))
                 {
                     continue;
                 }
-                if (ThisTextEditor.SelectedText.Equals(node.Title.Trim()))
+                if (WorkingTextEditor.SelectedText.Equals(node.Title.Trim()))
                 {
                     isMatch = true;
                 }
@@ -234,7 +244,7 @@ namespace RootNS.MyControls
                 {
                     foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
                     {
-                        if (ThisTextEditor.SelectedText.Equals(tip.Content.Trim()))
+                        if (WorkingTextEditor.SelectedText.Equals(tip.Content.Trim()))
                         {
                             isMatch = true;
                         }
@@ -250,11 +260,11 @@ namespace RootNS.MyControls
                     return;
                 }
             }
-            if (isMatch == false && !string.IsNullOrWhiteSpace(ThisTextEditor.SelectedText))
+            if (isMatch == false && !string.IsNullOrWhiteSpace(WorkingTextEditor.SelectedText))
             {
                 //未匹配的情况
                 WCard wCard = new WCard();
-                Node newNode = new Node() { Title = ThisTextEditor.SelectedText};
+                Node newNode = new Node() { Title = WorkingTextEditor.SelectedText };
                 Gval.CurrentBook.TabRoot.ChildNodes[5].ChildNodes.Add(newNode);
                 wCard.DataContext = newNode;
                 wCard.Show();
@@ -294,17 +304,17 @@ namespace RootNS.MyControls
         }
         private void BtnPaste_Click(object sender, RoutedEventArgs e)
         {
-            string temp = ThisTextEditor.Text;
-            ThisTextEditor.Text = Clipboard.GetText();
+            string temp = WorkingTextEditor.Text;
+            WorkingTextEditor.Text = Clipboard.GetText();
             BtnUndo.DataContext = temp;
-            EditorHelper.TypeSetting(ThisTextEditor);
+            EditorHelper.TypeSetting(WorkingTextEditor);
             Command_SaveText_Executed(null, null);
             BtnUndo.IsEnabled = true;
         }
         private void BtnUndo_Click(object sender, RoutedEventArgs e)
         {
-            ThisTextEditor.Text = BtnUndo.DataContext.ToString();
-            EditorHelper.TypeSetting(ThisTextEditor);
+            WorkingTextEditor.Text = BtnUndo.DataContext.ToString();
+            EditorHelper.TypeSetting(WorkingTextEditor);
             Command_SaveText_Executed(null, null);
             BtnUndo.IsEnabled = false;
         }
@@ -313,8 +323,8 @@ namespace RootNS.MyControls
         {
             if (e.Key == Key.Enter)
             {
-                ThisTextEditor.TextArea.Document.Insert(ThisTextEditor.CaretOffset, "\n　　");
-                ThisTextEditor.LineDown();
+                WorkingTextEditor.TextArea.Document.Insert(WorkingTextEditor.CaretOffset, "\n　　");
+                WorkingTextEditor.LineDown();
                 Command_SaveText_Executed(null, null);
             }
             //逗号||句号的情况
@@ -363,6 +373,18 @@ namespace RootNS.MyControls
             BtnSaveDoc.IsEnabled = true;
             //文字变更之后，刷新展示区
             RefreshShowContent(textCount);
+        }
+        private void SummaryTextEditor_TextChanged(object sender, EventArgs e)
+        {
+            if (this.Tag != null)
+            {
+                //不是轻量编辑器时
+                BtnSaveDoc.IsEnabled = true;
+                //文字变更之后，刷新展示区
+                Gval.Views.UcShower.ThisTextEditor.Text = SummaryTextEditor.Text;
+                ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = Gval.Views.UcShower.ThisTextEditor.Document.GetLineByOffset(SummaryTextEditor.CaretOffset);
+                Gval.Views.UcShower.ThisTextEditor.ScrollToLine(currentLine.LineNumber);
+            }
         }
 
         /// <summary>
@@ -464,7 +486,7 @@ namespace RootNS.MyControls
         private void slider_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.Tag != null)
-            { 
+            {
                 return;
             }
             double sizePt = Convert.ToDouble(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.FontSizeBypt));
@@ -492,10 +514,24 @@ namespace RootNS.MyControls
 
         private void BtnSummary_Click(object sender, RoutedEventArgs e)
         {
-            Gval.Views.UcShower.Tag = null;
-            Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
-            Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
-            Gval.Views.UcShower.Tag = true;
+            if (BtnSummary.Tag == null)
+            {
+                Row01.Height = new GridLength(15);
+                Row02.Height = new GridLength(400);
+                Row02.MinHeight = 300;
+                BtnSummary.Tag = true;
+                SummaryTextEditor.ScrollToEnd();
+                SummaryTextEditor.Select(SummaryTextEditor.Text.Length, 0);
+                SummaryTextEditor.TextArea.Focus();
+            }
+            else
+            {
+                Row02.MinHeight = 0;
+                Row01.Height = new GridLength(0);
+                Row02.Height = new GridLength(0);
+                BtnSummary.Tag = null;
+                ThisTextEditor.TextArea.Focus();
+            }
         }
 
         private void MenuItem0_Click(object sender, RoutedEventArgs e)
@@ -515,7 +551,7 @@ namespace RootNS.MyControls
             string title = string.Empty;
             foreach (string s in strs)
             {
-                title += s  + " ";
+                title += s + " ";
             }
             Node newNode = new Node
             {
@@ -529,5 +565,21 @@ namespace RootNS.MyControls
         }
 
 
+        private TextEditor WorkingTextEditor;
+        private void ThisTextEditor_GotFocus(object sender, RoutedEventArgs e)
+        {
+            WorkingTextEditor = (TextEditor)sender;
+        }
+
+        private void SummaryTextEditor_GotFocus(object sender, RoutedEventArgs e)
+        {
+            WorkingTextEditor = (TextEditor)sender;
+        }
+
+        private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = ThisTextEditor.Document.GetLineByOffset(ThisTextEditor.CaretOffset);
+            ThisTextEditor.ScrollToLine(currentLine.LineNumber);
+        }
     }
 }

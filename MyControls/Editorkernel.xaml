@@ -46,24 +46,50 @@
             <RowDefinition x:Name="Row0" Height="100*"/>
             <RowDefinition x:Name="Row1" Height="20"/>
         </Grid.RowDefinitions>
-        <avalonEdit:TextEditor 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="Row00" Height="100*"/>
+                <RowDefinition x:Name="Row01" Height="0"/>
+                <RowDefinition x:Name="Row02" Height="0"/>
+            </Grid.RowDefinitions>
+            <avalonEdit:TextEditor 
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Grid.Row="0"
             x:Name="ThisTextEditor" ShowLineNumbers="True" 
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged">
-            <avalonEdit:TextEditor.ContextMenu>
-                <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
-                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
-                    <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
-                </ContextMenu>
-            </avalonEdit:TextEditor.ContextMenu>
-            <avalonEdit:TextEditor.Options>
-                <avalonEdit:TextEditorOptions
+            FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged" GotFocus="ThisTextEditor_GotFocus">
+                <avalonEdit:TextEditor.ContextMenu>
+                    <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
+                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
+                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
+                    </ContextMenu>
+                </avalonEdit:TextEditor.ContextMenu>
+                <avalonEdit:TextEditor.Options>
+                    <avalonEdit:TextEditorOptions
                     HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
                     WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
-            </avalonEdit:TextEditor.Options>
-        </avalonEdit:TextEditor>
+                </avalonEdit:TextEditor.Options>
+            </avalonEdit:TextEditor>
+            <GridSplitter HorizontalAlignment="Stretch" Background="Ivory" Grid.Row="1" DragDelta="GridSplitter_DragDelta"/>
+            <avalonEdit:TextEditor 
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            Grid.Row="2" Background="#FAFAFA"
+            x:Name="SummaryTextEditor" ShowLineNumbers="True" 
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
+            FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="SummaryTextEditor_TextChanged" GotFocus="SummaryTextEditor_GotFocus">
+                <avalonEdit:TextEditor.ContextMenu>
+                    <ContextMenu x:Name="TextEditorMenu2" Opened="TextEditorMenu_Opened">
+                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
+                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
+                    </ContextMenu>
+                </avalonEdit:TextEditor.ContextMenu>
+                <avalonEdit:TextEditor.Options>
+                    <avalonEdit:TextEditorOptions
+                    HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"
+                    WordWrapIndentation="4" InheritWordWrapIndentation="False"/>
+                </avalonEdit:TextEditor.Options>
+            </avalonEdit:TextEditor>
+        </Grid>
         <Grid Grid.Row="1" Grid.ColumnSpan="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

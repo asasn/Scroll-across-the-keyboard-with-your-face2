@@ -45,6 +45,12 @@ namespace RootNS.Helper
         /// <param name="tEditor"></param>
         public static void TypeSetting(TextEditor tEditor)
         {
+            if (tEditor == null)
+            {
+                return;
+            }
+            ICSharpCode.AvalonEdit.Document.DocumentLine oldLine = tEditor.Document.GetLineByOffset(tEditor.CaretOffset);
+            int oldOffset = tEditor.CaretOffset;
             string reText = "　　"; //开头是两个全角空格
             string[] sArray = tEditor.Text.Split(new char[] { '\r', '\n', '\t' });
             string[] sArrayNoEmpty = sArray.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
@@ -65,8 +71,11 @@ namespace RootNS.Helper
             //排版完成，重新赋值给文本框
             tEditor.Text = reText;
             //光标移动至文末 
-            tEditor.ScrollToEnd();
-            tEditor.Select(tEditor.Text.Length, 0);
+            //tEditor.ScrollToEnd();
+            //tEditor.Select(tEditor.Text.Length, 0);
+            //光标移动至合适的位置
+            tEditor.ScrollToLine(Math.Min(tEditor.LineCount, oldLine.LineNumber));
+            tEditor.Select(Math.Min(tEditor.Text.Length, oldOffset), 0);
             tEditor.Focus();
         }
 
