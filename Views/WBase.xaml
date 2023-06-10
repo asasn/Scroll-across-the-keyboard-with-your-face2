@@ -7,14 +7,14 @@
       xmlns:models="clr-namespace:RootNS.Models" xmlns:MyControls="clr-namespace:RootNS.MyControls"
       d:DataContext="{d:DesignInstance Type={x:Type models:Node}}"
         mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
-      UseLayoutRounding="True" AllowsTransparency="True" 
+      UseLayoutRounding="True" AllowsTransparency="True" Unloaded="ThisWindow_Unloaded"
       d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720"
       MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Border Effect="{StaticResource EffectShadow3}" Margin="5" CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
         <Grid Margin="2">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RHeader" Height="26"/>
-                <RowDefinition MinHeight="26" Height="Auto"/>
+                <RowDefinition x:Name="RTitle" Height="Auto"/>
                 <RowDefinition Height="100*"/>
                 <RowDefinition x:Name="RSummary" Height="Auto"/>
                 <RowDefinition x:Name="RBottom" Height="40"/>
@@ -26,7 +26,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xEA10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="26"/>

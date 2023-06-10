@@ -4,6 +4,7 @@ using RootNS.MyControls;
 using RootNS.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -187,14 +188,24 @@ namespace RootNS
                 node = Gval.MaterialBook.TabRoot.ChildNodes[12].ChildNodes[0];
             }
             WBase wBase = new WBase() { DataContext = node };
-            bool isSucceed = WebdavHelper.DownloadWebDavFile(Gval.Webdav.Url + "\\" + node.TypeName + ".txt", Gval.Webdav.UserName, Gval.Webdav.PassWord);
-            if (isSucceed == false)
+            string localFilePath = Gval.Path.DataDirectory + node.Guid + ".txt";
+            string remoteFile = Gval.Webdav.Url + "\\" + node.Guid + ".txt";
+            string eTag = WebdavHelper.GetEtag(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+            if (node.Summary != eTag)
             {
-                HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                byte[] buffer = WebdavHelper.DownloadWebDavFile(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
+                if (buffer == null)
+                {
+                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                }
+                else
+                {
+                    File.WriteAllBytes(localFilePath, buffer);
+                }
             }
-            if (FileIO.IsFileExists(Gval.Path.DataDirectory + node.Guid + ".txt"))
+            if (FileIO.IsFileExists(localFilePath))
             {
-                node.Text = FileIO.ReadFromTxt(Gval.Path.DataDirectory + node.Guid + ".txt");
+                node.Text = FileIO.ReadFromTxt(localFilePath);
             }
             wBase.Show();
         }

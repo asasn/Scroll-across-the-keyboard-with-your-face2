@@ -69,7 +69,7 @@ namespace RootNS.MyControls
             {
                 (this.DataContext as Node).Owner.UpdataSyntax();
             }
-            if (this.Tag == null)
+            if (this.Tag != null)
             {
                 //不是轻量编辑器时
                 Gval.Views.UcShower.Tag = null;
@@ -80,7 +80,7 @@ namespace RootNS.MyControls
         }
 
 
-        private bool canSaveFlag;
+        private bool doSaveFlag;
         Stopwatch stopWatch = new Stopwatch();
         public DispatcherTimer Timer = new DispatcherTimer();
         FindReplaceDialog theDialog;
@@ -92,7 +92,7 @@ namespace RootNS.MyControls
         {
             if (BtnSaveDoc.IsEnabled == true)
             {
-                if ((canSaveFlag == true || SysHelper.GetLastInputTime() >= 10 * 1000))
+                if ((doSaveFlag == true || SysHelper.GetLastInputTime() >= 10 * 1000))
                 {
                     SaveInThreadMethod(this.DataContext as Node);
                     stopWatch.Restart(); //保存时，重置stopWatch计时器
@@ -105,7 +105,7 @@ namespace RootNS.MyControls
         {
             try
             {
-                canSaveFlag = true;
+                doSaveFlag = true;
                 //Console.WriteLine(thread.ManagedThreadId + " - 成功 - " + thread.ThreadState);
             }
             catch (Exception ex)
@@ -126,8 +126,13 @@ namespace RootNS.MyControls
         {
             try
             {
+                if (doSaveFlag == false || BtnSaveDoc.IsEnabled == false)
+                {
+                    return;
+                }
                 Node node = para as Node;
                 node.Text = ThisTextEditor.Text;
+                this.DataContext  = node;
                 textCount = node.Count = CommonHelper.Count.QiDianCount(ThisTextEditor.Text);
                 RefreshShowContent(textCount);
                 string sql = string.Format("UPDATE 内容 SET Text='{0}', Summary='{1}', Title='{2}', Count='{3}' WHERE Guid='{4}';", node.Text.Replace("'", "''"), node.Summary.Replace("'", "''"), node.Title.Replace("'", "''"), node.Count, node.Guid);
@@ -137,7 +142,7 @@ namespace RootNS.MyControls
                 SqliteHelper.PoolDict[node.Owner.Guid.ToString()].Close();
                 //HandyControl.Controls.Growl.SuccessGlobal(String.Format("{0} 已保存！", node.Title));
                 Console.WriteLine(string.Format("本次保存成功！"));
-                canSaveFlag = false;
+                doSaveFlag = false;
                 BtnSaveDoc.IsEnabled = false;
             }
             catch (Exception ex)
