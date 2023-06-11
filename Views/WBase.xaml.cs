@@ -46,20 +46,25 @@ namespace RootNS.Views
                 }
                 else
                 {
-                    (this.DataContext as Node).Summary = eTag;
+                    TbSummary.Text = (this.DataContext as Node).Summary = eTag;
                     BtnSave_Click(null, null);
                 }
             }
             if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云大纲.ToString() &&
                 BtnSave.IsEnabled == false && UpTag == true)
             {
-                string[] rets = Regex.Split((this.DataContext as Node).Text, "(第.+?章.*?\n)");
+                System.Collections.ArrayList nodes = new System.Collections.ArrayList();
+                nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList());
+                nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList());
 
+                string[] rets = Regex.Split((this.DataContext as Node).Text, "(第.+?章.*?\n)");
+                char[] myChar = { '：', ' ', '-'};
                 string title = string.Empty;
                 string content = string.Empty;
+                string sql = string.Empty;
                 foreach (string str in rets)
                 {
-                    Match match = Regex.Match(str, "(第.+?章.*?\n)");
+                    Match match = Regex.Match(str, "(第.+?章：.*?\n)");
                     if (match.Success)
                     {
                         title = match.Value;
@@ -76,11 +81,45 @@ namespace RootNS.Views
                     {
                         Title = title.Trim(),
                         Text = "　　" + content.Trim(),
-                    };
-                    Console.WriteLine(newNode.Title + "：" + newNode.Text + "\n");
+                    }; 
+                    foreach (Node node in nodes)
+                    {                       
+                        if (node.Title.Contains(newNode.Title.Trim(myChar)) && node.Summary.Trim().Equals(newNode.Text.Trim()) == false)
+                        {
+                            sql += string.Format("UPDATE 内容 SET Summary='{0}' WHERE Guid='{1}';", newNode.Text.Replace("'", "''"), node.Guid);
+                            if (Gval.Views.UcShower.ThisTextEditor.Text.Equals(node.Summary))
+                            {
+                                Gval.Views.UcShower.ThisTextEditor.Text = newNode.Text;
+                            }
+                            foreach (object item in Gval.TextEditorList)
+                            {
+                                if ((item as ICSharpCode.AvalonEdit.TextEditor).Text.Equals(node.Summary))
+                                {
+                                    (item as ICSharpCode.AvalonEdit.TextEditor).Text = newNode.Text;
+                                }
+                            }
+                            node.Summary = newNode.Text;
+                        }
+                    }
                     title = string.Empty;
                     content = string.Empty;
                 }
+                SqliteHelper.PoolDict[Gval.CurrentBook.Guid.ToString()].ExecuteNonQuery(sql);
+                SqliteHelper.PoolDict[Gval.CurrentBook.Guid.ToString()].Close();
+                string localFilePath = Gval.Path.DataDirectory + (this.DataContext as Node).Guid + ".txt";
+                string remoteFile = Gval.Webdav.Url + "\\" + (this.DataContext as Node).Guid + ".txt";
+                FileIO.WriteToTxt(localFilePath, (this.DataContext as Node).Text);
+                string eTag = WebdavHelper.UploadWebDavFile(remoteFile, localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
+                if (string.IsNullOrEmpty(eTag))
+                {
+                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                }
+                else
+                {
+                    TbSummary.Text = (this.DataContext as Node).Summary = eTag;
+                    BtnSave_Click(null, null);
+                }
+                Console.WriteLine(string.Format("章节大纲保存成功！"));
             }
             Gval.TextEditorList.Remove(LightEditor.ThisTextEditor);
         }
@@ -104,7 +143,8 @@ namespace RootNS.Views
             {
                 LightEditor.ThisTextEditor.Text = (this.DataContext as Node).Text;
             }
-            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云草稿.ToString())
+            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云草稿.ToString() ||
+                (this.DataContext as Node).TypeName == Book.TypeNameEnum.云大纲.ToString())
             {
                 this.Width = 700;
                 RTitle.Height = new GridLength(0);

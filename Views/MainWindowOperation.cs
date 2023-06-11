@@ -147,36 +147,53 @@ namespace RootNS
             {
                 return;
             }
-            string text = "　　";
-            foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList())
-            {
-                string title = Workflow.GetTitleFromTitle(node.Title);
-                if (string.IsNullOrEmpty(title) == false)
-                {
-                    text += title + "：\n　　\n" + node.Summary + "\n　　\n　　";
-                }
-            }
-            foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList())
-            {
-                string title = Workflow.GetTitleFromTitle(node.Title);
-                if (string.IsNullOrEmpty(title) == false)
-                {
-                    text += title + "：\n　　\n" + node.Summary + "\n　　\n　　";
-                }
-            }
             Node nodeShell = null;
-            if (Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes.Count == 0)
+            if (Gval.CurrentBook.TabRoot.ChildNodes[13].ChildNodes.Count == 0)
             {
                 nodeShell = new Node();
-                Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes.Add(nodeShell);
+                Gval.CurrentBook.TabRoot.ChildNodes[13].ChildNodes.Add(nodeShell);
                 nodeShell.Insert();
             }
             else
             {
-                nodeShell = Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes[0];
+                nodeShell = Gval.CurrentBook.TabRoot.ChildNodes[13].ChildNodes[0];
             }
-            nodeShell.Text = text;
             WBase wBase = new WBase() { DataContext = nodeShell };
+            string localFilePath = Gval.Path.DataDirectory + nodeShell.Guid + ".txt";
+            string remoteFile = Gval.Webdav.Url + "\\" + nodeShell.Guid + ".txt";
+            string eTag = WebdavHelper.GetEtag(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord);
+            if (nodeShell.Summary != eTag)
+            {
+                byte[] buffer = WebdavHelper.DownloadWebDavFile(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
+                if (buffer == null)
+                {
+                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                }
+                else
+                {
+                    File.WriteAllBytes(localFilePath, buffer);
+                }
+            }
+            if (FileIO.IsFileExists(localFilePath))
+            {
+                nodeShell.Text = FileIO.ReadFromTxt(localFilePath);
+            }
+            else
+            {
+                string text = "　　";
+                System.Collections.ArrayList nodes = new System.Collections.ArrayList();
+                nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList());
+                nodes.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList());
+                foreach (Node node in nodes)
+                {
+                    string title = Workflow.GetTitleFromTitle(node.Title);
+                    if (string.IsNullOrEmpty(title) == false)
+                    {
+                        text += title + "：\n　　\n" + node.Summary + "\n　　\n　　";
+                    }
+                }
+                nodeShell.Text = text;
+            }
             wBase.Show();
         }
         private void BtnPackage_Click(object sender, RoutedEventArgs e)
