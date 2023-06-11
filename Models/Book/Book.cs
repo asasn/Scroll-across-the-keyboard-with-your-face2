@@ -26,7 +26,8 @@ namespace RootNS.Models
             全局资料管理,
             全局题材管理,
             全局灵感管理,
-            云文档,
+            云草稿,
+            云大纲,
             Count,
         }
 
@@ -120,19 +121,7 @@ namespace RootNS.Models
         }
 
 
-        private IHighlightingDefinition _syntax;
-        /// <summary>
-        /// 语法高亮对象
-        /// </summary>
-        public IHighlightingDefinition Syntax
-        {
-            get { return _syntax; }
-            set
-            {
-                _syntax = value;
-                RaisePropertyChanged(nameof(Syntax));
-            }
-        }
+
 
         private Node _selectedNode;
         /// <summary>

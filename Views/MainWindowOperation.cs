@@ -143,29 +143,48 @@ namespace RootNS
 
         private void BtnOutlines_Click(object sender, RoutedEventArgs e)
         {
-            string text = string.Empty;
+            if (SqliteHelper.PoolDict.ContainsKey(Gval.CurrentBook.Guid.ToString()) == false)
+            {
+                return;
+            }
+            string text = "　　";
             foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[2].GetHeirsList())
             {
-                Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
-                if (match.Success)
+                string title = Workflow.GetTitleFromTitle(node.Title);
+                if (string.IsNullOrEmpty(title) == false)
                 {
-                    text += match.Value + "：\n" + node.Summary + "\n　　\n　　";
+                    text += title + "：\n　　\n" + node.Summary + "\n　　\n　　";
                 }
             }
             foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[0].GetHeirsList())
             {
-                Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
-                if (match.Success)
+                string title = Workflow.GetTitleFromTitle(node.Title);
+                if (string.IsNullOrEmpty(title) == false)
                 {
-                    text += match.Value + "：\n" + node.Summary + "\n　　\n　　";
+                    text += title + "：\n　　\n" + node.Summary + "\n　　\n　　";
                 }
             }
-            Views.WShow wShow = new Views.WShow();
-            wShow.ThisTextEditor.Text = text;
-            wShow.Show();
+            Node nodeShell = null;
+            if (Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes.Count == 0)
+            {
+                nodeShell = new Node();
+                Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes.Add(nodeShell);
+                nodeShell.Insert();
+            }
+            else
+            {
+                nodeShell = Gval.MaterialBook.TabRoot.ChildNodes[13].ChildNodes[0];
+            }
+            nodeShell.Text = text;
+            WBase wBase = new WBase() { DataContext = nodeShell };
+            wBase.Show();
         }
         private void BtnPackage_Click(object sender, RoutedEventArgs e)
         {
+            if (SqliteHelper.PoolDict.ContainsKey(Gval.CurrentBook.Guid.ToString()) == false)
+            {
+                return;
+            }
             string content = string.Empty;
             foreach (Node card in Gval.CurrentBook.TabRoot.ChildNodes[5].GetHeirsList())
             {

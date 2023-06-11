@@ -26,6 +26,10 @@ namespace RootNS.MyControls
             InitializeComponent();
             this.DataContext = node;
             node.Card.HiddenNullLines();
+            if ((this.DataContext as Node).Owner == Gval.MaterialBook)
+            {
+                TbTag.Background = Brushes.WhiteSmoke;
+            }
         }
     }
 }

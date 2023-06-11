@@ -63,10 +63,9 @@ namespace RootNS.MyControls
                 return;
             }
             //因为在TabControl中，每次切换的时候都会触发这个事件，故而一些初始化步骤放在父容器，不要放在这里
-            Gval.Views.CurrentEditorkernel = this;
             if (ThisTextEditor.SyntaxHighlighting == null)
             {
-                (this.DataContext as Node).Owner.UpdataSyntax();
+                EditorHelper.UpdataSyntax();
             }
             if (this.Tag != null)
             {
@@ -80,8 +79,8 @@ namespace RootNS.MyControls
             {
                 (this.DataContext as Node).PointX = (this.DataContext as Node).Text.Length;
             }
-            ThisTextEditor.ScrollToLine((int)(this.DataContext as Node).PointY);
-            ThisTextEditor.Select((int)(this.DataContext as Node).PointX, 0);
+            ThisTextEditor.ScrollToLine(Math.Min(ThisTextEditor.LineCount, (int)(this.DataContext as Node).PointY));
+            ThisTextEditor.Select(Math.Min(ThisTextEditor.Text.Length, (int)(this.DataContext as Node).PointX), 0);
             ThisTextEditor.TextArea.Focus();
         }
 

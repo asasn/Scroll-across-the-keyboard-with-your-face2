@@ -33,8 +33,13 @@ namespace RootNS.MyControls
         {
             Gval.Views.EditorTabControl = sender as HandyControl.Controls.TabControl;
             Gval.OpeningDocList.CollectionChanged += OpenedDocList_CollectionChanged;
+            Gval.TextEditorList.CollectionChanged += TextEditorList_CollectionChanged;
         }
 
+        private void TextEditorList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+
+        }
 
         private void OpenedDocList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -75,6 +80,8 @@ namespace RootNS.MyControls
                 editorBase.ThisTextEditor.Text = stuff.Text;
                 editorBase.SummaryTextEditor.Text = stuff.Summary;
                 editorBase.BtnSaveDoc.IsEnabled = false;
+                Gval.TextEditorList.Add(editorBase.ThisTextEditor);
+                Gval.TextEditorList.Add(editorBase.SummaryTextEditor);
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -89,23 +96,16 @@ namespace RootNS.MyControls
                 }
                 if (oldItem != null)
                 {
+                    Editorkernel editorBase = oldItem.Content as Editorkernel;
+                    Gval.TextEditorList.Remove(editorBase.ThisTextEditor);
+                    Gval.TextEditorList.Remove(editorBase.SummaryTextEditor);
                     Gval.Views.EditorTabControl.Items.Remove(oldItem);
                     if (Gval.Views.EditorTabControl.Items.Count == 0)
                     {
-                        Gval.Views.CurrentEditorkernel = null;
+                        Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Hidden;
                     }
                 }
-                if (Gval.Views.CurrentEditorkernel != null)
-                {
-                    //关闭标签页的时候，更新Summary的文本
-                    //Gval.Views.UcShower.Tag = null;
-                    //Gval.Views.UcShower.ThisTextEditor.Text = (Gval.Views.CurrentEditorkernel.DataContext as Node).Summary;
-                    //Gval.Views.UcShower.Tag = true;
-                }
-                else
-                {
-                    Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Hidden;
-                }
+                
                 //Console.WriteLine("关闭，从列表中删除");
             }
         }

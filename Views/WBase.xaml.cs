@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,10 +27,13 @@ namespace RootNS.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 允许上传的标记
+        /// </summary>
         public bool UpTag { get; set; } = false;
         private void ThisWindow_Unloaded(object sender, RoutedEventArgs e)
         {
-            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云文档.ToString() &&
+            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云草稿.ToString() &&
                 BtnSave.IsEnabled == false && UpTag == true)
             {
                 string localFilePath = Gval.Path.DataDirectory + (this.DataContext as Node).Guid + ".txt";
@@ -46,7 +50,41 @@ namespace RootNS.Views
                     BtnSave_Click(null, null);
                 }
             }
+            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云大纲.ToString() &&
+                BtnSave.IsEnabled == false && UpTag == true)
+            {
+                string[] rets = Regex.Split((this.DataContext as Node).Text, "(第.+?章.*?\n)");
+
+                string title = string.Empty;
+                string content = string.Empty;
+                foreach (string str in rets)
+                {
+                    Match match = Regex.Match(str, "(第.+?章.*?\n)");
+                    if (match.Success)
+                    {
+                        title = match.Value;
+                    }
+                    else
+                    {
+                        content = str.Trim();
+                    }
+                    if (string.IsNullOrEmpty(content))
+                    {
+                        continue;
+                    }
+                    Node newNode = new Node
+                    {
+                        Title = title.Trim(),
+                        Text = "　　" + content.Trim(),
+                    };
+                    Console.WriteLine(newNode.Title + "：" + newNode.Text + "\n");
+                    title = string.Empty;
+                    content = string.Empty;
+                }
+            }
+            Gval.TextEditorList.Remove(LightEditor.ThisTextEditor);
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (FunctionsPack.IsInDesignMode(this))
@@ -66,7 +104,7 @@ namespace RootNS.Views
             {
                 LightEditor.ThisTextEditor.Text = (this.DataContext as Node).Text;
             }
-            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云文档.ToString())
+            if ((this.DataContext as Node).TypeName == Book.TypeNameEnum.云草稿.ToString())
             {
                 this.Width = 700;
                 RTitle.Height = new GridLength(0);
@@ -84,6 +122,7 @@ namespace RootNS.Views
             }
             LightEditor.BtnSaveDoc.IsEnabled = false;
             UpTag = false;
+            Gval.TextEditorList.Add(LightEditor.ThisTextEditor);
         }
 
         private void BtnSaveDoc_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)

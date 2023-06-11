@@ -120,7 +120,7 @@ namespace RootNS.Views
                 (this.DataContext as Node).Insert();
             }
             UpdataCard();
-            Workflow.UpDataHilgliting(this.DataContext as Node);
+            EditorHelper.UpdataSyntax();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -139,7 +139,7 @@ namespace RootNS.Views
                     {
                         OldParent.ChildNodes.Add(this.DataContext as Node);
                     }
-                    Workflow.UpDataHilgliting(this.DataContext as Node);
+                    EditorHelper.UpdataSyntax();
                 }
                 if (dr == MessageBoxResult.Cancel)
                 {

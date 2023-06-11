@@ -50,10 +50,16 @@ namespace RootNS.Models
                 {
                     stuff.GenerateNewCard();
                     stuff.Card.Tag = stuff.Parent.Title;
-                    Workflow.UpDataHilgliting(stuff);
+                }
+                if (stuff.Owner.TabRoot.ChildNodes.Count > 8 &&
+                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[8].TypeName)
+                {
+                    stuff.GenerateNewCard();
+                    stuff.Card.Tag = stuff.Parent.Title;
                 }
                 if (Gval.FlagLoadingCompleted == true)
                 {
+                    EditorHelper.UpdataSyntax();
                     UpdataBrothers(stuff);
                 }
             }
@@ -106,38 +112,8 @@ namespace RootNS.Models
         }
 
 
-        /// <summary>
-        /// 从章节标题当中获取序号
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private int GetNumberFromTitle()
-        {
-            int n = 0;
-            Match match = Regex.Match(this.Title.Trim(), "第(.+?)章.*?");
-            if (match.Success)
-            {
-                n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
-            }
-            return n;
-        }
 
-        /// <summary>
-        /// 从章节标题当中获取名称（不包含序号的章节名）
-        /// </summary>
-        /// <returns></returns>
-        private string GetNameFromTitle()
-        {
-            //标题的名称（排除序号）
-            string cTitle = string.Empty;
-            string[] rets;
-            rets = Regex.Split(this.Title.Trim(), "第(.+?)章(.*?)");
-            if (rets.Length == 4)
-            {
-                cTitle = rets[3].ToString().Trim();
-            }
-            return cTitle;
-        }
+
 
 
 
@@ -158,13 +134,13 @@ namespace RootNS.Models
                     {
                         previousNode = new Node();
                     }
-                    int fn = previousNode.GetNumberFromTitle();
+                    int fn = Workflow.GetNumberFromTitle(previousNode.Title);
                     //当前操作节点相对于finalDoc的偏移量
                     int off = 0;
                     for (int ii = pi; ii < stuff.Parent.ChildNodes.Count; ii++)
                     {
                         off++;
-                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", fn + off, stuff.Parent.ChildNodes[ii].GetNameFromTitle());
+                        stuff.Parent.ChildNodes[ii].Title = string.Format("第{0}章 {1}", fn + off, Workflow.GetNameFromTitle(stuff.Parent.ChildNodes[ii].Title));
                     }
                     stuff.ChangeBrothersIndex(pi);
                     stuff.ChangeBrothersTitle(pi);
@@ -447,7 +423,7 @@ namespace RootNS.Models
             }
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlDel);
 
-            this.Owner.UpdataSyntax();
+            EditorHelper.UpdataSyntax();
         }
 
         /// <summary>
@@ -491,9 +467,10 @@ namespace RootNS.Models
                 CommitReName();
                 HasNameChange = false;
                 //提交之后，节点的标题改变，这个时候再来应用刷新高亮的方法
-                if (this.TypeName == this.Owner.TabRoot.ChildNodes[5].TypeName)
+                if (this.TypeName == this.Owner.TabRoot.ChildNodes[5].TypeName ||
+                    this.TypeName == this.Owner.TabRoot.ChildNodes[8].TypeName)
                 {
-                    this.Owner.UpdataSyntax();
+                    EditorHelper.UpdataSyntax();
                 }
             }
         }

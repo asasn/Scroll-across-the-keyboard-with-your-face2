@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,6 +16,56 @@ namespace RootNS.Helper
     /// </summary>
     internal partial class Workflow
     {
+
+        /// <summary>
+        /// 从章节标题当中获取序号
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static int GetNumberFromTitle(string title)
+        {
+            int n = 0;
+            Match match = Regex.Match(title.Trim(), "第(.+?)章.*?");
+            if (match.Success)
+            {
+                n = Convert.ToInt32(match.Value.Substring(1, match.Value.Length - 2));
+            }
+            return n;
+        }
+
+        /// <summary>
+        /// 从章节标题当中获取"第xx章样式"
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static string GetTitleFromTitle(string title)
+        {
+            string cTitle = string.Empty;
+            Match match = Regex.Match(title.Trim(), "第(.+?)章.*?");
+            if (match.Success)
+            {
+                cTitle = match.Value;
+            }
+            return cTitle;
+        }
+
+        /// <summary>
+        /// 从章节标题当中获取名称（不包含序号的章节名）
+        /// </summary>
+        /// <returns></returns>
+        public static string GetNameFromTitle(string title)
+        {
+            //标题的名称（排除序号）
+            string cTitle = string.Empty;
+            string[] rets;
+            rets = Regex.Split(title.Trim(), "第(.+?)章(.*?)");
+            if (rets.Length == 4)
+            {
+                cTitle = rets[3].ToString().Trim();
+            }
+            return cTitle;
+        }
+
         /// <summary>
         /// 根据名称查找命令
         /// </summary>
@@ -43,7 +94,10 @@ namespace RootNS.Helper
         /// <returns></returns>
         public static Node GetMatchCard(System.Text.RegularExpressions.Match match, Book book)
         {
-            foreach (Node card in book.TabRoot.ChildNodes[5].GetHeirsList())
+            System.Collections.ArrayList cards = new System.Collections.ArrayList();
+            cards.AddRange(Gval.CurrentBook.TabRoot.ChildNodes[5].GetHeirsList());
+            cards.AddRange(Gval.MaterialBook.TabRoot.ChildNodes[8].GetHeirsList());
+            foreach (Node card in cards)
             {
                 if (card.Attachment == null || card.Card == null || card.IsDir == true)
                 {

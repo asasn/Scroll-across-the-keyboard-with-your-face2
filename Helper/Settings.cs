@@ -18,7 +18,7 @@ namespace RootNS.Helper
         /// <returns></returns>
         public static object Get(Book book, string key)
         {
-            if (book.Guid == null)
+            if (book.Guid == null || SqliteHelper.PoolDict.ContainsKey(book.Guid.ToString()) == false)
             {
                 return null;
             }
@@ -41,7 +41,7 @@ namespace RootNS.Helper
         /// <param name="value">设置值</param>
         public static void Set(Book book, string key, object value)
         {
-            if (book.Guid == null || value == null)
+            if (book.Guid == null || value == null || SqliteHelper.PoolDict.ContainsKey(book.Guid.ToString()) == false)
             {
                 return;
             }

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace RootNS.Models
 {
@@ -83,6 +84,21 @@ namespace RootNS.Models
                 StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(OpeningDocList)));
             }
         }
+
+        private static ObservableCollection<object> _textEditorList = new ObservableCollection<object>();
+        /// <summary>
+        /// 打开的TextEditor列表
+        /// </summary>
+        public static ObservableCollection<object> TextEditorList
+        {
+            get { return _textEditorList; }
+            set
+            {
+                _textEditorList = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TextEditorList)));
+            }
+        }
+
 
         private static string _chatGpt_apikey;
         /// <summary>

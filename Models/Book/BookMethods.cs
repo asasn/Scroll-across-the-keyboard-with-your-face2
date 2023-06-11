@@ -30,24 +30,7 @@ namespace RootNS.Models
 
 
 
-        private HighlightingRule NewRule(string keyword, string colorTag)
-        {
-            try
-            {
-                new Regex(keyword);
-            }
-            catch (Exception ex)
-            {
-                keyword = "\\" + keyword;
-                throw new Exception(string.Format("高亮规则添加关键词时发生错误！\n{0}", ex));
-            }
-            HighlightingRule rule = new HighlightingRule
-            {
-                Color = this.Syntax.GetNamedColor(colorTag),
-                Regex = new Regex(keyword.Trim())
-            };
-            return rule;
-        }
+
 
 
         private void ChildNodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -65,63 +48,6 @@ namespace RootNS.Models
 
         }
 
-        /// <summary>
-        /// 列表内部的元素按照长度排序方法（注意正反排序，调整xy的顺序实现）
-        /// </summary>
-        private class StringLengthComparer : System.Collections.IComparer
-        {
-            public int Compare(object x, object y)
-            {
-                return (((string, string))y).Item1.Length.CompareTo((((string, string))x).Item1.Length);
-            }
-        }
-
-
-        /// <summary>
-        /// 刷新配色方案，填入本控件语法对象
-        /// </summary>
-        public void UpdataSyntax()
-        {
-            if (Gval.Views.CurrentEditorkernel == null)
-            {
-                return;
-            }
-            System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
-            this.Syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
-            xshdReader.Close();
-            System.Collections.ArrayList NameArrayList = new System.Collections.ArrayList();
-            foreach (Node node in this.TabRoot.ChildNodes[5].GetHeirsList())
-            {
-                if (node.Attachment == null || string.IsNullOrEmpty(node.Attachment.ToString()) ||
-                    node.Card == null || node.IsDir == true || node.IsDel == true || 
-                    string.IsNullOrEmpty(node.Title.Trim()) || string.IsNullOrEmpty(node.Card.Tag))
-                {
-                    continue;
-                }
-                NameArrayList.Add((node.Title.Trim(), node.Card.Tag));
-                foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
-                {
-                    NameArrayList.Add((tip.Content.Trim(), node.Card.Tag));
-                }
-            }
-            string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", "角色", "物品", "道具", "机构", "组织", "世界" };
-            NameArrayList.Sort(new StringLengthComparer());
-            foreach ((string, string) tuple in NameArrayList)
-            {
-                if (colorTags.Contains(tuple.Item2))
-                {
-                    HighlightingRule rule = NewRule(tuple.Item1, tuple.Item2);
-                    this.Syntax.MainRuleSet.Rules.Add(rule);
-                }
-                else
-                {
-                    HighlightingRule rule = NewRule(tuple.Item1, "其他");
-                    this.Syntax.MainRuleSet.Rules.Add(rule);
-                }
-            }
-
-            Gval.Views.CurrentEditorkernel.ThisTextEditor.SyntaxHighlighting = this.Syntax;
-        }
 
 
 

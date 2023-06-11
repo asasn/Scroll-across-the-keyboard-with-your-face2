@@ -54,8 +54,7 @@ namespace RootNS.MyControls
                 node.TypeName == Book.TypeNameEnum.全局信息卡.ToString())
             {
                 //在生成窗口对象之后，展现界面之前赋值给DataContext
-                WCard wCard = new WCard();
-                wCard.DataContext = node;
+                WCard wCard = new WCard() { DataContext = node };
                 wCard.Show();
             }
             if (node.TypeName == Book.TypeNameEnum.全局情节设计.ToString())
