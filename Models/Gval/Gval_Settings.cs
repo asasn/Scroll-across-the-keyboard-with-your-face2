@@ -22,7 +22,12 @@ namespace RootNS.Models
             public static string WebdavUrl { get { return "WebdavUrl"; } }
             public static string WebdavUserName { get { return "WebdavUserName"; } }
             public static string WebdavPassWord { get { return "WebdavPassWord"; } }
+            public static string CursorToEnd { get { return "CursorToEnd"; } }
+        }
 
+        public struct EditorSettings
+        {
+            public static bool CursorToEnd { get; set; } = true;
         }
 
         /// <summary>

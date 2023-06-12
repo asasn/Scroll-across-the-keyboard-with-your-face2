@@ -153,12 +153,18 @@ namespace RootNS.Helper
             }
             //排版完成，重新赋值给文本框
             tEditor.Text = reText;
-            //光标移动至文末 
-            //tEditor.ScrollToEnd();
-            //tEditor.Select(tEditor.Text.Length, 0);
-            //光标移动至合适的位置
-            tEditor.ScrollToLine(Math.Min(tEditor.LineCount, oldLine.LineNumber));
-            tEditor.Select(Math.Min(tEditor.Text.Length, oldOffset), 0);
+            if (Gval.EditorSettings.CursorToEnd == true)
+            {
+                //光标移动至文末
+                tEditor.Select(tEditor.Text.Length, 0); 
+                tEditor.ScrollToEnd();
+            }
+            else
+            {
+                //光标移动至合适的位置
+                tEditor.Select(Math.Min(tEditor.Text.Length, oldOffset), 0);
+                tEditor.ScrollToLine(Math.Min(tEditor.LineCount, oldLine.LineNumber));
+            }
             tEditor.Focus();
         }
 

@@ -52,7 +52,7 @@
                 <RowDefinition x:Name="Row01" Height="0"/>
                 <RowDefinition x:Name="Row02" Height="0"/>
             </Grid.RowDefinitions>
-            <avalonEdit:TextEditor 
+            <avalonEdit:TextEditor ScrollViewer.CanContentScroll="False"
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Grid.Row="0"
             x:Name="ThisTextEditor" ShowLineNumbers="True" 

@@ -19,7 +19,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label BorderThickness="0,0,0,0">服务器地址：</Label>
-                        <TextBox x:Name="WebdavTabTbUrl" Grid.Column="1" TextChanged="WebdavTabTextBox_TextChanged" MinWidth="197" />
+                        <TextBox x:Name="WebdavTabTbUrl" Grid.Column="1" TextChanged="WebdavTabTextBox_TextChanged" MinWidth="300" />
                     </Grid>
                     <Grid HorizontalAlignment="Left" Margin="0,5,0,5">
                         <Grid.ColumnDefinitions>
@@ -47,8 +47,22 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="编辑器">
+                <StackPanel>
+                    <Grid HorizontalAlignment="Left" Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel x:Name="CursorToEndSetting" Margin="10,10,0,0" Loaded="CursorToEndSetting_Loaded">
+                            <RadioButton x:Name="rb1" Margin="0,5,0,5" ToolTip="可能因空格被删除而改变" Checked="Rb1_Checked">排版后光标位置不移动</RadioButton>
+                            <RadioButton x:Name="rb2" Grid.Column="1" Margin="0,5,0,5" Checked="Rb2_Checked">排版后光标移动至末尾</RadioButton>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="其他">
-                
+
             </TabItem>
         </TabControl>
     </Grid>

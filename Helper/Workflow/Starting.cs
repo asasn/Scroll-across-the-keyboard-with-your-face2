@@ -21,10 +21,29 @@ namespace RootNS.Helper
                 FileIO.TryToCreateFolder(Gval.Path.DataDirectory);
             }
             Gval.MaterialBook.Load();
-            LoadWebdavInfo();
+            LoadSettings();
         }
 
-        private static void LoadWebdavInfo()
+        /// <summary>
+        /// 再入基本的设置
+        /// </summary>
+        private static void LoadSettings()
+        {
+            LoadEditorSettings();
+            LoadWebdavSettings();
+        }
+
+        private static void LoadEditorSettings()
+        {
+            object cursor = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.CursorToEnd);
+            if (cursor != null)
+            {
+                Gval.EditorSettings.CursorToEnd = Convert.ToBoolean(cursor);
+            }
+        }
+
+
+        private static void LoadWebdavSettings()
         {
             object url = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.WebdavUrl);
             object userName = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.WebdavUserName);
@@ -58,7 +77,7 @@ namespace RootNS.Helper
             else
             {
                 Gval.CurrentBook.Guid = Guid.Parse(curGuid.ToString());
-            }         
+            }
             string sql = string.Format("SELECT * FROM 书库 ORDER BY [Index];");
             SQLiteDataReader reader = SqliteHelper.PoolDict[Gval.MaterialBook.Guid.ToString()].ExecuteQuery(sql);
             while (reader.Read())

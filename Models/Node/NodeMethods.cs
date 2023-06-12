@@ -70,6 +70,7 @@ namespace RootNS.Models
                 this.Count -= 1;
                 if (Gval.FlagLoadingCompleted == true)
                 {
+                    EditorHelper.UpdataSyntax();
                     UpdataBrothers(stuff);
                 }
             }

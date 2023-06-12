@@ -48,6 +48,22 @@ namespace RootNS.Views
             BtnWebdavTabSave.IsEnabled = false;
         }
 
+        private void Rb1_Checked(object sender, RoutedEventArgs e)
+        {
+            Gval.EditorSettings.CursorToEnd = false;
+            Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CursorToEnd, Gval.EditorSettings.CursorToEnd);
+        }
 
+        private void Rb2_Checked(object sender, RoutedEventArgs e)
+        {
+            Gval.EditorSettings.CursorToEnd = true; 
+            Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CursorToEnd, Gval.EditorSettings.CursorToEnd);
+        }
+
+        private void CursorToEndSetting_Loaded(object sender, RoutedEventArgs e)
+        {
+            rb1.IsChecked = !Gval.EditorSettings.CursorToEnd;
+            rb2.IsChecked = Gval.EditorSettings.CursorToEnd;
+        }
     }
 }
