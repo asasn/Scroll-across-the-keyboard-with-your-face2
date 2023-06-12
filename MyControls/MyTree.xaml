@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:hc="https://handyorg.github.io/handycontrol" 
     xmlns:behavior="clr-namespace:RootNS.Helper" 
-    Background="#FFFEFEFE" UseLayoutRounding="True"
+    Background="#FAFAFA" UseLayoutRounding="True"
     mc:Ignorable="d" VirtualizingPanel.IsVirtualizing="True"
     d:DesignHeight="450" d:DesignWidth="250" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" Loaded="UserControl_Loaded">
     <Grid Background="Transparent">
@@ -34,7 +34,7 @@
                 <Button ToolTip="导入（Insert）" x:Name="BtnImport" FontFamily="../Resources/icons/#icomoon" Content="&#xe98f;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Grid.Column="1" Padding="0" BorderThickness="0" Width="25" Height="25" Click="BtnImport_Click"/>
             </StackPanel>
         </Grid>
-        <TreeView Margin="2" x:Name="TreeNodes" hc:ScrollViewer.IsPenetrating="False"  TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded" DragOver="TreeNodes_DragOver" Grid.RowSpan="2" MouseEnter="TreeNodes_MouseEnter" MouseLeave="TreeNodes_MouseLeave">
+        <TreeView Background="#FCFCFC" Margin="2" x:Name="TreeNodes" hc:ScrollViewer.IsPenetrating="False"  TreeViewItem.Selected="TreeNodes_Selected" ItemsSource="{Binding ChildNodes}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" DragEnter="TreeNodes_DragEnter" Drop="TreeNodes_Drop" MouseMove="TreeNodes_MouseMove" MouseLeftButtonDown="TreeNodes_MouseLeftButtonDown" DragLeave="TreeNodes_DragLeave" MouseUp="TreeNodes_MouseUp" Loaded="TreeNodes_Loaded" DragOver="TreeNodes_DragOver" Grid.RowSpan="2" MouseEnter="TreeNodes_MouseEnter" MouseLeave="TreeNodes_MouseLeave">
             <TreeView.Resources>
                 <RoutedUICommand x:Key="AddFolder" Text="添加目录"/>
                 <RoutedUICommand x:Key="AddDoc" Text="添加节点"/>
@@ -115,6 +115,6 @@
             </TreeView.ItemsPanel>
         </TreeView>
         <hc:SearchBar Grid.Row="2" Name="SearchBar" Visibility="Hidden" VerticalContentAlignment="Center" Margin="2,2,2,2" SearchStarted="SearchBar_SearchStarted" MouseEnter="SearchBar_MouseEnter" MouseLeave="SearchBar_MouseLeave"/>
-        <Button Grid.Row="1" x:Name="BtnClearSearch" Visibility="Hidden" ToolTip="清除搜索结果并返回之前的页面" FontFamily="../Resources/icons/#icomoon" Content="&#xea11;" FontSize="18" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" Click="BtnClearSearch_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Margin="2,2,2,2"/>
+        <Button Grid.Row="1" x:Name="BtnClearSearch" Visibility="Hidden" ToolTip="清除搜索结果并返回之前的页面" FontFamily="../Resources/icons/#icomoon" Content="&#xea11;" FontSize="20" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" Click="BtnClearSearch_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Margin="16,2,16,2"/>
     </Grid>
 </UserControl>

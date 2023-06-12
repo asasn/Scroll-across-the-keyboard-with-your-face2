@@ -80,7 +80,7 @@ namespace RootNS.Helper
                     NameArrayList.Add((tip.Content.Trim(), node.Card.Tag));
                 }
             }
-            string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", "角色", "物品", "道具", "机构", "组织", "世界" };
+            string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", "角色", "龙套", "物品", "道具", "机构", "组织", "地区", "区域", "世界" };
             NameArrayList.Sort(new StringLengthComparer());
             foreach ((string, string) tuple in NameArrayList)
             {

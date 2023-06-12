@@ -357,12 +357,18 @@ namespace RootNS.MyControls
 
         private void SearchBar_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
-            BtnClearSearch.Visibility = Visibility.Visible;
+            if (string.IsNullOrEmpty(SearchBar.Text))
+            {
+                BtnClearSearch_Click(null, null);
+                return;
+            }
+            int count = 0;
             foreach (Node node in (TreeNodes.DataContext as Node).GetHeirsList())
             {
                 if (node.GetAllContent().Contains(e.Info.ToLower()))
                 {
-                    node.Visibility = Visibility.Visible;
+                    node.Visibility = Visibility.Visible; 
+                    count++;
                 }
                 else
                 {
@@ -377,14 +383,19 @@ namespace RootNS.MyControls
                     node.Parent.Visibility = Visibility.Visible;
                 }
             }
+            SearchBar.Text = String.Empty;
+            if (count == 0)
+            {
+                BtnClearSearch_Click(null, null);
+            }
+            else
+            {
+                BtnClearSearch.Visibility = Visibility.Visible;
+            }
         }
 
         private void BtnClearSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(SearchBar.Text))
-            {
-                return;
-            }
             BtnClearSearch.Visibility = Visibility.Hidden;
             SearchBar.Clear();
             foreach (Node node in (TreeNodes.DataContext as Node).GetHeirsList())
@@ -396,6 +407,7 @@ namespace RootNS.MyControls
         private void SearchBar_MouseEnter(object sender, MouseEventArgs e)
         {
             SearchBar.Visibility = Visibility.Visible;
+            SearchBar.Opacity = 1;
         }
 
         private void SearchBar_MouseLeave(object sender, MouseEventArgs e)
@@ -406,11 +418,12 @@ namespace RootNS.MyControls
         private void TreeNodes_MouseEnter(object sender, MouseEventArgs e)
         {
             SearchBar.Visibility = Visibility.Visible;
+            SearchBar.Opacity = 1;
         }
 
         private void TreeNodes_MouseLeave(object sender, MouseEventArgs e)
         {
-            SearchBar.Visibility = Visibility.Hidden;
+            SearchBar.Opacity = 0.5;
         }
 
 
