@@ -23,6 +23,7 @@ namespace RootNS.Models
             public static string WebdavUserName { get { return "WebdavUserName"; } }
             public static string WebdavPassWord { get { return "WebdavPassWord"; } }
             public static string CursorToEnd { get { return "CursorToEnd"; } }
+            public static string ThisBookTotalNodesCount { get { return "ThisBookTotalNodesCount"; } }
         }
 
         public struct EditorSettings

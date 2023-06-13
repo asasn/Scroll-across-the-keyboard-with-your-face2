@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace RootNS.Helper
 {
@@ -23,6 +24,7 @@ namespace RootNS.Helper
             Gval.MaterialBook.Load();
             LoadSettings();
         }
+
 
         /// <summary>
         /// 再入基本的设置
@@ -68,7 +70,6 @@ namespace RootNS.Helper
         /// </summary>
         public static void LoadBooksToBank()
         {
-            Gval.FlagLoadingCompleted = false;
             object curGuid = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid);
             if (curGuid == null)
             {
@@ -100,6 +101,7 @@ namespace RootNS.Helper
                 Gval.BooksBank.Add(book);
             }
             reader.Close();
+            Gval.FlagLoadingCompleted = true;
         }
     }
 }

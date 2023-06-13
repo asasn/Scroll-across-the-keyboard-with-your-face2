@@ -44,21 +44,22 @@ namespace RootNS.Models
                 {
                     stuff.TypeName = this.TypeName;
                 }
-                //注意，这里要防止初始化加载的时候触发事件，需要加入Gval.FlagLoadingCompleted标记或者TabRoot.ChildNodes.Count的判断
-                if (stuff.Owner.TabRoot.ChildNodes.Count > 5 &&
-                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
-                {
-                    stuff.GenerateNewCard();
-                    stuff.Card.Tag = stuff.Parent.Title;
-                }
-                if (stuff.Owner.TabRoot.ChildNodes.Count > 8 &&
-                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[8].TypeName)
-                {
-                    stuff.GenerateNewCard();
-                    stuff.Card.Tag = stuff.Parent.Title;
-                }
                 if (Gval.FlagLoadingCompleted == true)
                 {
+                    //注意，这里要防止初始化加载的时候触发事件，需要加入Gval.FlagLoadingCompleted标记或者TabRoot.ChildNodes.Count的判断
+                    if (stuff.Owner.TabRoot.ChildNodes.Count > 5 &&
+                    stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[5].TypeName)
+                    {
+                        stuff.GenerateNewCard();
+                        stuff.Card.Tag = stuff.Parent.Title;
+                    }
+                    if (stuff.Owner.TabRoot.ChildNodes.Count > 8 &&
+                        stuff.TypeName == stuff.Owner.TabRoot.ChildNodes[8].TypeName)
+                    {
+                        stuff.GenerateNewCard();
+                        stuff.Card.Tag = stuff.Parent.Title;
+                    }
+
                     EditorHelper.UpdataSyntax();
                     UpdataBrothers(stuff);
                 }

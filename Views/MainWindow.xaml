@@ -25,7 +25,7 @@
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <GroupBox x:Name="GboxTree" Header="目录树" Style="{StaticResource BaseStyle}" Grid.RowSpan="2">
-            <Grid>
+            <Grid>                
                 <Border x:Name="BorderB" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -71,6 +71,7 @@
                         </Grid>
                     </Grid>
                 </Border>
+                <hc:CircleProgressBar x:Name="LoadBookProgressBar" Grid.Row="1" Value="{Binding PercentPoint, Source={StaticResource Gval}}" ></hc:CircleProgressBar>
             </Grid>
         </GroupBox>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="Ivory" Grid.RowSpan="2"/>

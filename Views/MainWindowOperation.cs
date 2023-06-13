@@ -26,12 +26,16 @@ namespace RootNS
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, Gval.CurrentBook.Guid);
-            Gval.CurrentBook.Load();
-            Gval.FlagLoadingCompleted = true;
+            if (Gval.FlagLoadingCompleted == true)
+            {
+                Gval.FlagLoadingCompleted = false;
+                Gval.CurrentBook.Load();
+                Gval.FlagLoadingCompleted = true;
+                Gval.Views.UcSearcher.TbKeyWords.Clear();
+                Gval.Views.UcSearcher.ThisSearcher.Start();
+            }
             RbEventsInBook.IsChecked = false;
             RbEventsInBook.IsChecked = true;
-            Gval.Views.UcSearcher.TbKeyWords.Clear();
-            Gval.Views.UcSearcher.ThisSearcher.Start();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

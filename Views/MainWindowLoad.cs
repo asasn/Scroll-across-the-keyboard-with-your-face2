@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace RootNS
 {
@@ -66,6 +67,7 @@ namespace RootNS
             Gval.Views.MainWindow = this;
         }
 
+
         private void BorderR_Loaded(object sender, RoutedEventArgs e)
         {
             Gval.Views.BorderR = sender as Border;
@@ -104,11 +106,36 @@ namespace RootNS
         /// <param name="e"></param>
         private void WinMain_ContentRendered(object sender, EventArgs e)
         {
-            //载入书籍数据
-            Workflow.LoadBooksToBank();
-            Gval.FlagLoadingCompleted = true;        }
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1)
+            };
+            Timer.Tick += TimeRuner;
+            Timer.Start();
+        }
 
+        private DispatcherTimer Timer = new DispatcherTimer();
 
+        static bool _loading = false;
+        /// <summary>
+        /// 方法：每次间隔运行的内容
+        /// </summary>
+        private void TimeRuner(object sender, EventArgs e)
+        {
+            if (_loading == false)
+            {
+                _loading = true;
+                Console.WriteLine("----------Load----------");
+                //载入书籍数据
+                Workflow.LoadBooksToBank();
+                LoadBookProgressBar.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Timer.Stop();
+                Console.WriteLine("----------Stop----------");
+            }
+        }
 
     }
 }

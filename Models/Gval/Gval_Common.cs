@@ -13,7 +13,7 @@ namespace RootNS.Models
     public partial class Gval : NotificationObject
     {
 
-        private static bool _flagLoadingCompleted;
+        private static bool _flagLoadingCompleted = false;
         /// <summary>
         /// 完成标志：载入
         /// </summary>
@@ -141,6 +141,21 @@ namespace RootNS.Models
             {
                 _previousText = value;
                 StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(PreviousText)));
+            }
+        }
+
+
+        private static double _percentPoint;
+        /// <summary>
+        /// 进度条：当前进展（百分点）
+        /// </summary>
+        public static double PercentPoint
+        {
+            get { return _percentPoint; }
+            set
+            {
+                _percentPoint = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(PercentPoint)));
             }
         }
     }

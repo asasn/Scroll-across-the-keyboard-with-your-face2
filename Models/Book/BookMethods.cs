@@ -49,21 +49,28 @@ namespace RootNS.Models
         }
 
 
-
-
+        double counter;
+        double total = 1;
         /// <summary>
         /// 从TabRoot开始，递归载入整本书的所有节点内容
         /// </summary>
         public void Load()
         {
-            Gval.FlagLoadingCompleted = false;
             TableHelper.TryToBuildDatabaseForBook(this);
             SqliteHelper.PoolOperate.Add(this);
+            counter = 0;
+            object _total = Settings.Get(this, Gval.SettingsKeys.ThisBookTotalNodesCount);
+            if (_total != null)
+            {
+                total = Convert.ToDouble(_total);
+            }
+            Gval.PercentPoint = 0;
             foreach (var item in this.TabRoot.ChildNodes)
             {
                 item.ChildNodes.Clear();//载入之前先清空
                 RecursiveReLoad(item);
             }
+            Settings.Set(this, Gval.SettingsKeys.ThisBookTotalNodesCount, counter);
         }
 
         private void RecursiveReLoad(Node pNode)
@@ -92,7 +99,10 @@ namespace RootNS.Models
                     HasSave = true
                 };
                 pNode.ChildNodes.Add(node);
-                if (node.TypeName == node.Owner.TabRoot.ChildNodes[5].TypeName)
+                counter++;
+                Gval.PercentPoint = Math.Round(counter / total, 2) * 100;
+                if (node.TypeName == node.Owner.TabRoot.ChildNodes[5].TypeName ||
+                    node.TypeName == node.Owner.TabRoot.ChildNodes[8].TypeName)
                 {
                     node.GenerateNewCard();
                 }
@@ -106,6 +116,10 @@ namespace RootNS.Models
         /// </summary>
         public void Close()
         {
+            if (Gval.Views.EditorTabControl == null)
+            {
+                return;
+            }
             //当移除完元素之后，数组大小发生了变更，会抛出异常，所以在这里使用逆序遍历来进行删除
             for (int i = Gval.Views.EditorTabControl.Items.Count - 1; i >= 0; i--)
             {
