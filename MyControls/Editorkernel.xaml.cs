@@ -131,7 +131,7 @@ namespace RootNS.MyControls
         {
             try
             {
-                if (doSaveFlag == false || BtnSaveDoc.IsEnabled == false)
+                if (BtnSaveDoc.IsEnabled == false)
                 {
                     return;
                 }
