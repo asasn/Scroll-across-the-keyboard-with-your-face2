@@ -274,7 +274,7 @@ namespace RootNS.Models
         }
 
         /// <summary>
-        /// 获取子节点当中的目录集合
+        /// 获取子节点当中的目录集合（包含自身）
         /// </summary>
         public ObservableCollection<Node> DirCollection
         {
@@ -283,6 +283,7 @@ namespace RootNS.Models
         private ObservableCollection<Node> GetDirCollection()
         {
             ObservableCollection<Node> dirList = new ObservableCollection<Node>();
+            dirList.Add(this);
             foreach (Node node in this.ChildNodes)
             {
                 if (node.IsDir == true)
@@ -501,6 +502,13 @@ namespace RootNS.Models
             this.Parent.ChildNodes.Remove(this);
             this.ChangeBrothersIndex(pn);//要在拥有新的父节点之前进行处理
             dstNode.ChildNodes.Add(this);
+            if (this.Card != null)
+            {
+                this.Card.Tag = this.Parent.Title;
+                this.Attachment = JsonHelper.Otj<RootNS.Models.Card>(this.Card);
+                this.UpdateNodeProperty("内容", "Attachment", this.Attachment.ToString());
+                EditorHelper.UpdataSyntax();
+            }
             this.UpdateNodeProperty("节点", "Puid", this.Parent.Guid.ToString());
             this.UpdateNodeProperty("节点", "Index", this.Index.ToString());
             this.UpdateNodeProperty("节点", "TypeName", this.TypeName);

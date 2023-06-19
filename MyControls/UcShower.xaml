@@ -20,7 +20,7 @@
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             x:Name="ThisTextEditor" ShowLineNumbers="False"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="9pt" Background="#FAFAFA" Foreground="DimGray" IsReadOnly="True" Cursor="Hand">
+            FontSize="10pt" Background="#FAFAFA" Foreground="DimGray" IsReadOnly="True" Cursor="Hand">
                 <avalonEdit:TextEditor.Options>
                     <avalonEdit:TextEditorOptions
                     HighlightCurrentLine="False" ShowSpaces="True" ConvertTabsToSpaces="True"

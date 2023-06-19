@@ -19,6 +19,7 @@
 	<Color name="区域" foreground="Violet"/>
 	<Color name="世界" foreground="Violet"/>
 	<Color name="其他" foreground="Orange"/>
+	<Color name="未指定" foreground="Gray"/>
 	<!-- This is the main ruleset. -->
 	<RuleSet>
 		<Span color="对话" multiline="true">

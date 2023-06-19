@@ -25,6 +25,8 @@ namespace RootNS.Models
                 Node node = new Node() { IsDir = true, TypeName = enumName, Guid = new Guid(guid) };
                 TabRoot.ChildNodes.Add(node);
             }
+            TabRoot.ChildNodes[5].Title = "未指定";
+            TabRoot.ChildNodes[8].Title = "未指定";
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
         }
 

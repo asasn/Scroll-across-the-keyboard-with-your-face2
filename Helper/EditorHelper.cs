@@ -80,18 +80,20 @@ namespace RootNS.Helper
                     NameArrayList.Add((tip.Content.Trim(), node.Card.Tag));
                 }
             }
-            string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", "角色", "龙套", "物品", "道具", "机构", "组织", "地区", "区域", "世界" };
+            string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", 
+                "角色", "龙套", "物品", "道具", "机构", "组织", "地区", "区域", "世界", "其他" };
             NameArrayList.Sort(new StringLengthComparer());
             foreach ((string, string) tuple in NameArrayList)
             {
-                if (colorTags.Contains(tuple.Item2))
+                string el = Workflow.CheckStringMethod(tuple.Item2, colorTags);
+                if (string.IsNullOrEmpty(el))
                 {
-                    HighlightingRule rule = NewRule(tuple.Item1, tuple.Item2);
+                    HighlightingRule rule = NewRule(tuple.Item1, "未指定");
                     _syntax.MainRuleSet.Rules.Add(rule);
                 }
                 else
                 {
-                    HighlightingRule rule = NewRule(tuple.Item1, "其他");
+                    HighlightingRule rule = NewRule(tuple.Item1, el);
                     _syntax.MainRuleSet.Rules.Add(rule);
                 }
             }
@@ -156,7 +158,7 @@ namespace RootNS.Helper
             if (Gval.EditorSettings.CursorToEnd == true)
             {
                 //光标移动至文末
-                tEditor.Select(tEditor.Text.Length, 0); 
+                tEditor.Select(tEditor.Text.Length, 0);
                 tEditor.ScrollToEnd();
             }
             else

@@ -67,6 +67,30 @@ namespace RootNS.Helper
         }
 
         /// <summary>
+        /// 检查字符串中是否包含某个集合当中的元素，并且把第一个匹配的结果拾取出来：foreach循环(非LINQ表达式)
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="excludeWordList"></param>
+        /// <returns></returns>
+        public static string CheckStringMethod(string str, ICollection<string> excludeWordList)
+        {
+            string contain = string.Empty;
+            if (str.Trim().Length <= 0 || excludeWordList == null || excludeWordList.Count <= 0)
+            {
+                return contain;
+            }
+            foreach (var el in excludeWordList)
+            {
+                if (str.Contains(el))
+                {
+                    contain = el;
+                    break; ;
+                }
+            }
+            return contain;
+        }
+
+        /// <summary>
         /// 根据名称查找命令
         /// </summary>
         /// <param name="commandBindings"></param>

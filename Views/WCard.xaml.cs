@@ -43,7 +43,7 @@ namespace RootNS.Views
             TbAge.Text = ((this.DataContext as Node).Owner.CurrentYear - Convert.ToInt64(TbBornYear.Text)).ToString();
             if (string.IsNullOrEmpty((this.DataContext as Node).Card.Tag))
             {
-                (this.DataContext as Node).Card.Tag = "其他";
+                (this.DataContext as Node).Card.Tag = "未指定";
             }
             TbTag.SelectedItem = (this.DataContext as Node).Parent;
             (this.DataContext as Node).PointY = Convert.ToInt64(TbAge.Text);
@@ -82,6 +82,8 @@ namespace RootNS.Views
             (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", (this.DataContext as Node).Attachment.ToString());
             (this.DataContext as Node).UpdateNodeProperty("节点", "Puid", (this.DataContext as Node).Parent.Guid.ToString());
             (this.DataContext as Node).UpdateNodeProperty("节点", "Index", (this.DataContext as Node).Index.ToString());
+            
+            EditorHelper.UpdataSyntax();
         }
 
 
@@ -120,7 +122,6 @@ namespace RootNS.Views
                 (this.DataContext as Node).Insert();
             }
             UpdataCard();
-            EditorHelper.UpdataSyntax();
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
