@@ -9,17 +9,16 @@
 	<Color name="标记" foreground="Yellow" />
 	<Color name="对话" foreground="DarkGoldenrod" />
 	<Color name="敏感" foreground="Red"/>
+	<Color name="建议" foreground="Magenta"/>
 	<Color name="角色" foreground="Blue" fontFamily="宋体" />
-	<Color name="龙套" foreground="MediumBlue"/>
-	<Color name="物品" foreground="#FF9800"/>
-	<Color name="道具" foreground="#FF9800"/>
-	<Color name="机构" foreground="#2196F3"/>
-	<Color name="组织" foreground="#2196F3"/>
-	<Color name="地区" foreground="Violet"/>
-	<Color name="区域" foreground="Violet"/>
-	<Color name="世界" foreground="Violet"/>
-	<Color name="其他" foreground="Orange"/>
-	<Color name="未指定" foreground="Gray"/>
+	<Color name="龙套" foreground="DodgerBlue"/>
+	<Color name="道具" foreground="DarkGoldenrod"/>
+	<Color name="势力" foreground="Violet"/>
+	<Color name="部门" foreground="Plum"/>
+	<Color name="场景" foreground="MediumOrchid"/>
+	<Color name="地区" foreground="Orchid"/>
+	<Color name="其他" foreground="Gray"/>
+	<Color name="未指定" foreground="Thistle"/>
 	<!-- This is the main ruleset. -->
 	<RuleSet>
 		<Span color="对话" multiline="true">

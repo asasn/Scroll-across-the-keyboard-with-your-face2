@@ -24,7 +24,10 @@ namespace RootNS.Models
             public static string WebdavPassWord { get { return "WebdavPassWord"; } }
             public static string CursorToEnd { get { return "CursorToEnd"; } }
             public static string ThisBookTotalNodesCount { get { return "ThisBookTotalNodesCount"; } }
+            public static string EditorColorTags { get { return "EditorColorTags"; } }
         }
+
+        public static Dictionary<string, object> EditorColorTags;
 
         public struct EditorSettings
         {
