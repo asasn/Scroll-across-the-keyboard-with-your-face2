@@ -25,6 +25,7 @@ namespace RootNS.MyControls
         {
             InitializeComponent();
             this.DataContext = node;
+            TbAge.Text = (node.Owner.CurrentYear - Convert.ToInt64(node.PointX)).ToString();
             node.Card.HiddenNullLines();
             if ((this.DataContext as Node).Owner == Gval.MaterialBook)
             {
