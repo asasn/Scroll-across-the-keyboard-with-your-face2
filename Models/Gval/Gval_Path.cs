@@ -24,7 +24,11 @@ namespace RootNS.Models
 
         }
 
+        public struct Url
+        {
+            public static string HomePage { get { return "https://github.com/asasn/Scroll-across-the-keyboard-with-your-face2"; } }
 
-
+            public static string Latest = "https://api.github.com/repos/asasn/Scroll-across-the-keyboard-with-your-face2/releases/latest";
+        }
     }
 }

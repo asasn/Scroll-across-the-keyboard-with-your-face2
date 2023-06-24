@@ -32,7 +32,7 @@ namespace RootNS.Models
         {
             if (e.PropertyName == nameof(CurrentBook))
             {
-                CurrentBook.Close();
+                
             }
         }
 
@@ -49,7 +49,19 @@ namespace RootNS.Models
         }
 
 
-        private static string _currentVersion = "2.0.5.0";
+        private static string _latestVersion = "未检查";
+
+        public static string LatestVersion
+        {
+            get { return _latestVersion; }
+            set
+            {
+                _latestVersion = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(LatestVersion)));
+            }
+        }
+
+        private static string _currentVersion = "2.1.0.0";
 
         public static string CurrentVersion
         {

@@ -28,6 +28,10 @@ namespace RootNS.Models
             TabRoot.ChildNodes[5].Title = "未指定";
             TabRoot.ChildNodes[8].Title = "未指定";
             this.CoverPath = Gval.Path.DataDirectory + this.Guid.ToString() + ".jpg";
+            if (FileIO.IsFileExists(this.CoverPath) == false)
+            {
+                this.CoverPath = "../Resources/DefaultCover.jpg";
+            }
         }
 
 

@@ -25,7 +25,7 @@
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <GroupBox x:Name="GboxTree" Header="目录树" Style="{StaticResource BaseStyle}" Grid.RowSpan="2">
-            <Grid>                
+            <Grid>
                 <Border x:Name="BorderB" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Grid.Column="2" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}">
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -56,22 +56,18 @@
                             </TabItem>
                         </TabControl>
                         <Grid Grid.Row="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="100*"/>
-                                <ColumnDefinition Width="25"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnBankManage" FontFamily="../Resources/icons/#icomoon" Content="&#xe954;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="书库总览" Width="25" Height="25" Click="BtnBankManage_Click" />
-                            <Button x:Name="BtnAddABook"  FontFamily="../Resources/icons/#icomoon" Content="&#xe9bc;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="新增" Width="25" Height="25" Grid.Column="1" Click="BtnAddABook_Click"/>
-                            <Button x:Name="BtnDelCurrentBook" FontFamily="../Resources/icons/#icomoon" Content="&#xe99f;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="删除" Width="25" Height="25" Grid.Column="2" Click="BtnDelCurrentBook_Click"/>
-                            <Button x:Name="BtnEditCurrentBookInfo" FontFamily="../Resources/icons/#icomoon" Content="&#xe982;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="当前书籍信息管理" Width="25" Height="25" Grid.Column="3" Click="BtnEditCurrentBookInfo_Click"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="BtnBankManage" FontFamily="../Resources/icons/#icomoon" Content="&#xe954;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="书库总览" Width="25" Height="25" Click="BtnBankManage_Click" />
+                                <Button x:Name="BtnAddABook"  FontFamily="../Resources/icons/#icomoon" Content="&#xe9bc;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="新增" Width="25" Height="25" Grid.Column="1" Click="BtnAddABook_Click"/>
+                                <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" Visibility="{Binding IsNoBook, Source={StaticResource Gval}, Converter={StaticResource BoolConvertToVisibility}}" Margin="-5,0,0,0" />
+                                <Button x:Name="BtnDelCurrentBook" FontFamily="../Resources/icons/#icomoon" Content="&#xe99f;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="删除" Width="25" Height="25" Grid.Column="2" Click="BtnDelCurrentBook_Click"/>
+                                <Button x:Name="BtnEditCurrentBookInfo" FontFamily="../Resources/icons/#icomoon" Content="&#xe982;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="当前书籍信息管理" Width="25" Height="25" Grid.Column="3" Click="BtnEditCurrentBookInfo_Click"/>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                 </Border>
-                <hc:CircleProgressBar x:Name="LoadBookProgressBar" Grid.Row="1" Value="{Binding PercentPoint, Source={StaticResource Gval}}" ></hc:CircleProgressBar>
+                <hc:CircleProgressBar x:Name="LoadBookProgressBar" Grid.Row="1" Width="100" Height="100" Opacity="0.6" Value="{Binding PercentPoint, Source={StaticResource Gval}}" />
+                <!--Value="{Binding PercentPoint, Source={StaticResource Gval}}"-->
             </Grid>
         </GroupBox>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="Ivory" Grid.RowSpan="2"/>
@@ -132,6 +128,18 @@
                     </Grid>
                 </Border>
                 <mycontrols:EditorShell x:Name="Editor" BorderThickness="1" Grid.Column="4" Loaded="Editor_Loaded" />
+                <StackPanel x:Name="EditorShower" Visibility="{Binding OpeningDocList.Count, Source={StaticResource Gval}, Converter={StaticResource CountConvertToVisibility}}"  Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False">
+                    <Label BorderThickness="0" Background="Transparent" Content="在编辑器中的操作帮助：" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="选定文字后按F2，进行角色卡片编辑" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="选定文字后按F3，查找下一个" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="选定文字后按F4，查找上一个" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="按Ctrl+F，查找文字" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="按Ctrl+H，替换文字" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="按Ctrl+W，关闭当前页面" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="按F9，进行文字排版并保存" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="按鼠标右键，打开菜单栏" HorizontalAlignment="Left"></Label>
+                    <Label BorderThickness="0" Background="Transparent" Content="Ctrl+S保存（一般不用，有自动保存功能）" HorizontalAlignment="Left"></Label>
+                </StackPanel>
             </Grid>
 
         </GroupBox>

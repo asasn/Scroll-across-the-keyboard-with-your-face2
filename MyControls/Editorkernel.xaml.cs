@@ -190,7 +190,14 @@ namespace RootNS.MyControls
         {
             if (string.IsNullOrEmpty(WorkingTextEditor.TextArea.Selection.GetText()) == true)
             {
-                Gval.PreviousText = Gval.Views.UcSearcher.TbKeyWords.Text;
+                if (string.IsNullOrEmpty(Gval.Views.UcSearcher.TbKeyWords.Text))
+                {
+
+                }
+                else
+                {
+                    Gval.PreviousText = Gval.Views.UcSearcher.TbKeyWords.Text;
+                }
 
             }
             else
@@ -515,23 +522,35 @@ namespace RootNS.MyControls
         {
             if (BtnSummary.Tag == null)
             {
-                Row01.Height = new GridLength(15);
-                Row02.Height = new GridLength(400);
-                Row02.MinHeight = 300;
-                BtnSummary.Tag = true;
-                SummaryTextEditor.ScrollToEnd();
-                SummaryTextEditor.Select(SummaryTextEditor.Text.Length, 0);
-                SummaryTextEditor.TextArea.Focus();
+                SwitchToSummaryTextEditor();
             }
             else
             {
-                Row02.MinHeight = 0;
-                Row01.Height = new GridLength(0);
-                Row02.Height = new GridLength(0);
-                BtnSummary.Tag = null;
-                ThisTextEditor.TextArea.Focus();
+                SwitchToThisTextEditor();
             }
         }
+
+        private void SwitchToSummaryTextEditor()
+        {
+            Row01.Height = new GridLength(15);
+            Row02.Height = new GridLength(400);
+            Row02.MinHeight = 300;
+            BtnSummary.Tag = true;
+            SummaryTextEditor.ScrollToEnd();
+            SummaryTextEditor.Select(SummaryTextEditor.Text.Length, 0);
+            SummaryTextEditor.TextArea.Focus();
+        }
+
+
+        private void SwitchToThisTextEditor()
+        {
+            Row02.MinHeight = 0;
+            Row01.Height = new GridLength(0);
+            Row02.Height = new GridLength(0);
+            BtnSummary.Tag = null;
+            ThisTextEditor.TextArea.Focus();
+        }
+
 
         private void MenuItem0_Click(object sender, RoutedEventArgs e)
         {
@@ -568,6 +587,7 @@ namespace RootNS.MyControls
         private void ThisTextEditor_GotFocus(object sender, RoutedEventArgs e)
         {
             WorkingTextEditor = (TextEditor)sender;
+            SwitchToThisTextEditor();
         }
 
         private void SummaryTextEditor_GotFocus(object sender, RoutedEventArgs e)

@@ -1,0 +1,36 @@
+﻿<Window x:Class="RootNS.Views.WDelBook"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RootNS.Views" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}"
+        mc:Ignorable="d" WindowStyle="None" ResizeMode="CanResizeWithGrip" Topmost="True" Background="Transparent"
+      UseLayoutRounding="True" AllowsTransparency="True" Effect="{StaticResource EffectShadow3}" 
+      d:DesignWidth="400" MinHeight="200" MaxHeight="200" MinWidth="300" MaxWidth="400"
+        Title="WDelBook" Height="200" Width="400" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid x:Name="GCard" Margin="10">
+        <Border CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
+            <Grid Margin="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="RHeader" Height="10"/>
+                        <RowDefinition x:Name="RTip" Height="Auto"/>
+                        <RowDefinition x:Name="RTextBox" Height="30"/>
+                        <RowDefinition x:Name="RButton" Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="GHeader" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="26"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                    </Grid>
+                        <TextBlock  Grid.Row="1" TextWrapping="Wrap"  Text="请注意，删除书籍是一个需要慎重考虑的操作，如无必要，请勿进行！如果执意要删除，请在下面的输入框输入文字：“我确认删除本书”进行确认！"></TextBlock>
+                    <TextBox x:Name="TbVerify"  Grid.Row="2" TextChanged="TbVerify_TextChanged" Loaded="TbVerify_Loaded"></TextBox>
+                    <Button x:Name="BtnVerify" IsEnabled="False"  Grid.Row="3" Content="确认" HorizontalAlignment="Right" Click="BtnVerify_Click" ></Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

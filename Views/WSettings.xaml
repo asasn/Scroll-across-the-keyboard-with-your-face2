@@ -61,8 +61,17 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="其他">
-
+            <TabItem Header="版本和更新">
+                <StackPanel>
+                    <TextBox BorderThickness="0" Text="{Binding CurrentVersion, Source={StaticResource Gval}, StringFormat=当前版本 {\0}}" Grid.Row="1" HorizontalContentAlignment="Center"/>
+                    <TextBox BorderThickness="0" Text="{Binding LatestVersion, Source={StaticResource Gval}, StringFormat=最新版本 {\0}}" Grid.Row="2" HorizontalContentAlignment="Center"/>
+                    <Label x:Name="labelTip" Foreground="Gray" Padding="0" BorderThickness="0" Content="未检查" Grid.Row="3" HorizontalContentAlignment="Center" MinHeight="0"/>
+                    <TextBlock Grid.Row="4" HorizontalAlignment="Center">
+            <Hyperlink x:Name="HLink" FontSize="16" Foreground="Blue" Click="Hyperlink_Click" Cursor="Hand">点此进入GitHub仓库</Hyperlink>
+                    </TextBlock>
+                    <Label Foreground="Gray" Padding="0" BorderThickness="0" Content="连接GitHub不稳定，如遇错误请多试几次" VerticalAlignment="Stretch" Grid.Row="5" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" MinHeight="0" Height="15"/>
+                    <Button x:Name="BtnCheckVersion" Content="检查更新" Grid.Row="2" Click="BtnCheckVersion_Click" Padding="3,3,3,3"/>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

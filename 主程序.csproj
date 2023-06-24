@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -111,6 +112,7 @@
     <Compile Include="Helper\SysHelper.cs" />
     <Compile Include="Helper\TableHelper.cs" />
     <Compile Include="Helper\WebdavHelper.cs" />
+    <Compile Include="Helper\WebHelper.cs" />
     <Compile Include="Helper\Workflow\DataIn.cs" />
     <Compile Include="Helper\Workflow\DataOut.cs" />
     <Compile Include="Helper\Workflow\Starting.cs" />
@@ -150,6 +152,9 @@
     <Compile Include="Views\NameToolWindow.xaml.cs">
       <DependentUpon>NameToolWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WBookInfo.xaml.cs">
+      <DependentUpon>WBookInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WCard.xaml.cs">
       <DependentUpon>WCard.xaml</DependentUpon>
     </Compile>
@@ -158,6 +163,12 @@
     </Compile>
     <Compile Include="Views\WChatAI.xaml.cs">
       <DependentUpon>WChatAI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows - 模板.xaml.cs">
+      <DependentUpon>Windows - 模板.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WDelBook.xaml.cs">
+      <DependentUpon>WDelBook.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WSettings.xaml.cs">
       <DependentUpon>WSettings.xaml</DependentUpon>
@@ -264,6 +275,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WBookInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,6 +288,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WChatAI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows - 模板.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WDelBook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -345,6 +368,7 @@
     <Content Include="jieba.NET.0.42.2\Resources\stopwords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\DefaultCover.jpg" />
     <Content Include="Resources\Text.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

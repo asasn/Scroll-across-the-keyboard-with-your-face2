@@ -59,6 +59,10 @@ namespace RootNS.Helper
         /// </summary>
         public static void UpdataSyntax()
         {
+            if (Gval.CurrentBook == null)
+            {
+                return;
+            }
             System.Xml.XmlTextReader xshdReader = new System.Xml.XmlTextReader(Gval.Path.XshdFilePath);
             _syntax = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(xshdReader, HighlightingManager.Instance);
             xshdReader.Close();

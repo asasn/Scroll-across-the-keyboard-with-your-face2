@@ -24,6 +24,11 @@ namespace RootNS.Helper
             TableHelper.TryToBuildDatabaseForBook(newBook);
             DataOut.InsertBooksBank(newBook);
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, newBook.Guid);
+            if (Gval.IsNoBook)
+            {
+                Gval.IsNoBook = false;
+                Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.IsNoBook, Gval.IsNoBook);
+            }
             return newBook;
         }
     }

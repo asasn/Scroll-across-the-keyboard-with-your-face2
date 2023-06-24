@@ -25,6 +25,10 @@ namespace RootNS
     {
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (Gval.CurrentBook == null)
+            {
+                return;
+            }
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, Gval.CurrentBook.Guid);
             if (Gval.FlagLoadingCompleted == true)
             {
@@ -86,12 +90,14 @@ namespace RootNS
 
         private void BtnDelCurrentBook_Click(object sender, RoutedEventArgs e)
         {
-
+            WDelBook wDelBook = new WDelBook();
+            wDelBook.Show();
         }
 
         private void BtnEditCurrentBookInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            WBookInfo wBookInfo = new WBookInfo();
+            wBookInfo.Show();
         }
 
         private void RbEventsInBook_Checked(object sender, RoutedEventArgs e)

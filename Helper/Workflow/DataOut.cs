@@ -30,6 +30,19 @@ namespace RootNS.Helper
             return newBook;
         }
 
-
+        /// <summary>
+        /// 在书库数据库中更新记录
+        /// </summary>
+        /// <param name="book"></param>
+        public static void UpdateBookName(Book book)
+        {
+            string sql = string.Format("UPDATE 书库 SET Title='{0}' WHERE Guid='{1}';", book.Title.Replace("'", "''"), book.Guid);
+            SqliteHelper.PoolDict[Gval.MaterialBook.Guid.ToString()].ExecuteNonQuery(sql);
+        }
+        public static void DeleteBook(Book book)
+        {
+            string sql = string.Format("DELETE FROM 书库 WHERE Guid='{0}';", book.Guid);
+            SqliteHelper.PoolDict[Gval.MaterialBook.Guid.ToString()].ExecuteNonQuery(sql);
+        }
     }
 }

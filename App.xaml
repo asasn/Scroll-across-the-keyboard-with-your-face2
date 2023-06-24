@@ -16,6 +16,7 @@
             <models:Gval x:Key="Gval"/>
             <converter:BoolConvertToVisibility x:Key="BoolConvertToVisibility"/>
             <converter:BoolConvertToReVisibility x:Key="BoolConvertToReVisibility"/>
+            <converter:CountConvertToVisibility x:Key="CountConvertToVisibility"/>
             <converter:Bool2IconString x:Key="Bool2IconString"/>
             <converter:SetTreeMaxWidth x:Key="SetTreeMaxWidth"/>
             <converter:SetEditorMaxWidth x:Key="SetEditorMaxWidth"/>

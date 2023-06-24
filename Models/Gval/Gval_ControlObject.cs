@@ -23,7 +23,7 @@ namespace RootNS.Models
         public struct Views
         {
             public static MainWindow MainWindow { get; set; }
-            
+            public static StackPanel EditorShower { get; set; }
             public static HandyControl.Controls.TabControl EditorTabControl { get; set; }
             public static UcShower UcShower { get; set; }
             public static UcSearcher UcSearcher { get; set; }

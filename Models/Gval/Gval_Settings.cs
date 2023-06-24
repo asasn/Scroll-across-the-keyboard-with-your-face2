@@ -1,6 +1,7 @@
 ﻿using RootNS.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +26,48 @@ namespace RootNS.Models
             public static string CursorToEnd { get { return "CursorToEnd"; } }
             public static string ThisBookTotalNodesCount { get { return "ThisBookTotalNodesCount"; } }
             public static string EditorColorTags { get { return "EditorColorTags"; } }
+            public static string IsNoBook { get { return "IsNoBook"; } }
+            public static string IsWarnAgain { get { return "IsWarnAgain"; } }
         }
 
-        public static Dictionary<string, object> EditorColorTags;
+
+        private static bool _isWarnAgain = true;
+
+        public static bool IsWarnAgain
+        {
+            get { return _isWarnAgain; }
+            set
+            {
+                _isWarnAgain = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(IsWarnAgain)));
+            }
+        }
+
+        private static bool _isNoBook = true;
+
+        public static bool IsNoBook
+        {
+            get { return _isNoBook; }
+            set
+            {
+                _isNoBook = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(IsNoBook)));
+            }
+        }
+
+
+        private static Dictionary<string, object> _editorColorTags;
+
+        public static Dictionary<string, object> EditorColorTags
+        {
+            get { return _editorColorTags; }
+            set
+            {
+                _editorColorTags = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(EditorColorTags)));
+            }
+        }
+
 
         public struct EditorSettings
         {

@@ -61,7 +61,7 @@
                 <avalonEdit:TextEditor.ContextMenu>
                     <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
                         <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
-                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
+                        <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="把选定的文字加入文章片段（剪切的方式）" Click="MenuItem1_Click" IsEnabled="True"/>
                     </ContextMenu>
                 </avalonEdit:TextEditor.ContextMenu>
                 <avalonEdit:TextEditor.Options>

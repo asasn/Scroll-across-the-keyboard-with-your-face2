@@ -31,9 +31,25 @@ namespace RootNS.Helper
         /// </summary>
         private static void LoadSettings()
         {
+            LoadUserSign();
             LoadEditorSettings();
             LoadWebdavSettings();
         }
+
+        private static void LoadUserSign()
+        {
+            object ret = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.IsNoBook);
+            if (ret != null)
+            {
+                Gval.IsNoBook = Convert.ToBoolean(ret);
+            }
+            object ret2 = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.IsWarnAgain);
+            if (ret2 != null)
+            {
+                Gval.IsWarnAgain = Convert.ToBoolean(ret2);
+            }
+        }
+
 
         private static void LoadEditorSettings()
         {

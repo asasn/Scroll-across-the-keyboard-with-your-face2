@@ -34,11 +34,11 @@ namespace RootNS.Converter
                     {
                         if (System.Convert.ToBoolean(values[2]) == true)
                         {
-                            return "\ue96b";
+                            return "\ue92c";
                         }
                         else
                         {
-                            return "\ue92c";
+                            return "\ue96b";
                         }
                     }
 
@@ -171,6 +171,41 @@ namespace RootNS.Converter
             try
             {
                 if ((bool)value == true)
+                {
+                    return Visibility.Collapsed;
+                }
+
+                return Visibility.Visible;
+            }
+            catch
+            {
+                return Visibility.Visible;
+            }
+        }
+
+        //这里只有在TwoWay的时候才有用
+        public object ConvertBack(object value, Type targetType, object parameter,
+         System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
+    /// <summary>
+    /// 统计数量是否Collapsed（信息展示栏缩起）
+    /// </summary>
+    public class CountConvertToVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return Visibility.Visible;
+            }
+            try
+            {
+                if ((int)value > 0)
                 {
                     return Visibility.Collapsed;
                 }
