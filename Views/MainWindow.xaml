@@ -37,7 +37,7 @@
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="25"/>
                         </Grid.RowDefinitions>
-                        <hc:ComboBox x:Name="TreeBox" VerticalAlignment="Top" SelectedItem="{Binding CurrentBook, Source={StaticResource Gval}}" ItemsSource="{Binding BooksBank, Source={StaticResource Gval}}" SelectionChanged="ComboBox_SelectionChanged">
+                        <hc:ComboBox x:Name="TreeBox" ToolTip="从书库当中选择一本书籍作为工作区" VerticalAlignment="Top" SelectedItem="{Binding CurrentBook, Source={StaticResource Gval}}" ItemsSource="{Binding BooksBank, Source={StaticResource Gval}}" SelectionChanged="ComboBox_SelectionChanged">
                             <hc:ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Padding="0" BorderBrush="Transparent" Background="Transparent" Content="{Binding Title}"></Label>
@@ -59,9 +59,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="BtnBankManage" Visibility="Collapsed" FontFamily="../Resources/icons/#icomoon" Content="&#xe954;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="书库总览" Width="25" Height="25" Click="BtnBankManage_Click" />
                                 <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" ShowBadge="{Binding HasBook, Source={StaticResource Gval}, Converter={StaticResource Boolean2BooleanReConverter}}" Width="25" Height="25">
-                                    <Button x:Name="BtnAddABook"  FontFamily="../Resources/icons/#icomoon" Content="&#xe9bc;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="新增" Width="25" Height="25" Grid.Column="1" Click="BtnAddABook_Click"/>
+                                    <Button x:Name="BtnAddABook"  FontFamily="../Resources/icons/#icomoon" Content="&#xe9bc;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="新增书籍" Width="25" Height="25" Grid.Column="1" Click="BtnAddABook_Click"/>
                                 </hc:Badge>
-                                <Button x:Name="BtnDelCurrentBook" FontFamily="../Resources/icons/#icomoon" Content="&#xe99f;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="删除" Width="25" Height="25" Grid.Column="2" Click="BtnDelCurrentBook_Click"/>
+                                <Button x:Name="BtnDelCurrentBook" FontFamily="../Resources/icons/#icomoon" Content="&#xe99f;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="删除书籍" Width="25" Height="25" Grid.Column="2" Click="BtnDelCurrentBook_Click"/>
                                 <Button x:Name="BtnEditCurrentBookInfo" FontFamily="../Resources/icons/#icomoon" Content="&#xe982;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="当前书籍信息管理" Width="25" Height="25" Grid.Column="3" Click="BtnEditCurrentBookInfo_Click"/>
                             </StackPanel>
                         </Grid>
@@ -106,7 +106,7 @@
                             <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2">
-                            <Button x:Name="BtnOutlines" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的章节大纲（编辑时可自动对齐，但章节标题必须为“第xx章：”这样的格式，然后换行）" Width="30" Height="30" Click="BtnOutlines_Click"/>
+                            <Button x:Name="BtnOutlines" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的章节大纲（编辑时可自动对齐，但章节标题必须为“第xx章：”这样的格式，然后换新行写章纲）" Width="30" Height="30" Click="BtnOutlines_Click"/>
                             <Button x:Name="BtnPackage" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ab;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的卡片名称和别名（用于高亮匹配或者语音输入）" Width="30" Height="30" Click="BtnPackage_Click"/>
                         </StackPanel>
                     </Grid>
@@ -170,7 +170,7 @@
                     <Button x:Name="BtnReLayout" FontFamily="../Resources/icons/#icomoon" Content="&#xe987;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="恢复默认的主面板布局" Width="30" Height="30" Click="BtnReLayout_Click"/>
                     <Button x:Name="BtnThemeColor" FontFamily="../Resources/icons/#icomoon" Content="&#xe90a;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="左键随机一个主题颜色，右键恢复默认" Width="30" Height="30" Click="BtnThemeColor_Click" MouseRightButtonDown="BtnThemeColor_MouseRightButtonDown"/>
                     <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" ShowBadge="{Binding HasNewVersion, Source={StaticResource Gval}}" Width="30" Height="30">
-                        <Button x:Name="BtnSettings" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ce;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="设置" Width="30" Height="30" Click="BtnSettings_Click"/>
+                        <Button x:Name="BtnSettings" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ce;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="软件设置" Width="30" Height="30" Click="BtnSettings_Click"/>
                     </hc:Badge>
                     </StackPanel>
             </Grid>

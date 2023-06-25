@@ -14,8 +14,8 @@
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="BtnOpenToolWindow" FontFamily="../Resources/icons/#icomoon"  Content="&#xea04;" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" FontSize="24" BorderThickness="0" Padding="0" Background="Transparent" ToolTip="打开取名工具窗口"  Height="30" Width="30" Margin="0,4,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="BtnOpenToolWindow_Click"/>
-            <Button x:Name="BtnResult" Focusable="False" Background="Transparent" BorderBrush="Transparent" ToolTipService.ShowDuration="60000" Content="{Binding Nameer.OneName, ElementName=userControl}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="BtnResult_Click"/>
-            <Button x:Name="BtnRandomGenerate" FontFamily="../Resources/icons/#icomoon"  Content="&#xe9c3;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="随机取一个名字（点击结果文字，可以复制到剪贴板）" Height="30" Width="30" Grid.Column="3" Click="BtnRandomGenerate_Click" Margin="0,4,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+            <Button x:Name="BtnResult" Focusable="False" Background="Transparent" BorderBrush="Transparent" ToolTipService.ShowDuration="60000" Content="{Binding Nameer.OneName, ElementName=userControl}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="点击结果文字，可以复制到剪贴板" Click="BtnResult_Click"/>
+            <Button x:Name="BtnRandomGenerate" FontFamily="../Resources/icons/#icomoon"  Content="&#xe9c3;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="随机取一个名字" Height="30" Width="30" Grid.Column="3" Click="BtnRandomGenerate_Click" Margin="0,4,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
         </Grid>
     </Border>
 </UserControl>

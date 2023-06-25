@@ -90,12 +90,20 @@ namespace RootNS
 
         private void BtnDelCurrentBook_Click(object sender, RoutedEventArgs e)
         {
+            if (SqliteHelper.PoolDict.ContainsKey(Gval.CurrentBook.Guid.ToString()) == false)
+            {
+                return;
+            }
             WDelBook wDelBook = new WDelBook();
             wDelBook.Show();
         }
 
         private void BtnEditCurrentBookInfo_Click(object sender, RoutedEventArgs e)
         {
+            if (SqliteHelper.PoolDict.ContainsKey(Gval.CurrentBook.Guid.ToString()) == false)
+            {
+                return;
+            }
             WBookInfo wBookInfo = new WBookInfo();
             wBookInfo.Show();
         }
