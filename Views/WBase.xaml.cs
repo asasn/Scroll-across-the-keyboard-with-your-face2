@@ -42,7 +42,7 @@ namespace RootNS.Views
                 string eTag = WebdavHelper.UploadWebDavFile(remoteFile, localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (string.IsNullOrEmpty(eTag))
                 {
-                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
                 }
                 else
                 {
@@ -64,7 +64,7 @@ namespace RootNS.Views
                 string sql = string.Empty;
                 foreach (string str in rets)
                 {
-                    Match match = Regex.Match(str, "(第.+?章：.*?\n)");
+                    Match match = Regex.Match(str, "(第.+?章[： ].*?\n)");
                     if (match.Success)
                     {
                         title = match.Value;
@@ -77,9 +77,11 @@ namespace RootNS.Views
                     {
                         continue;
                     }
+                    string[] words = title.Split(new[] { '\n', '，', ',', ' ', '　', '：', ':' });
+                    string firstWord = words[0];
                     Node newNode = new Node
                     {
-                        Title = title.Trim(),
+                        Title = firstWord.Trim(),
                         Text = "　　" + content.Trim(),
                     }; 
                     foreach (Node node in nodes)
@@ -112,7 +114,7 @@ namespace RootNS.Views
                 string eTag = WebdavHelper.UploadWebDavFile(remoteFile, localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (string.IsNullOrEmpty(eTag))
                 {
-                    HandyControl.Controls.Growl.ErrorGlobal("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
                 }
                 else
                 {

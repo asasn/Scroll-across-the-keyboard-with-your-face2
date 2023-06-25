@@ -106,7 +106,7 @@
                             <RadioButton x:Name="RbCardsInBook" Style="{StaticResource RadioButtonIcon}" FontFamily="../Resources/icons/#icomoon" Content="&#xea04;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="信息卡管理（本书）" Width="30" Height="30" Margin="0,5,0,0" Checked="RbCardsInBook_Checked"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2">
-                            <Button x:Name="BtnOutlines" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的章节大纲" Width="30" Height="30" Click="BtnOutlines_Click"/>
+                            <Button x:Name="BtnOutlines" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的章节大纲（编辑时可自动对齐，但章节标题必须为“第xx章：”这样的格式，然后换行）" Width="30" Height="30" Click="BtnOutlines_Click"/>
                             <Button x:Name="BtnPackage" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ab;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="获取本书的卡片名称和别名（用于高亮匹配或者语音输入）" Width="30" Height="30" Click="BtnPackage_Click"/>
                         </StackPanel>
                     </Grid>
