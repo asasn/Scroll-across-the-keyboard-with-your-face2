@@ -28,7 +28,10 @@ namespace RootNS.Models
             public static string EditorColorTags { get { return "EditorColorTags"; } }
             public static string IsNoBook { get { return "IsNoBook"; } }
             public static string IsWarnAgain { get { return "IsWarnAgain"; } }
+            public static string LastCheckHour { get { return "LastCheckHour"; } }
         }
+
+        public static string LastCheckHour { get; set; }
 
 
         private static bool _isWarnAgain = true;

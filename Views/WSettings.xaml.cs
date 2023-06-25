@@ -29,6 +29,7 @@ namespace RootNS.Views
         {
             InitializeComponent();
 
+
             if (Gval.CurrentVersion == Gval.LatestVersion)
             {
                 labelTip.Content = "已是最新版本";
@@ -92,7 +93,6 @@ namespace RootNS.Views
                 Gval.LatestVersion = "网络错误！";
                 labelTip.Content = "网络错误，请稍等片刻之后再次尝试！";
                 (sender as Button).IsEnabled = true;
-                BtnCheckVersion.Visibility = Visibility.Visible;
                 return;
             }
             else
@@ -114,6 +114,7 @@ namespace RootNS.Views
             {
                 labelTip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                 labelTip.Content = "有新版本，请打开GitHub仓库以更新";
+                Gval.HasNewVersion = true;
             }
         }
 

@@ -61,7 +61,12 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="版本和更新">
+            <TabItem>
+                <TabItem.Header>
+                    <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" ShowBadge="{Binding HasNewVersion, Source={StaticResource Gval}}">
+                        <Label Padding="0" Content="版本和更新" Background="Transparent" BorderBrush="Transparent" Height="18"/>
+                    </hc:Badge>
+                </TabItem.Header>
                 <StackPanel>
                     <TextBox BorderThickness="0" Text="{Binding CurrentVersion, Source={StaticResource Gval}, StringFormat=当前版本 {\0}}" Grid.Row="1" HorizontalContentAlignment="Center"/>
                     <TextBox BorderThickness="0" Text="{Binding LatestVersion, Source={StaticResource Gval}, StringFormat=最新版本 {\0}}" Grid.Row="2" HorizontalContentAlignment="Center"/>

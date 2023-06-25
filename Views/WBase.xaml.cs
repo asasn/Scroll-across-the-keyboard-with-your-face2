@@ -73,7 +73,7 @@ namespace RootNS.Views
                     {
                         content = str.Trim();
                     }
-                    if (string.IsNullOrEmpty(content))
+                    if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content))
                     {
                         continue;
                     }

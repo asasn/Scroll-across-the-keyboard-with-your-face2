@@ -73,6 +73,19 @@ namespace RootNS.Models
             }
         }
 
+        private static bool _hasNewVersion;
+
+        public static bool HasNewVersion
+        {
+            get { return _hasNewVersion; }
+            set
+            {
+                _hasNewVersion = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(HasNewVersion)));
+            }
+        }
+
+
         public static string AppAuthor { get { return "不问苍生问鬼神"; } }
     }
 }

@@ -19,7 +19,7 @@ namespace RootNS.Models
             已发布,
             事件记录,
             文章片段,
-            信息卡, 
+            信息卡,
             全局情节设计,
             全局文章片段,
             全局信息卡,
@@ -48,7 +48,7 @@ namespace RootNS.Models
         //}
 
 
-        private Node _tabRoot = new Node() { Guid = new Guid(), TypeName="根节点"};
+        private Node _tabRoot = new Node() { Guid = new Guid(), TypeName = "根节点" };
         /// <summary>
         /// 书籍目录树的最顶部根节点
         /// </summary>
@@ -137,6 +137,25 @@ namespace RootNS.Models
             }
         }
 
+        private ObservableCollection<Outline> _outLines;
+        /// <summary>
+        /// 大纲
+        /// </summary>
+        public ObservableCollection<Outline> OutLines
+        {
+            get { return _outLines; }
+            set
+            {
+                _outLines = value;
+                RaisePropertyChanged(nameof(OutLines));
+            }
+        }
+
+        public struct Outline
+        {
+            public string Title;
+            public string Content;
+        }
 
         //private ObservableCollection<object> _cGuidList = new ObservableCollection<object>();
         ///// <summary>

@@ -115,7 +115,7 @@
                 <Button x:Name="reSlider" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c3;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="还原字体大小" Click="reSlider_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
             </StackPanel>
             </Grid>
-        <Button x:Name="BtnSummary" FontFamily="../Resources/icons/#icomoon" Content="&#xe979;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="显示章节注释（草稿/章纲/备忘）" Click="BtnSummary_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
+        <Button x:Name="BtnSummary" Visibility="Collapsed" FontFamily="../Resources/icons/#icomoon" Content="&#xe979;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="显示章节注释（草稿/章纲/备忘）" Click="BtnSummary_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
         <StackPanel Grid.Row="0" Grid.Column="1">
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnSaveDoc" Padding="0" BorderThickness="0" ToolTip="保存文档（Ctrl + S）" hc:FloatingBlock.Content="✔" Click="BtnSaveText_Click"/>
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe947;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopy" Padding="0" BorderThickness="0" ToolTip="复制文档内容（不包含未保存的部分）" Click="BtnCopy_Click"/>

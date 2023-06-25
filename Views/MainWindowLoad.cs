@@ -3,9 +3,12 @@ using RootNS.Models;
 using RootNS.MyControls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -132,10 +135,58 @@ namespace RootNS
             }
             else
             {
+                CheckVersion();
                 Timer.Stop();
                 Console.WriteLine("----------Stop----------");
             }
         }
+
+        private void CheckVersion()
+        {
+            DateTime now = DateTime.Now;
+            string lastCheckHour  = now.ToString("yyyy-MM-dd HH");
+            object record = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.LastCheckHour);
+            if (record != null)
+            {
+                Gval.LastCheckHour = Convert.ToString(record);
+            }
+            if (Gval.LastCheckHour == lastCheckHour)
+            {
+                return;
+            }
+            else
+            {
+                Gval.LastCheckHour = lastCheckHour;
+                Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.LastCheckHour, lastCheckHour);
+            }
+
+            StreamReader reader = WebHelper.GetHtmlReaderObject(Gval.Url.Latest);
+            if (reader == null)
+            {
+                Gval.LatestVersion = "网络错误！";
+                return;
+            }
+            else
+            {
+                string text = reader.ReadToEnd();
+                Dictionary<string, object> latestInfo = JsonHelper.Jto<Dictionary<string, object>>(text);
+                string versionName = latestInfo["name"].ToString();
+                Match match = Regex.Match(text, "\\d+\\.\\d+\\.\\d+\\.\\d+");
+                if (match.Success)
+                {
+                    Gval.LatestVersion = HttpUtility.UrlDecode(match.Value);
+                }
+            }
+            if (Gval.CurrentVersion == Gval.LatestVersion)
+            {
+
+            }
+            else if (Gval.LatestVersion != "网络错误！" && Gval.LatestVersion != "未检查")
+            {
+                Gval.HasNewVersion = true;
+            }
+        }
+
 
     }
 }
