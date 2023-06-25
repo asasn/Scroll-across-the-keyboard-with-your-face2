@@ -38,10 +38,10 @@ namespace RootNS.Helper
 
         private static void LoadUserSign()
         {
-            object ret = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.IsNoBook);
+            object ret = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.HasBook);
             if (ret != null)
             {
-                Gval.IsNoBook = Convert.ToBoolean(ret);
+                Gval.HasBook = Convert.ToBoolean(ret);
             }
             object ret2 = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.IsWarnAgain);
             if (ret2 != null)

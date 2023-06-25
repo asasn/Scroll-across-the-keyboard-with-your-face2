@@ -24,10 +24,10 @@ namespace RootNS.Helper
             TableHelper.TryToBuildDatabaseForBook(newBook);
             DataOut.InsertBooksBank(newBook);
             Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.CurrentBookGuid, newBook.Guid);
-            if (Gval.IsNoBook)
+            if (Gval.HasBook == false)
             {
-                Gval.IsNoBook = false;
-                Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.IsNoBook, Gval.IsNoBook);
+                Gval.HasBook = true;
+                Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.HasBook, Gval.HasBook);
             }
             return newBook;
         }

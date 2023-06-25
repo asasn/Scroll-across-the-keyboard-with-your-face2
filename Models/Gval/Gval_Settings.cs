@@ -26,7 +26,7 @@ namespace RootNS.Models
             public static string CursorToEnd { get { return "CursorToEnd"; } }
             public static string ThisBookTotalNodesCount { get { return "ThisBookTotalNodesCount"; } }
             public static string EditorColorTags { get { return "EditorColorTags"; } }
-            public static string IsNoBook { get { return "IsNoBook"; } }
+            public static string HasBook { get { return "HasBook"; } }
             public static string IsWarnAgain { get { return "IsWarnAgain"; } }
             public static string LastCheckHour { get { return "LastCheckHour"; } }
         }
@@ -46,15 +46,15 @@ namespace RootNS.Models
             }
         }
 
-        private static bool _isNoBook = true;
+        private static bool _hasBook = false;
 
-        public static bool IsNoBook
+        public static bool HasBook
         {
-            get { return _isNoBook; }
+            get { return _hasBook; }
             set
             {
-                _isNoBook = value;
-                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(IsNoBook)));
+                _hasBook = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(HasBook)));
             }
         }
 

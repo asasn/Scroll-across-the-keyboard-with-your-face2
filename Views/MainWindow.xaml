@@ -58,7 +58,7 @@
                         <Grid Grid.Row="6">
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="BtnBankManage" Visibility="Collapsed" FontFamily="../Resources/icons/#icomoon" Content="&#xe954;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="书库总览" Width="25" Height="25" Click="BtnBankManage_Click" />
-                                <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" ShowBadge="{Binding IsNoBook, Source={StaticResource Gval}}" Width="25" Height="25">
+                                <hc:Badge Status="Processing" Style="{StaticResource BadgeDanger}" ShowBadge="{Binding HasBook, Source={StaticResource Gval}, Converter={StaticResource Boolean2BooleanReConverter}}" Width="25" Height="25">
                                     <Button x:Name="BtnAddABook"  FontFamily="../Resources/icons/#icomoon" Content="&#xe9bc;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="新增" Width="25" Height="25" Grid.Column="1" Click="BtnAddABook_Click"/>
                                 </hc:Badge>
                                 <Button x:Name="BtnDelCurrentBook" FontFamily="../Resources/icons/#icomoon" Content="&#xe99f;" FontSize="18" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" ToolTip="删除" Width="25" Height="25" Grid.Column="2" Click="BtnDelCurrentBook_Click"/>
