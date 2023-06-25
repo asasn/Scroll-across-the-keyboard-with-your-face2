@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="26"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xEA10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="24" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
             </Grid>
             <Grid  Grid.Row="1">
                 <Grid.ColumnDefinitions>

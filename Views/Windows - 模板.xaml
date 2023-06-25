@@ -14,22 +14,32 @@
             <Grid Margin="10">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition x:Name="RHeader" Height="10"/>
-                        <RowDefinition x:Name="RTip" Height="30"/>
+                        <RowDefinition x:Name="RHeader" Height="18"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid x:Name="GHeader" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100*"/>
                             <ColumnDefinition Width="26"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                        <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="24" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
                     </Grid>
-                    <Grid x:Name="GTip" Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="100*"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
+                    <StackPanel Grid.Row="1" Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="100*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label></Label>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="100*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label></Label>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>

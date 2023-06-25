@@ -179,7 +179,7 @@ namespace RootNS.Views
                 return;
             }
             OldParent = (this.DataContext as Node).Parent;
-            (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
+            OldParent.ChildNodes.Remove(this.DataContext as Node);
             (TbTag.SelectedItem as Node).ChildNodes.Add(this.DataContext as Node);
             (this.DataContext as Node).Card.HasChange = true;
         }

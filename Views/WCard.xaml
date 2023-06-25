@@ -12,7 +12,7 @@
         <Border CornerRadius="10" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" >
             <Grid Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition x:Name="RHeader" Height="10"/>
+                    <RowDefinition x:Name="RHeader" Height="18"/>
                     <RowDefinition x:Name="RName" Height="26"/>
                     <RowDefinition x:Name="RAge"  Height="26"/>
                     <RowDefinition x:Name="RMian" Height="Auto"/>
@@ -24,7 +24,7 @@
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="26"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                    <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="24" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>

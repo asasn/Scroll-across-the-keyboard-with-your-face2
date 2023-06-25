@@ -10,8 +10,8 @@
       UseLayoutRounding="True"
       d:DesignWidth="800" MinWidth="800" MinHeight="480" Width="800" Height="480" WindowStartupLocation="CenterScreen">
     <Grid >
-        <StackPanel>
-            
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label IsEnabled="False" FontSize="30" Content="摆烂中，先画一个饼在这里" Height="60"></Label>
         </StackPanel>
     </Grid>
 </Window>

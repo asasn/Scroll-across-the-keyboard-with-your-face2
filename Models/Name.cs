@@ -19,7 +19,7 @@ namespace RootNS.Models
             this.PropertyChanged += Name_PropertyChanged;
         }
 
-        private string _oneName = "随机取个名";
+        private string _oneName = "←左右按钮取名→";
 
         public string OneName
         {

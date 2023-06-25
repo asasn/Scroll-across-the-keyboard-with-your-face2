@@ -185,7 +185,7 @@ namespace RootNS
                 byte[] buffer = WebdavHelper.DownloadWebDavFile(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (buffer == null)
                 {
-                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请在设置——Webdav选项中设置地址、账号和应用密码，并确认网络畅通。");
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace RootNS
             }
             if (string.IsNullOrEmpty(nodeShell.Text.Trim()))
             {
-                nodeShell.Text = "　　第1章：测试标题\n　　\n　　测试的章纲文字。";
+                nodeShell.Text = "　　第1章：测试标题1\n　　\n　　测试的章纲文字测试的章纲文字测试的章纲文字。\n　　\n　　第2章：测试标题2\n　　\n　　测试的章纲文字测试的章纲文字测试的章纲文字。\n　　\n　　第3章：测试标题3\n　　\n　　测试的章纲文字测试的章纲文字测试的章纲文字。";
             }
             wBase.Show();
         }
@@ -250,8 +250,8 @@ namespace RootNS
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
-            Views.WSettings chatAI = new Views.WSettings();
-            chatAI.Show();
+            Views.WSettings wSettings = new Views.WSettings();
+            wSettings.Show();
         }
 
 
@@ -277,7 +277,7 @@ namespace RootNS
                 byte[] buffer = WebdavHelper.DownloadWebDavFile(remoteFile, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (buffer == null)
                 {
-                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请在设置——Webdav选项中设置地址、账号和应用密码，并确认网络畅通。");
                 }
                 else
                 {
@@ -289,6 +289,12 @@ namespace RootNS
                 node.Text = FileIO.ReadFromTxt(localFilePath);
             }
             wBase.Show();
+        }
+
+        private void BtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            WHelp wHelp = new WHelp();
+            wHelp.Show();
         }
     }
 }

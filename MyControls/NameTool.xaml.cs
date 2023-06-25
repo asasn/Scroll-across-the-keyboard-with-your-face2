@@ -45,6 +45,7 @@ namespace RootNS.MyControls
                 string pinyin = Nameer.ReadFromPinyinDict(c.ToString());
                 toolTip += pinyin.Trim() + "    ";
             }
+            toolTip += "点击复制名字";
             BtnResult.ToolTip = toolTip.Trim();
         }
 

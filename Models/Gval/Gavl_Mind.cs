@@ -1,4 +1,5 @@
 ﻿using RootNS.Helper;
+using RootNS.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +28,30 @@ namespace RootNS.Models
         /// </summary>
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
 
+
+        private static string _currentVersion = "2.2.0.0";
+
+        public static string CurrentVersion
+        {
+            get { return _currentVersion; }
+            set
+            {
+                _currentVersion = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(CurrentVersion)));
+            }
+        }
+
+        private static bool _hasNewVersion;
+
+        public static bool HasNewVersion
+        {
+            get { return _hasNewVersion; }
+            set
+            {
+                _hasNewVersion = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(HasNewVersion)));
+            }
+        }
 
         private void Gval_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -61,29 +86,6 @@ namespace RootNS.Models
             }
         }
 
-        private static string _currentVersion = "2.1.0.0";
-
-        public static string CurrentVersion
-        {
-            get { return _currentVersion; }
-            set
-            {
-                _currentVersion = value;
-                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(CurrentVersion)));
-            }
-        }
-
-        private static bool _hasNewVersion;
-
-        public static bool HasNewVersion
-        {
-            get { return _hasNewVersion; }
-            set
-            {
-                _hasNewVersion = value;
-                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(HasNewVersion)));
-            }
-        }
 
 
         public static string AppAuthor { get { return "不问苍生问鬼神"; } }

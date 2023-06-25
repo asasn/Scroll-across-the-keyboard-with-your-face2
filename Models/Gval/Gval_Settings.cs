@@ -29,7 +29,23 @@ namespace RootNS.Models
             public static string HasBook { get { return "HasBook"; } }
             public static string IsWarnAgain { get { return "IsWarnAgain"; } }
             public static string LastCheckHour { get { return "LastCheckHour"; } }
+            public static string VerifyCode { get { return "VerifyCode"; } }
+            public static string ShowNoVerify { get { return "ShowNoVerify"; } }
         }
+        public static string VerifyCode { get; set; }
+
+        private static bool _showNoVerify = true;
+
+        public static bool ShowNoVerify
+        {
+            get { return _showNoVerify; }
+            set
+            {
+                _showNoVerify = value;
+                StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(ShowNoVerify)));
+            }
+        }
+
 
         public static string LastCheckHour { get; set; }
 
