@@ -7,10 +7,10 @@
       xmlns:models="clr-namespace:RootNS.Models" xmlns:MyControls="clr-namespace:RootNS.MyControls"
       d:DataContext="{d:DesignInstance Type={x:Type models:Node}}"
       mc:Ignorable="d"
-      UseLayoutRounding="True"
-      d:DesignWidth="800" MinWidth="800" MinHeight="480" Width="800" Height="480" WindowStartupLocation="CenterScreen" Loaded="ThisWindow_Loaded">
+      UseLayoutRounding="True" Title="软件设置和说明"
+      Width="800" Height="480" WindowStartupLocation="CenterScreen" Loaded="ThisWindow_Loaded" ResizeMode="NoResize">
     <Grid >
-        <TabControl TabStripPlacement="Left">
+        <TabControl x:Name="TabMain" TabStripPlacement="Left">
             <TabItem Header="Webdav">
                 <StackPanel>
                     <Grid HorizontalAlignment="Left" Margin="0,5,0,5">
@@ -76,6 +76,48 @@
                     </TextBlock>
                     <Label Foreground="Gray" Padding="0" BorderThickness="0" Content="连接GitHub不稳定，如遇错误请多试几次" VerticalAlignment="Stretch" Grid.Row="5" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" MinHeight="0" Height="15"/>
                     <Button x:Name="BtnCheckVersion" Content="检查更新" Grid.Row="2" Click="BtnCheckVersion_Click" Padding="3,3,3,3"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="软件说明">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,20,20,20">
+                    <Grid Margin="0,10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="16" IsEnabled="False" Focusable="False" Foreground="Gray" Background="Transparent" TextWrapping="Wrap" Text="本软件采用C#+WPF写成，开源，免费，数据格式开放。&#x0a;采用的是Sqlite数据库，用户文件储存在/Data目录下，未加密，请注意保持备份。" ></TextBlock>
+                        <TextBlock FontSize="24" Grid.Row="1">           
+                                <Hyperlink NavigateUri="https://github.com/asasn/Scroll-across-the-keyboard-with-your-face2" Foreground="DarkGoldenrod"  RequestNavigate="Hyperlink_RequestNavigate">
+                                    唯一发布地址：GitHub上面的仓库页
+                                </Hyperlink>
+                        </TextBlock>
+                        <TextBlock FontSize="16" IsEnabled="False" Focusable="False" Foreground="Gray" Background="Transparent" TextWrapping="Wrap" Text="注册码机制可能会在多个版本之后被移除，这是学习写代码用的。&#x0a;（无广告，但可能会带有一部分作者信息，为软件名称，标题之类的被动式信息。）" Grid.Row="2" ></TextBlock>
+                    </Grid>
+                    <Grid Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" FontSize="16">           
+                                <Hyperlink NavigateUri="https://www.lkong.com/user/584564" Foreground="DarkOrange" RequestNavigate="Hyperlink_RequestNavigate">
+                                    软件署名：此间风物（龙的天空）
+                                </Hyperlink>
+                        </TextBlock>
+                        <TextBlock FontSize="16" IsEnabled="False" Focusable="False" Foreground="Gray" Background="Transparent" TextWrapping="Wrap" Text="（以上联系方式仅供bug和使用反馈，意见和建议只接受合理的，其他事情请勿扰）" Grid.Row="1" ></TextBlock>
+                    </Grid>
+                    <Grid Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" FontSize="16">           
+                                <Hyperlink NavigateUri="https://my.qidian.com/author/2623140/" Foreground="DarkOrange" RequestNavigate="Hyperlink_RequestNavigate">
+                                    起点笔名：不问苍生问鬼神
+                                </Hyperlink>
+                        </TextBlock>
+                        <TextBlock FontSize="16" IsEnabled="False" Focusable="False" Foreground="Gray" Background="Transparent" TextWrapping="Wrap" Text="制作这款软件的初衷，源自于2020年左右，搜集到一些资料，无意之中打开了编程的大门。自此像是发现新大陆痴迷代码，恰巧一直想要一款好用的码字软件而不得，自然而然的萌生了我上我也行的念头，于是一通瞎捣鼓，搞出了之前的那款，命名为【脸滚键盘】，正是本软件第一代产品。而现在，已经来到【脸滚键盘2】，整体逻辑清晰了一些，未来如果身体条件和时间精力都允许的话，还将继续研制【脸滚键盘3】，主要方向在连接AI，以及图形化界面交互。&#x0a;如果您欣赏我的劳动，愿意赞助，请打赏我正在连载中的最新作品。&#x0a;为免各种麻烦，谢绝其他方式的私下交易。" Grid.Row="1" ></TextBlock>
+                    </Grid>
                 </StackPanel>
             </TabItem>
         </TabControl>

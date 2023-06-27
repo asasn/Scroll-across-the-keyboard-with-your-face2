@@ -7,11 +7,11 @@
         mc:Ignorable="d" Title="WShow" Loaded="Window_Loaded"
         d:DesignWidth="450" MinWidth="300" MinHeight="480" Width="450" Height="720">
     <Grid>
-        <avalonEdit:TextEditor 
+        <avalonEdit:TextEditor
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"            
             x:Name="ThisTextEditor" ShowLineNumbers="True" IsReadOnly="True"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="10.5pt">
+            FontSize="10pt">
             <avalonEdit:TextEditor.Options>
                 <avalonEdit:TextEditorOptions
                     HighlightCurrentLine="True" ShowSpaces="True" ConvertTabsToSpaces="True"

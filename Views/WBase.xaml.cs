@@ -42,7 +42,7 @@ namespace RootNS.Views
                 string eTag = WebdavHelper.UploadWebDavFile(remoteFile, localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (string.IsNullOrEmpty(eTag))
                 {
-                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请在设置——Webdav选项中设置地址、账号和应用密码，并确认网络畅通。");
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace RootNS.Views
                 string eTag = WebdavHelper.UploadWebDavFile(remoteFile, localFilePath, Gval.Webdav.UserName, Gval.Webdav.PassWord, localFilePath);
                 if (string.IsNullOrEmpty(eTag))
                 {
-                    HandyControl.Controls.Growl.Warning("云同步失败，请检查网络或者地址、账号和应用密码");
+                    HandyControl.Controls.Growl.Warning("云同步失败，请在设置——Webdav选项中设置地址、账号和应用密码，并确认网络畅通。");
                 }
                 else
                 {

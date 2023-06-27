@@ -48,6 +48,7 @@ namespace RootNS.Views
             WebdavTabTbName.Text = Gval.Webdav.UserName;
             WebdavTabTbPassWord.Text = Gval.Webdav.PassWord;
             BtnWebdavTabSave.IsEnabled = false;
+            Gval.Views.WSettings = sender as Window;
         }
         private void WebdavTabTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -121,6 +122,11 @@ namespace RootNS.Views
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(Gval.Url.HomePage);
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Process.Start(e.Uri.AbsoluteUri);
         }
     }
 }

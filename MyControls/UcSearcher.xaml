@@ -37,7 +37,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="5">
-            <TextBox Background="#FCFCFC" Padding="0" Text="{Binding KeyWords, UpdateSourceTrigger=PropertyChanged}" hc:BorderElement.CornerRadius="0" BorderBrush="DodgerBlue" BorderThickness="0,0,0,1" x:Name="TbKeyWords" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="TbKeyWords_KeyDown"/>
+            <TextBox Background="#FCFCFC" Text="{Binding KeyWords, UpdateSourceTrigger=PropertyChanged}" hc:BorderElement.CornerRadius="0" BorderBrush="DodgerBlue" BorderThickness="0,0,0,1" x:Name="TbKeyWords" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="TbKeyWords_KeyDown"/>
             <Button ToolTip="搜索" x:Name="BtnSearch" FontFamily="../Resources/icons/#icomoon" Content="&#xe9cb;" FontSize="16" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}"  Grid.Column="1" BorderThickness="0" Padding="0" Click="BtnSearch_Click" Background="Transparent" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="30"></Button>
         </Grid>
         <ListBox Background="#FCFCFC" x:Name="ListBoxOfResults" ItemsSource="{Binding Results}" Grid.Row="2" Margin="5,0,5,5">

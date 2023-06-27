@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
+using VerifyLib;
 
 namespace RootNS.Helper
 {
@@ -24,6 +25,9 @@ namespace RootNS.Helper
             Gval.MaterialBook.Load();
             LoadSettings();
         }
+
+
+
 
 
         /// <summary>
@@ -47,6 +51,16 @@ namespace RootNS.Helper
             if (ret2 != null)
             {
                 Gval.IsWarnAgain = Convert.ToBoolean(ret2);
+            }
+            object verifyCode = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.VerifyCode);
+            if (verifyCode != null)
+            {
+                Gval.VerifyCode = Convert.ToString(verifyCode);
+            }
+            object showNoVerify = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.ShowNoVerify);
+            if (showNoVerify != null)
+            {
+                Gval.ShowNoVerify = Convert.ToBoolean(showNoVerify);
             }
         }
 

@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using VerifyLib;
 
 namespace RootNS
 {
@@ -69,8 +70,19 @@ namespace RootNS
         {
             Gval.Views.MainWindow = this;
         }
+        private void GboxTree_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.GboxTree = sender as GroupBox;
+        }
 
-
+        private void GboxWork_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.GboxWork = sender as GroupBox;
+        }
+        private void LbShowNoVerify_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.LbShowNoVerify = sender as Label;
+        }
         private void BorderR_Loaded(object sender, RoutedEventArgs e)
         {
             Gval.Views.BorderR = sender as Border;
@@ -101,6 +113,10 @@ namespace RootNS
         {
             Gval.Views.UcMaterials = sender as MyTree;
         }
+        private void BtnSettings_Loaded(object sender, RoutedEventArgs e)
+        {
+            Gval.Views.BtnSettings = sender as Button;
+        }
 
         /// <summary>
         /// 在窗口的内容呈现完毕后发生
@@ -109,12 +125,16 @@ namespace RootNS
         /// <param name="e"></param>
         private void WinMain_ContentRendered(object sender, EventArgs e)
         {
-            Timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(1)
-            };
-            Timer.Tick += TimeRuner;
-            Timer.Start();
+            //Timer = new DispatcherTimer
+            //{
+            //    Interval = TimeSpan.FromMilliseconds(1)
+            //};
+            //Timer.Tick += TimeRuner;
+            //Timer.Start();
+
+            //LoadVerify();
+            Workflow.LoadBooksToBank();
+            LoadBookProgressBar.Visibility = Visibility.Collapsed;
         }
 
         private DispatcherTimer Timer = new DispatcherTimer();
@@ -127,65 +147,41 @@ namespace RootNS
         {
             if (_loading == false)
             {
-                _loading = true;
                 Console.WriteLine("----------Load----------");
                 //载入书籍数据
                 Workflow.LoadBooksToBank();
+                _loading = true;
                 LoadBookProgressBar.Visibility = Visibility.Collapsed;
             }
             else
             {
-                CheckVersion();
-                Timer.Stop();
                 Console.WriteLine("----------Stop----------");
+                Console.WriteLine("----------版本检查----------");
+                FunctionsPack.CheckVersion();
+                Timer.Stop();
             }
         }
 
-        private void CheckVersion()
+        /// <summary>
+        /// 防君子不防小人的随缘验证
+        /// </summary>
+        private static void LoadVerify()
         {
-            DateTime now = DateTime.Now;
-            string lastCheckHour  = now.ToString("yyyy-MM-dd HH");
-            object record = Settings.Get(Gval.MaterialBook, Gval.SettingsKeys.LastCheckHour);
-            if (record != null)
+            if (Gval.ShowNoVerify == true)
             {
-                Gval.LastCheckHour = Convert.ToString(record);
-            }
-            if (Gval.LastCheckHour == lastCheckHour)
-            {
-                return;
+                Gval.Views.GboxTree.IsEnabled = false;
+                Gval.Views.GboxWork.IsEnabled = false;
+                Gval.Views.LbShowNoVerify.Visibility = Visibility.Visible;
             }
             else
             {
-                Gval.LastCheckHour = lastCheckHour;
-                Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.LastCheckHour, lastCheckHour);
-            }
-
-            StreamReader reader = WebHelper.GetHtmlReaderObject(Gval.Url.Latest);
-            if (reader == null)
-            {
-                Gval.LatestVersion = "网络错误！";
-                return;
-            }
-            else
-            {
-                string text = reader.ReadToEnd();
-                Dictionary<string, object> latestInfo = JsonHelper.Jto<Dictionary<string, object>>(text);
-                string versionName = latestInfo["name"].ToString();
-                Match match = Regex.Match(text, "\\d+\\.\\d+\\.\\d+\\.\\d+");
-                if (match.Success)
-                {
-                    Gval.LatestVersion = HttpUtility.UrlDecode(match.Value);
-                }
-            }
-            if (Gval.CurrentVersion == Gval.LatestVersion)
-            {
-
-            }
-            else if (Gval.LatestVersion != "网络错误！" && Gval.LatestVersion != "未检查")
-            {
-                Gval.HasNewVersion = true;
+                Gval.Views.GboxTree.IsEnabled = true;
+                Gval.Views.GboxWork.IsEnabled = true;
+                Gval.Views.LbShowNoVerify.Visibility = Visibility.Collapsed;
             }
         }
+
+        
 
 
     }

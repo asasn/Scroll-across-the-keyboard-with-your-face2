@@ -14,7 +14,7 @@
             <Grid Margin="10">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition x:Name="RHeader" Height="10"/>
+                        <RowDefinition x:Name="RHeader" Height="18"/>
                         <RowDefinition Height="Auto" MinHeight="200" MaxHeight="300"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
@@ -27,16 +27,16 @@
                             <ColumnDefinition Width="100*"/>
                             <ColumnDefinition Width="26"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="18" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
+                        <Button Grid.Column="1" Padding="0" ToolTip="关闭该信息卡窗口" x:Name="BtnClose" FontFamily="../Resources/icons/#icomoon" Content="&#xea10;" FontSize="24" Background="Transparent" Foreground="Red"  BorderThickness="0" Click="BtnClose_Click" Width="26" Height="26"/>
                     </Grid>
-                    <Image x:Name="ImgShow" Source="{Binding CoverPath}" Height="192" Width="144" Grid.Row="1" />
+                    <Image x:Name="ImgShow" Source="{Binding CoverPath}" Height="192" Width="144" ToolTip="在/Data文件夹下，采用Guid+.jpg格式的文件作为封面" Grid.Row="1" />
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="100*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Background="#f5f5f5" BorderThickness="0" Padding="0"  Content="Uid：" Width="38"/>
-                        <TextBox Background="Transparent" Grid.Column="1" x:Name="TbUid" Text="{Binding Guid, Mode=OneWay}" IsReadOnly="True" Padding="0"/>
+                        <Label Background="Transparent" BorderThickness="0" Padding="0"  Content="Guid：" Width="38"/>
+                        <TextBox Background="Transparent" Grid.Column="1" x:Name="TbUid" Text="{Binding Guid, Mode=OneWay}" IsReadOnly="True"/>
                     </Grid>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
@@ -45,7 +45,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label Background="Transparent" BorderThickness="0" Padding="0"  Content="书名：" Width="38"/>
-                        <TextBox Grid.Column="1" x:Name="TbName" Padding="0" Text="{Binding Title, Mode=OneWay}" TextChanged="BookName_TextChanged"/>
+                        <TextBox Grid.Column="1" x:Name="TbName" Text="{Binding Title, Mode=OneWay}" TextChanged="BookName_TextChanged"/>
                         <Button Grid.Column="2" x:Name="BtnReName" Content="重命名" IsEnabled="False" Click="BtnReName_Click"/>
                     </Grid>
                     <Grid Grid.Row="4">
@@ -55,9 +55,9 @@
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
                         <Label Background="Transparent" BorderThickness="0" Padding="0"  Content="千字价格：" Width="58" HorizontalAlignment="Left"/>
-                        <TextBox x:Name="TbPrice" Text="{Binding Price}"  Padding="0" TextChanged="TbPrice_TextChanged" Margin="60,0,0,0"/>
+                        <TextBox x:Name="TbPrice" Text="{Binding Price}" TextChanged="TbPrice_TextChanged" Margin="60,0,0,0"/>
                         <Label Background="Transparent" BorderThickness="0" Padding="0"  Content="当前年份：" Width="58" Grid.Column="2" HorizontalAlignment="Left"/>
-                        <TextBox Grid.Column="2" Text="{Binding CurrentYear}" x:Name="TbCurrentYear" Padding="0" TextChanged="TbCurrentYear_TextChanged" MinWidth="30" Margin="60,0,0,0"/>
+                        <TextBox Grid.Column="2" Text="{Binding CurrentYear}" x:Name="TbCurrentYear" TextChanged="TbCurrentYear_TextChanged" MinWidth="30" Margin="60,0,0,0"/>
                     </Grid>
                     <Grid Grid.Row="5">
                         <Grid.ColumnDefinitions>
@@ -65,7 +65,7 @@
                             <ColumnDefinition Width="100*"/>
                         </Grid.ColumnDefinitions>
                         <Label Background="Transparent" BorderThickness="0" Padding="0"  Content="简介：" Width="38" VerticalAlignment="Top" Margin="0,7.5,0,0"/>
-                        <TextBox Grid.Column="1" MaxHeight="120" VerticalScrollBarVisibility="Auto" Text="{Binding Summary}" x:Name="TbSummary" Padding="0" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="999"/>
+                        <TextBox Grid.Column="1" MaxHeight="120" VerticalScrollBarVisibility="Auto" Text="{Binding Summary}" x:Name="TbSummary" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="999"/>
                     </Grid>
                     <Grid Grid.Row="6">
                         <Grid.ColumnDefinitions>

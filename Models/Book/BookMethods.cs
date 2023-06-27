@@ -106,7 +106,7 @@ namespace RootNS.Models
                 };
                 pNode.ChildNodes.Add(node);
                 counter++;
-                Gval.PercentPoint = Math.Round(counter / total, 2) * 100;
+                Gval.PercentPoint = Math.Round(counter / total, 2);
                 if (node.TypeName == node.Owner.TabRoot.ChildNodes[5].TypeName ||
                     node.TypeName == node.Owner.TabRoot.ChildNodes[8].TypeName)
                 {

@@ -85,7 +85,7 @@ namespace RootNS.Helper
                 }
             }
             string[] colorTags = { "搜索", "符号", "数字", "字母", "标记", "对话", "敏感", "建议",
-                "角色", "龙套", "道具", "势力", "部门", "场景", "地区", "其他" };
+                "角色", "龙套", "势力", "部门", "地区", "场景", "道具", "其他" };
             NameArrayList.Sort(new StringLengthComparer());
             foreach ((string, string) tuple in NameArrayList)
             {

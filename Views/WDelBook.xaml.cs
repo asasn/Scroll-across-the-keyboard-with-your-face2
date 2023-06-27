@@ -43,7 +43,7 @@ namespace RootNS.Views
 
         private void BtnVerify_Click(object sender, RoutedEventArgs e)
         {
-            if (TbVerify.Text.Equals("我确认删除本书") == false)
+            if (TbVerify.Text.Equals(TbkVerify.Text) == false)
             {
                 return;
             }
@@ -82,7 +82,7 @@ namespace RootNS.Views
 
         private void TbVerify_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TbVerify.Text == "我确认删除本书")
+            if (TbVerify.Text.Equals(TbkVerify.Text))
             {
                 BtnVerify.IsEnabled = true;
             }

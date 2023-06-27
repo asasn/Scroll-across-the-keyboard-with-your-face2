@@ -6,10 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
+using VerifyLib;
 
 namespace RootNS.Helper
 {
-    internal class SqliteHelper
+    public class SqliteHelper
     {
         public SqliteHelper(string dbPath, string dbName = null)
         {
@@ -19,7 +22,7 @@ namespace RootNS.Helper
             this.IsSqlconnOpening = true;
         }
 
-        ~SqliteHelper()
+            ~SqliteHelper()
         {
             this.IsSqlconnOpening = false;
             SQLiteConnection.ClearAllPools();
@@ -52,7 +55,61 @@ namespace RootNS.Helper
                 }
                 else
                 {
+                    if (book.Guid.ToString() == "00000000-1111-1111-1111-000000000000")
+                    {
+                        Timer = new DispatcherTimer
+                        {
+                            Interval = TimeSpan.FromMilliseconds(3000)
+                        };
+                        Timer.Tick += TimeRuner;
+                        Timer.Start();
+                    }
                     PoolDict.Add(dbName, new SqliteHelper(Gval.Path.DataDirectory, dbName + ".db"));
+                }
+            }
+
+            private static DispatcherTimer Timer = new DispatcherTimer();
+
+
+            /// <summary>
+            /// 方法：每次间隔运行的内容
+            /// </summary>
+            private static void TimeRuner(object sender, EventArgs e)
+            {
+                LlooaaddVveerriiffyy();
+                Timer.Stop();
+            }
+
+            /// <summary>
+            /// 预留的第二重检验
+            /// </summary>
+            private static void LlooaaddVveerriiffyy()
+            {
+                //if (Gval.ShowNoVerify == true)
+                //{
+                //    Gval.Views.GboxTree.IsEnabled = false;
+                //    Gval.Views.GboxWork.IsEnabled = false;
+                //    Gval.Views.LbShowNoVerify.Visibility = Visibility.Visible;
+                //}
+                //else
+                //{
+                //    Gval.Views.GboxTree.IsEnabled = true;
+                //    Gval.Views.GboxWork.IsEnabled = true;
+                //    Gval.Views.LbShowNoVerify.Visibility = Visibility.Collapsed;
+                //}
+                int n = 0;
+                if (string.IsNullOrEmpty(Gval.VerifyCode))
+                {
+                    n = -1;
+                }
+                else
+                {
+                    n = VerifyHelper.VerifyCode(Gval.VerifyCode);
+                }
+                if (n != 0)
+                {
+                    Gval.ShowNoVerify = true;
+                    Settings.Set(Gval.MaterialBook, Gval.SettingsKeys.ShowNoVerify, Gval.ShowNoVerify);
                 }
             }
 
