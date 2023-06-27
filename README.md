@@ -17,3 +17,4 @@
 # 软件截图
 
 ![软件截图](https://github.com/asasn/Scroll-across-the-keyboard-with-your-face2/raw/master/相关图片/主界面未注册.png)
+![软件截图](https://github.com/asasn/Scroll-across-the-keyboard-with-your-face2/raw/master/相关图片/特色功能.png)
