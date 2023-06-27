@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace RootNS.Views
 {
@@ -53,9 +54,7 @@ namespace RootNS.Views
             this.Left = point.X - this.ActualWidth * 0.5;
             this.Top = point.Y - 26;
             BtnSeeMore_Click(null, null);
-
         }
-
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -82,7 +81,7 @@ namespace RootNS.Views
             (this.DataContext as Node).UpdateNodeProperty("内容", "Attachment", (this.DataContext as Node).Attachment.ToString());
             (this.DataContext as Node).UpdateNodeProperty("节点", "Puid", (this.DataContext as Node).Parent.Guid.ToString());
             (this.DataContext as Node).UpdateNodeProperty("节点", "Index", (this.DataContext as Node).Index.ToString());
-            
+
             EditorHelper.UpdataSyntax();
         }
 
@@ -178,9 +177,13 @@ namespace RootNS.Views
                 TbTag.IsEnabled = true;
                 return;
             }
+            if (TbTag.SelectedItem == null)
+            {
+                return;
+            }
             OldParent = (this.DataContext as Node).Parent;
-            OldParent.ChildNodes.Remove(this.DataContext as Node);
             (TbTag.SelectedItem as Node).ChildNodes.Add(this.DataContext as Node);
+            OldParent.ChildNodes.Remove(this.DataContext as Node);
             (this.DataContext as Node).Card.HasChange = true;
         }
 

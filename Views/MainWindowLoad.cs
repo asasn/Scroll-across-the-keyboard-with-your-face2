@@ -69,6 +69,13 @@ namespace RootNS
         private void WinMain_Loaded(object sender, RoutedEventArgs e)
         {
             Gval.Views.MainWindow = this;
+
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1)
+            };
+            Timer.Tick += TimeRuner;
+            Timer.Start();
         }
         private void GboxTree_Loaded(object sender, RoutedEventArgs e)
         {
@@ -125,16 +132,7 @@ namespace RootNS
         /// <param name="e"></param>
         private void WinMain_ContentRendered(object sender, EventArgs e)
         {
-            //Timer = new DispatcherTimer
-            //{
-            //    Interval = TimeSpan.FromMilliseconds(1)
-            //};
-            //Timer.Tick += TimeRuner;
-            //Timer.Start();
 
-            //LoadVerify();
-            Workflow.LoadBooksToBank();
-            LoadBookProgressBar.Visibility = Visibility.Collapsed;
         }
 
         private DispatcherTimer Timer = new DispatcherTimer();
@@ -157,7 +155,8 @@ namespace RootNS
             {
                 Console.WriteLine("----------Stop----------");
                 Console.WriteLine("----------版本检查----------");
-                FunctionsPack.CheckVersion();
+                FunctionsPack.CheckVersion(); 
+                //LoadVerify();
                 Timer.Stop();
             }
         }
