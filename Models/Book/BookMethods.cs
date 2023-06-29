@@ -62,6 +62,10 @@ namespace RootNS.Models
         /// </summary>
         public void Load()
         {
+            if (this.Loaded == true)
+            {
+                return;
+            }
             TableHelper.TryToBuildDatabaseForBook(this);
             SqliteHelper.PoolOperate.Add(this);
             counter = 0;
@@ -77,6 +81,7 @@ namespace RootNS.Models
                 RecursiveReLoad(item);
             }
             Settings.Set(this, Gval.SettingsKeys.ThisBookTotalNodesCount, counter);
+            this.Loaded = true;
         }
 
         private void RecursiveReLoad(Node pNode)

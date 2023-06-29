@@ -31,6 +31,19 @@ namespace RootNS.Models
             Count,
         }
 
+        private bool _loaded;
+        /// <summary>
+        /// 检查本书是否已经载入，如果已经载入，就不用再重新从数据库读取了，切换当前书籍时进行检查使用
+        /// </summary>
+        public bool Loaded
+        {
+            get { return _loaded; }
+            set
+            {
+                _loaded = value;
+                RaisePropertyChanged(nameof(Loaded));
+            }
+        }
 
 
         //private Guid _tabRootGuid;

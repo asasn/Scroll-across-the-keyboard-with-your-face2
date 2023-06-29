@@ -42,7 +42,12 @@ namespace RootNS
             //读取和应用一些设置
             //-------------------------------------------
             Workflow.Start();
-
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1)
+            };
+            Timer.Tick += TimeRuner;
+            Timer.Start();
             //改变动态资源当中的颜色主题
             //-------------------------------------------
             try
@@ -69,13 +74,6 @@ namespace RootNS
         private void WinMain_Loaded(object sender, RoutedEventArgs e)
         {
             Gval.Views.MainWindow = this;
-
-            Timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(1)
-            };
-            Timer.Tick += TimeRuner;
-            Timer.Start();
         }
         private void GboxTree_Loaded(object sender, RoutedEventArgs e)
         {
@@ -132,12 +130,13 @@ namespace RootNS
         /// <param name="e"></param>
         private void WinMain_ContentRendered(object sender, EventArgs e)
         {
-
+            //LoadVerify();
         }
 
         private DispatcherTimer Timer = new DispatcherTimer();
 
         static bool _loading = false;
+        static bool _checking = false;
         /// <summary>
         /// 方法：每次间隔运行的内容
         /// </summary>
@@ -145,19 +144,26 @@ namespace RootNS
         {
             if (_loading == false)
             {
+                _loading = true;
                 Console.WriteLine("----------Load----------");
                 //载入书籍数据
                 Workflow.LoadBooksToBank();
-                _loading = true;
                 LoadBookProgressBar.Visibility = Visibility.Collapsed;
+                Console.WriteLine("---------Loaded---------");
             }
             else
             {
-                Console.WriteLine("----------Stop----------");
-                Console.WriteLine("----------版本检查----------");
-                FunctionsPack.CheckVersion(); 
-                //LoadVerify();
-                Timer.Stop();
+                if (_checking == false)
+                {
+                    _checking = true;
+                    Console.WriteLine("----------版本检查----------");
+                    FunctionsPack.CheckVersion();                    
+                }
+            }
+
+            if (_loading == true && _checking == true)
+            {
+                //Timer.Stop(); //如果要周期性的执行一些任务，则不必停止，注意TimeRuner函数的判断条件即可
             }
         }
 
