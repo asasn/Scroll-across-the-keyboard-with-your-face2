@@ -95,6 +95,10 @@ namespace RootNS.Views
                             }
                             foreach (object item in Gval.TextEditorList)
                             {
+                                if ((item as ICSharpCode.AvalonEdit.TextEditor).Tag == null)
+                                {
+                                    continue;
+                                }
                                 if ((item as ICSharpCode.AvalonEdit.TextEditor).Text.Equals(node.Summary))
                                 {
                                     (item as ICSharpCode.AvalonEdit.TextEditor).Text = newNode.Text;

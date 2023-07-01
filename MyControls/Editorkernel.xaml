@@ -74,7 +74,7 @@
             <avalonEdit:TextEditor 
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Grid.Row="2" Background="#FAFAFA"
-            x:Name="SummaryTextEditor" ShowLineNumbers="True" 
+            x:Name="SummaryTextEditor" ShowLineNumbers="True" Tag="true"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
             FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="SummaryTextEditor_TextChanged" GotFocus="SummaryTextEditor_GotFocus">
                 <avalonEdit:TextEditor.ContextMenu>
