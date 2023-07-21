@@ -134,7 +134,22 @@ namespace RootNS.Views
                 }
                 if (dr == MessageBoxResult.No)
                 {
-                    (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
+                    bool tag = false;
+                    foreach (Card.Line line in (this.DataContext as Node).Card.Lines)
+                    {
+                        foreach (Card.Line.Tip tip in line.Tips)
+                        {
+                            if (string.IsNullOrEmpty(tip.Content) == false)
+                            {
+                                tag = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (tag == false)
+                    {
+                        (this.DataContext as Node).Parent.ChildNodes.Remove(this.DataContext as Node);
+                    }
                     if (OldParent != null)
                     {
                         OldParent.ChildNodes.Add(this.DataContext as Node);
