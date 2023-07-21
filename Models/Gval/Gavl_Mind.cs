@@ -29,7 +29,7 @@ namespace RootNS.Models
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
 
 
-        private static string _currentVersion = "2.2.0.0";
+        private static string _currentVersion = "2.2.0.1";
 
         public static string CurrentVersion
         {
