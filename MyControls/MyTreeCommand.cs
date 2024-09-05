@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static RootNS.Models.Book;
 
 namespace RootNS.MyControls
 {
@@ -172,6 +173,11 @@ namespace RootNS.MyControls
             if (selectedNode == null)
             {
                 selectedNode = (sender as Button).DataContext as Node;
+            }
+            if (selectedNode.TypeName == TypeNameEnum.草稿.ToString())
+            {
+                selectedNode = selectedNode.Parent;
+                selectedNode.Title = TypeNameEnum.草稿.ToString();
             }
             selectedNode.Export();
         }

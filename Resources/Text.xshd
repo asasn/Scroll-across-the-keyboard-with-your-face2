@@ -8,6 +8,7 @@
 	<Color name="字母" foreground="#C08040" />
 	<Color name="标记" foreground="Yellow" />
 	<Color name="对话" foreground="DarkGoldenrod" />
+	<Color name="心理" foreground="Violet" />
 	<Color name="敏感" foreground="Red"/>
 	<Color name="建议" foreground="Magenta"/>
 	<Color name="角色" foreground="Blue" fontFamily="宋体" />
@@ -17,13 +18,18 @@
 	<Color name="地区" foreground="MediumOrchid"/>
 	<Color name="场景" foreground="Orchid"/>
 	<Color name="道具" foreground="Orange"/>
-	<Color name="其他" foreground="Gray"/>
+	<Color name="技能" foreground="DarkOrange"/>
+	<Color name="概念" foreground="Gray"/>
 	<Color name="未指定" foreground="Thistle"/>
 	<!-- This is the main ruleset. -->
 	<RuleSet>
 		<Span color="对话" multiline="true">
 			<Begin>“</Begin>
 			<End>”</End>
+		</Span>
+		<Span color="心理" multiline="true">
+			<Begin>『</Begin>
+			<End>』</End>
 		</Span>
 		<Rule color="符号" >
 			‘.*?’|".*?"|'.*?'|《.*?》|（.*?）|【.*?】|\(.*?\)|\[.*?\]|\{.*?\}|『(.+?)』|「(.+?)」

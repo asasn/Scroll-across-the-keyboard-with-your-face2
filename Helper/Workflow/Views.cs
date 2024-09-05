@@ -17,6 +17,7 @@ namespace RootNS.Helper
         /// </summary>
         /// <param name="thisWin"></param>
         /// <param name="uc"></param>
+        /// <param name="offset"></param>
         public static void ForViewPointX(Window thisWin, UIElement uc, double offset = 0)
         {
             thisWin.Left = uc.TranslatePoint(new Point(), Gval.Views.MainWindow).X + offset;
@@ -30,7 +31,7 @@ namespace RootNS.Helper
         /// 弹窗位置
         /// </summary>
         /// <param name="thisWin"></param>
-        /// <param name="uc"></param>
+        /// <param name="offset"></param>
         public static void ForViewPointX(Window thisWin, double offset = 0)
         {
             thisWin.Left = 300 + offset;

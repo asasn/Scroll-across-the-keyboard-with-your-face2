@@ -49,7 +49,7 @@ namespace RootNS.Helper
             }
 
             /// <summary>
-            /// 起点中文网的统计
+            /// 起点中文网的字数统计
             /// </summary>
             /// <param name="content"></param>
             /// <returns></returns>
@@ -63,7 +63,7 @@ namespace RootNS.Helper
                 input = Regex.Replace(input, @"[…]", "■", RegexOptions.Multiline);
 
                 // 将连续的特殊符号替换为一个■
-                input = Regex.Replace(input, @"([^—][—]+)", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"([—]+)", "■", RegexOptions.Multiline);
 
                 // 将连续的英文单词替换为一个■
                 input = Regex.Replace(input, @"([a-zA-Z~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F][a-zA-Z~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]+)", "■", RegexOptions.Multiline);

@@ -340,9 +340,9 @@ namespace RootNS.Models
 
             ArrayList arrayList = this.GetHeirsList();
             string sqlDel = string.Empty;
-            foreach (var item in arrayList)
+            foreach (Node item in arrayList)
             {
-                sqlDel += string.Format("DELETE FROM 节点 WHERE Guid='{0}';", this.Guid);
+                sqlDel += string.Format("DELETE FROM 节点 WHERE Guid='{0}';", item.Guid);
             }
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlDel);
 
@@ -419,10 +419,10 @@ namespace RootNS.Models
             this.IsDel = flag;
             ArrayList arrayList = this.GetHeirsList();
             string sqlDel = string.Empty;
-            foreach (var item in arrayList)
+            foreach (Node item in arrayList)
             {
-                (item as Node).IsDel = flag;
-                sqlDel += string.Format("UPDATE 节点 SET IsDel='{0}' WHERE Guid='{1}';", this.IsDel, this.Guid);
+                item.IsDel = flag;
+                sqlDel += string.Format("UPDATE 节点 SET IsDel='{0}' WHERE Guid='{1}';", item.IsDel, item.Guid);
             }
             SqliteHelper.PoolDict[this.Owner.Guid.ToString()].ExecuteNonQuery(sqlDel);
 
