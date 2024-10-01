@@ -51,10 +51,12 @@ namespace RootNS.MyControls
             Timer.Tick += TimeRuner;
             Timer.Start();
 
-            theDialog = new FindReplaceDialog(this.ThisTextEditor);
-            WorkingTextEditor = ThisTextEditor;
+
+            thisDialog = new FindReplaceDialog();
         }
 
+        private FindReplaceDialog thisDialog;
+        private bool? dialogTag;
 
         private void ThisTextEditor_Loaded(object sender, RoutedEventArgs e)
         {
@@ -69,7 +71,7 @@ namespace RootNS.MyControls
             }
             if (this.Tag != null)
             {
-                //不是轻量编辑器时
+                FindReplaceDialog.editor = ThisTextEditor;
                 Gval.Views.UcShower.Tag = null;
                 Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
                 Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
@@ -88,7 +90,6 @@ namespace RootNS.MyControls
         private bool doSaveFlag;
         Stopwatch stopWatch = new Stopwatch();
         public DispatcherTimer Timer = new DispatcherTimer();
-        FindReplaceDialog theDialog;
 
         /// <summary>
         /// 方法：每次间隔运行的内容
@@ -163,32 +164,34 @@ namespace RootNS.MyControls
 
         private void Command_Typesetting_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            EditorHelper.TypeSetting(WorkingTextEditor);
+            EditorHelper.TypeSetting(this.ThisTextEditor);
             Command_SaveText_Executed(null, null);
         }
 
 
         private void Command_Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(WorkingTextEditor);
+            Gval.Views.UcFindReplaceDialog = FindReplaceDialog.ShowForReplace();
+            dialogTag = false;
             this.SetPreviousText();
-            FindReplaceDialog.theDialog.TabFind.IsSelected = true;
-            FindReplaceDialog.theDialog.txtFind.SelectAll();
-            FindReplaceDialog.theDialog.txtFind.Focus();
+            Gval.Views.UcFindReplaceDialog.TabFind.IsSelected = true;
+            Gval.Views.UcFindReplaceDialog.txtFind.SelectAll();
+            Gval.Views.UcFindReplaceDialog.txtFind.Focus();
         }
 
         private void Command_Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FindReplaceDialog.theDialog = FindReplaceDialog.ShowForReplace(WorkingTextEditor);
+            Gval.Views.UcFindReplaceDialog = FindReplaceDialog.ShowForReplace();
+            dialogTag = true; 
             this.SetPreviousText();
-            FindReplaceDialog.theDialog.TabReplace.IsSelected = true;
-            FindReplaceDialog.theDialog.txtFind2.SelectAll();
-            FindReplaceDialog.theDialog.txtFind2.Focus();
+            Gval.Views.UcFindReplaceDialog.TabReplace.IsSelected = true;
+            Gval.Views.UcFindReplaceDialog.txtFind2.SelectAll();
+            Gval.Views.UcFindReplaceDialog.txtFind2.Focus();
         }
 
         private void SetPreviousText()
         {
-            if (string.IsNullOrEmpty(WorkingTextEditor.TextArea.Selection.GetText()) == true)
+            if (string.IsNullOrEmpty(this.ThisTextEditor.TextArea.Selection.GetText()) == true)
             {
                 if (string.IsNullOrEmpty(Gval.Views.UcSearcher.TbKeyWords.Text))
                 {
@@ -202,7 +205,7 @@ namespace RootNS.MyControls
             }
             else
             {
-                Gval.PreviousText = WorkingTextEditor.TextArea.Selection.GetText();
+                Gval.PreviousText = this.ThisTextEditor.TextArea.Selection.GetText();
             }
         }
 
@@ -211,15 +214,15 @@ namespace RootNS.MyControls
         private void Command_MoveNext_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.SetPreviousText();
-            theDialog.cbSearchUp.IsChecked = false;
-            theDialog.FindNext(Gval.PreviousText);
+            thisDialog.cbSearchUp.IsChecked = false;
+            thisDialog.FindNext(Gval.PreviousText);
         }
 
         private void Command_MovePrevious_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.SetPreviousText();
-            theDialog.cbSearchUp.IsChecked = true;
-            theDialog.FindNext(Gval.PreviousText);
+            thisDialog.cbSearchUp.IsChecked = true;
+            thisDialog.FindNext(Gval.PreviousText);
         }
 
         private void Command_CloseTabItem_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -242,7 +245,7 @@ namespace RootNS.MyControls
                 {
                     continue;
                 }
-                if (WorkingTextEditor.SelectedText.Equals(node.Title.Trim()))
+                if (this.ThisTextEditor.SelectedText.Equals(node.Title.Trim()))
                 {
                     isMatch = true;
                 }
@@ -250,7 +253,7 @@ namespace RootNS.MyControls
                 {
                     foreach (Card.Line.Tip tip in node.Card.Lines[0].Tips)
                     {
-                        if (WorkingTextEditor.SelectedText.Equals(tip.Content.Trim()))
+                        if (this.ThisTextEditor.SelectedText.Equals(tip.Content.Trim()))
                         {
                             isMatch = true;
                         }
@@ -266,11 +269,11 @@ namespace RootNS.MyControls
                     return;
                 }
             }
-            if (isMatch == false && !string.IsNullOrWhiteSpace(WorkingTextEditor.SelectedText))
+            if (isMatch == false && !string.IsNullOrWhiteSpace(this.ThisTextEditor.SelectedText))
             {
                 //未匹配的情况
                 WCard wCard = new WCard();
-                Node newNode = new Node() { Title = WorkingTextEditor.SelectedText };
+                Node newNode = new Node() { Title = this.ThisTextEditor.SelectedText };
                 Gval.CurrentBook.TabRoot.ChildNodes[5].ChildNodes.Add(newNode);
                 wCard.DataContext = newNode;
                 wCard.Show();
@@ -310,17 +313,17 @@ namespace RootNS.MyControls
         }
         private void BtnPaste_Click(object sender, RoutedEventArgs e)
         {
-            string temp = WorkingTextEditor.Text;
-            WorkingTextEditor.Text = Clipboard.GetText();
+            string temp = this.ThisTextEditor.Text;
+            this.ThisTextEditor.Text = Clipboard.GetText();
             BtnUndo.DataContext = temp;
-            EditorHelper.TypeSetting(WorkingTextEditor);
+            EditorHelper.TypeSetting(this.ThisTextEditor);
             Command_SaveText_Executed(null, null);
             BtnUndo.IsEnabled = true;
         }
         private void BtnUndo_Click(object sender, RoutedEventArgs e)
         {
-            WorkingTextEditor.Text = BtnUndo.DataContext.ToString();
-            EditorHelper.TypeSetting(WorkingTextEditor);
+            this.ThisTextEditor.Text = BtnUndo.DataContext.ToString();
+            EditorHelper.TypeSetting(this.ThisTextEditor);
             Command_SaveText_Executed(null, null);
             BtnUndo.IsEnabled = false;
         }
@@ -329,8 +332,8 @@ namespace RootNS.MyControls
         {
             if (e.Key == Key.Enter)
             {
-                WorkingTextEditor.TextArea.Document.Insert(WorkingTextEditor.CaretOffset, "\n　　");
-                WorkingTextEditor.LineDown();
+                this.ThisTextEditor.TextArea.Document.Insert(this.ThisTextEditor.CaretOffset, "\n　　");
+                this.ThisTextEditor.LineDown();
                 Command_SaveText_Executed(null, null);
             }
             //逗号||句号的情况
@@ -583,16 +586,15 @@ namespace RootNS.MyControls
         }
 
 
-        private TextEditor WorkingTextEditor;
         private void ThisTextEditor_GotFocus(object sender, RoutedEventArgs e)
         {
-            WorkingTextEditor = (TextEditor)sender;
+            this.ThisTextEditor = (TextEditor)sender;
             SwitchToThisTextEditor();
         }
 
         private void SummaryTextEditor_GotFocus(object sender, RoutedEventArgs e)
         {
-            WorkingTextEditor = (TextEditor)sender;
+            this.ThisTextEditor = (TextEditor)sender;
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

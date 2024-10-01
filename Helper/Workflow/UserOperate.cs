@@ -37,7 +37,7 @@ namespace RootNS.Helper
                 newBook.TabRoot.ChildNodes[4].ChildNodes.Add(node4);
                 node4.Insert();
             }
-            string[] colorTags = { "角色", "龙套", "势力", "部门", "地区", "场景", "道具", "技能", "概念" };
+            string[] colorTags = { "角色", "龙套", "势力", "部门", "地区", "场景", "道具", "技能", "概念", "错误" };
             foreach (var colorTag in colorTags)
             {
                 Node node = new Node();

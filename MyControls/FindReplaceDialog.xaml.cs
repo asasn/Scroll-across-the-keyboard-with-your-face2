@@ -23,12 +23,10 @@ namespace RootNS.MyControls
         private static bool useWildcards = false;
         private static bool searchUp = false;
 
-        private TextEditor editor;
 
-        public FindReplaceDialog(TextEditor editor)
+        public FindReplaceDialog()
         {
             InitializeComponent();
-            this.editor = editor;
 
             txtFind.Text = txtFind2.Text = textToFind;
             cbCaseSensitive.IsChecked = caseSensitive;
@@ -148,12 +146,13 @@ namespace RootNS.MyControls
         }
 
         public static FindReplaceDialog theDialog = null;
+        public static TextEditor editor = null;
 
-        public static FindReplaceDialog ShowForReplace(TextEditor editor)
+        public static FindReplaceDialog ShowForReplace()
         {
             if (theDialog == null)
             {
-                theDialog = new FindReplaceDialog(editor);
+                theDialog = new FindReplaceDialog();
                 theDialog.Show();
 
                 //设置窗口位置
@@ -176,7 +175,7 @@ namespace RootNS.MyControls
         {
             if (theDialog == null)
             {
-                theDialog = new FindReplaceDialog(editor);
+                theDialog = new FindReplaceDialog();
 
                 //设置窗口位置
                 Workflow.ForViewPointX(theDialog, Gval.Views.BorderR);

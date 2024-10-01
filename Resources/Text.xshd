@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="Text" extensions=".txt" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<!-- The named colors 'Comment' and 'String' are used in SharpDevelop to detect if a line is inside a multiline string/comment -->
-	<!--fontWeight="bold" fontFamily="行楷" foreground="#0000CD"-->
+	<!--fontWeight="bold" fontSize="24" fontStyle="italic" foreground="#0000CD" fontFamily="楷体"-->
 	<Color name="搜索" background="#40FF40"/>
 	<Color name="符号" foreground="#C08040" />
 	<Color name="数字" foreground="#C08040" />
@@ -19,7 +19,8 @@
 	<Color name="场景" foreground="Orchid"/>
 	<Color name="道具" foreground="Orange"/>
 	<Color name="技能" foreground="DarkOrange"/>
-	<Color name="概念" foreground="Gray"/>
+	<Color name="概念" exampleText="无实体的对象" foreground="#0000CD"/>
+	<Color name="错误" foreground="Red"/>
 	<Color name="未指定" foreground="Thistle"/>
 	<!-- This is the main ruleset. -->
 	<RuleSet>

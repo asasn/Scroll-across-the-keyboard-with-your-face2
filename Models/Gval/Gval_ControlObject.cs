@@ -36,6 +36,7 @@ namespace RootNS.Models
             public static Label LbShowNoVerify { get; set; }
             public static Button BtnSettings { get; set; }
             public static Window WSettings { get; set; }
+            public static FindReplaceDialog UcFindReplaceDialog { get; set; }
         }
 
 
