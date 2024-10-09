@@ -1,4 +1,6 @@
-﻿using RootNS.Helper;
+﻿using ICSharpCode.AvalonEdit;
+using JiebaNet.Segmenter;
+using RootNS.Helper;
 using RootNS.Models;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,16 @@ namespace RootNS.MyControls
         private void Command_Typesetting_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 
+        }
+
+        private void ThisTextEditor_TextChanged(object sender, EventArgs e)
+        {
+            if (this.DataContext == null)
+            {
+                return;
+            }
+            TextEditor summaryTextEditor = ((Gval.Views.EditorTabControl.SelectedItem as HandyControl.Controls.TabItem).Content as Editorkernel).SummaryTextEditor;
+            summaryTextEditor.Text = ThisTextEditor.Text;
         }
     }
 }

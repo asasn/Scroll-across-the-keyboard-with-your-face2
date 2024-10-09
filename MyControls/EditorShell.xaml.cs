@@ -73,10 +73,6 @@ namespace RootNS.MyControls
                 {
                     stuff.Text = "　　";
                 }
-                if (string.IsNullOrWhiteSpace(stuff.Summary) == true)
-                {
-                    stuff.Summary = "　　";
-                }
                 editorBase.ThisTextEditor.Text = stuff.Text;
                 editorBase.SummaryTextEditor.Text = stuff.Summary;
                 editorBase.BtnSaveDoc.IsEnabled = false;

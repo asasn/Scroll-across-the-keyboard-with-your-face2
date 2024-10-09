@@ -18,9 +18,9 @@
         <Grid Margin="5">
             <avalonEdit:TextEditor Visibility="Hidden"
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-            x:Name="ThisTextEditor" ShowLineNumbers="False"
+            x:Name="ThisTextEditor" ShowLineNumbers="False" MaxWidth="999"
             SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="10pt" Background="#FAFAFA" Foreground="DimGray" IsReadOnly="True" Cursor="Hand">
+            FontSize="10pt" Background="#FAFAFA" Foreground="DimGray" IsReadOnly="False" Cursor="Hand" TextChanged="ThisTextEditor_TextChanged" >
                 <avalonEdit:TextEditor.Options>
                     <avalonEdit:TextEditorOptions
                     HighlightCurrentLine="False" ShowSpaces="True" ConvertTabsToSpaces="True"

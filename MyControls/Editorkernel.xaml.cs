@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -55,6 +57,7 @@ namespace RootNS.MyControls
             thisDialog = new FindReplaceDialog();
         }
 
+
         private FindReplaceDialog thisDialog;
         private bool? dialogTag;
 
@@ -74,6 +77,7 @@ namespace RootNS.MyControls
                 FindReplaceDialog.editor = ThisTextEditor;
                 Gval.Views.UcShower.Tag = null;
                 Gval.Views.UcShower.ThisTextEditor.Visibility = Visibility.Visible;
+                Gval.Views.UcShower.DataContext = (this.DataContext as Node);
                 Gval.Views.UcShower.ThisTextEditor.Text = (this.DataContext as Node).Summary;
                 Gval.Views.UcShower.Tag = true;
             }
@@ -388,11 +392,18 @@ namespace RootNS.MyControls
             if (this.Tag != null)
             {
                 //不是轻量编辑器时
-                BtnSaveDoc.IsEnabled = true;
-                //文字变更之后，刷新展示区
-                Gval.Views.UcShower.ThisTextEditor.Text = SummaryTextEditor.Text;
-                ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = Gval.Views.UcShower.ThisTextEditor.Document.GetLineByOffset(SummaryTextEditor.CaretOffset);
-                Gval.Views.UcShower.ThisTextEditor.ScrollToLine(currentLine.LineNumber);
+                if (SummaryTextEditor.Text.Equals((this.DataContext as Node).Summary))
+                {
+
+                }
+                else
+                {
+                    BtnSaveDoc.IsEnabled = true;
+                }
+                ////文字变更之后，刷新展示区
+                //Gval.Views.UcShower.ThisTextEditor.Text = SummaryTextEditor.Text;
+                //ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = Gval.Views.UcShower.ThisTextEditor.Document.GetLineByOffset(SummaryTextEditor.CaretOffset);
+                //Gval.Views.UcShower.ThisTextEditor.ScrollToLine(currentLine.LineNumber);
             }
         }
 

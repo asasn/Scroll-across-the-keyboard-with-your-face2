@@ -109,7 +109,7 @@
                             </RadioButton>
                         </StackPanel>
                         <StackPanel Grid.Row="2">
-                            <Button x:Name="BtnOutlines" ToolTipService.ShowDuration="60000" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" Width="30" Height="30" Click="BtnOutlines_Click">
+                            <Button x:Name="BtnOutlines" Visibility="Collapsed" ToolTipService.ShowDuration="60000" FontFamily="../Resources/icons/#icomoon" Content="&#xe98c;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" Width="30" Height="30" Click="BtnOutlines_Click">
                                 <Button.ToolTip>
                                     <TextBlock TextWrapping="Wrap" Text="{x:Static prop:Resources.TipBtnOutlines}"></TextBlock>
                                 </Button.ToolTip>

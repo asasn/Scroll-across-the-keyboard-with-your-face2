@@ -238,7 +238,7 @@ namespace RootNS
                     content += tip.Content.Trim() + "\n";
                 }
             }
-            Views.WShow wShow = new Views.WShow();
+            Views.WShowPackage wShow = new Views.WShowPackage();
             wShow.ThisTextEditor.Text = content;
             wShow.Show();
         }

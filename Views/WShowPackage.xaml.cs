@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace RootNS.Views
 {
     /// <summary>
-    /// WShow.xaml 的交互逻辑
+    /// WShowPackage.xaml 的交互逻辑
     /// </summary>
-    public partial class WShow : Window
+    public partial class WShowPackage : Window
     {
-        public WShow()
+        public WShowPackage()
         {
             InitializeComponent();
         }
