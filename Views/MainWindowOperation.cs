@@ -219,6 +219,27 @@ namespace RootNS
             }
             wBase.Show();
         }
+
+        private void BtnReadmodel_Click(object sender, RoutedEventArgs e)
+        {
+            if (Gval.CurrentBook.TabRoot.ChildNodes[0].ChildsCount == 0)
+            {
+                return;
+            }
+            string content = string.Empty;
+            foreach (Node node in Gval.CurrentBook.TabRoot.ChildNodes[0].ChildNodes)
+            {
+                content += node.Title.Trim() + "\n";
+                content += node.Text + "\n\n";
+            }
+            Views.WShowPackage wShow = new Views.WShowPackage();
+            wShow.ThisTextEditor.Text = content;
+            wShow.ThisTextEditor.ShowLineNumbers = false;
+            wShow.ThisTextEditor.FontSize = 28;
+            wShow.ThisTextEditor.FontFamily = new FontFamily("霞鹜文楷");
+            wShow.Show();
+        }
+
         private void BtnPackage_Click(object sender, RoutedEventArgs e)
         {
             if (SqliteHelper.PoolDict.ContainsKey(Gval.CurrentBook.Guid.ToString()) == false)
@@ -229,6 +250,10 @@ namespace RootNS
             foreach (Node card in Gval.CurrentBook.TabRoot.ChildNodes[5].GetHeirsList())
             {
                 if (card.Attachment == null || card.Card == null || card.IsDir == true)
+                {
+                    continue;
+                }
+                if (card.Card.Tag.Equals("错误"))
                 {
                     continue;
                 }

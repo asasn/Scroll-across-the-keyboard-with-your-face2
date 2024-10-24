@@ -112,6 +112,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5,0,5,0" >
                 <Slider x:Name="slider" Value="12" Width="120" Maximum="36" Minimum="10" ValueChanged="slider_ValueChanged" ToolTip="{Binding Value, ElementName=slider}" SmallChange="1" LargeChange="1" IsSnapToTickEnabled="True" Loaded="slider_Loaded"/>
+                <Button x:Name="readModel" FontFamily="../Resources/icons/#icomoon" Content="&#xe922;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="进入阅读模式" Click="readModel_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
                 <Button x:Name="reSlider" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c3;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="还原字体大小" Click="reSlider_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
             </StackPanel>
             </Grid>

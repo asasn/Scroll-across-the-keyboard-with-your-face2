@@ -526,10 +526,18 @@ namespace RootNS.MyControls
             ThisTextEditor.FontSize = (sender as Slider).Value * 16 / 12;
         }
 
+        private void readModel_Click(object sender, RoutedEventArgs e)
+        {
+            slider.Value = 32;
+            ThisTextEditor.ShowLineNumbers = false;
+            ThisTextEditor.FontFamily = new FontFamily("霞鹜文楷");
+        }
+
         private void reSlider_Click(object sender, RoutedEventArgs e)
         {
-            ThisTextEditor.FontSize = 16;
             slider.Value = 12;
+            ThisTextEditor.ShowLineNumbers = true;
+            ThisTextEditor.FontFamily = new FontFamily("宋体");
         }
 
         private void BtnSummary_Click(object sender, RoutedEventArgs e)
@@ -613,5 +621,7 @@ namespace RootNS.MyControls
             ICSharpCode.AvalonEdit.Document.DocumentLine currentLine = ThisTextEditor.Document.GetLineByOffset(ThisTextEditor.CaretOffset);
             ThisTextEditor.ScrollToLine(currentLine.LineNumber);
         }
+
+
     }
 }
