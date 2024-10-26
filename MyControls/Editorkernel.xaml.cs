@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -71,6 +72,12 @@ namespace RootNS.MyControls
             if (ThisTextEditor.SyntaxHighlighting == null)
             {
                 EditorHelper.UpdataSyntax();
+                ThisTextEditor.FontFamily = new FontFamily(Convert.ToString(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.FontFamily)));
+                if (string.IsNullOrEmpty(ThisTextEditor.FontFamily.Source) || this.Tag == null)
+                {
+                    //字体名字查无，或者是轻量编辑器时
+                    ThisTextEditor.FontFamily = new FontFamily("宋体");
+                }
             }
             if (this.Tag != null)
             {
@@ -186,7 +193,7 @@ namespace RootNS.MyControls
         private void Command_Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Gval.Views.UcFindReplaceDialog = FindReplaceDialog.ShowForReplace();
-            dialogTag = true; 
+            dialogTag = true;
             this.SetPreviousText();
             Gval.Views.UcFindReplaceDialog.TabReplace.IsSelected = true;
             Gval.Views.UcFindReplaceDialog.txtFind2.SelectAll();
@@ -502,43 +509,112 @@ namespace RootNS.MyControls
 
         }
 
-        bool isSliderLoaded = false;
-        private void slider_Loaded(object sender, RoutedEventArgs e)
+        bool isSlider1Loaded = false;
+        private void slider1_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.Tag != null)
+            if (this.Tag == null)
             {
+                //是轻量编辑器时
                 return;
             }
-            double sizePt = Convert.ToDouble(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.FontSizeBypt));
-            if (sizePt != 0)
+            double size = Convert.ToDouble(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.TextAreaMargin));
+            if (size != 0)
             {
-                slider.Value = sizePt;
+                slider1.Value = size;
             }
-            isSliderLoaded = true;
+            isSlider1Loaded = true;
         }
 
-        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void slider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (isSliderLoaded == true)
+            if (isSlider1Loaded == true)
             {
-                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.FontSizeBypt, slider.Value);
+                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.TextAreaMargin, slider1.Value);
             }
-            ThisTextEditor.FontSize = (sender as Slider).Value * 16 / 12;
+            double aaa = (sender as Slider).Value * 10;
+            ThisTextEditor.TextArea.Margin = new Thickness(aaa, 0, aaa, 0);
         }
 
+        bool isSlider2Loaded = false;
+        private void slider2_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.Tag == null)
+            {
+                //是轻量编辑器时
+                return;
+            }
+            double size = Convert.ToDouble(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.FontSize));
+            if (size != 0)
+            {
+                slider2.Value = size;
+            }
+            isSlider2Loaded = true;
+        }
+
+        private void slider2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (isSlider2Loaded == true)
+            {
+                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.FontSize, slider2.Value);
+            }
+            ThisTextEditor.FontSize = (sender as Slider).Value;
+        }
+
+        bool _isReadModel = false;
         private void readModel_Click(object sender, RoutedEventArgs e)
         {
-            slider.Value = 32;
-            ThisTextEditor.ShowLineNumbers = false;
-            ThisTextEditor.FontFamily = new FontFamily("霞鹜文楷");
+            if (ThisTextEditor.FontFamily.Source == "霞鹜文楷")
+            {
+                _isReadModel = true;
+            }
+            if (_isReadModel)
+            {
+                ThisTextEditor.TextArea.Margin = new Thickness(0);
+                slider1.Value = 0;
+                slider2.Value = 16;
+                CbShowLineNumbers.IsChecked = true;
+                ThisTextEditor.FontFamily = new FontFamily("宋体");
+                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.FontFamily, ThisTextEditor.FontFamily);
+                _isReadModel = false;
+            }
+            else
+            {
+                slider1.Value = 15;
+                slider2.Value = 24;
+                CbShowLineNumbers.IsChecked = false;
+                ThisTextEditor.FontFamily = new FontFamily("霞鹜文楷");
+                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.FontFamily, ThisTextEditor.FontFamily);
+                _isReadModel = true;
+            }
+
         }
 
         private void reSlider_Click(object sender, RoutedEventArgs e)
         {
-            slider.Value = 12;
-            ThisTextEditor.ShowLineNumbers = true;
+            ThisTextEditor.TextArea.Margin = new Thickness(0);
+            slider1.Value = 0;
+            slider2.Value = 16;
+            CbShowLineNumbers.IsChecked = true;
             ThisTextEditor.FontFamily = new FontFamily("宋体");
+            Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.FontFamily, ThisTextEditor.FontFamily);
         }
+
+        bool isCbShowLineNumbersLoad = false;
+        private void CbShowLineNumbers_Loaded(object sender, RoutedEventArgs e)
+        {
+            CbShowLineNumbers.IsChecked = Convert.ToBoolean(Settings.Get(Gval.CurrentBook, Gval.SettingsKeys.IsShowLineNumbers));
+            isCbShowLineNumbersLoad = true;
+        }
+
+        private void isCbShowLineNumbers_Change(object sender, RoutedEventArgs e)
+        {
+            if (isCbShowLineNumbersLoad == true)
+            {
+                Settings.Set(Gval.CurrentBook, Gval.SettingsKeys.IsShowLineNumbers, CbShowLineNumbers.IsChecked);
+            }
+            ThisTextEditor.ShowLineNumbers = (bool)(sender as ToggleButton).IsChecked;
+        }
+
 
         private void BtnSummary_Click(object sender, RoutedEventArgs e)
         {

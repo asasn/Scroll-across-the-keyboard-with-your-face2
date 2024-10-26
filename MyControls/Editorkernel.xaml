@@ -56,8 +56,8 @@
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Grid.Row="0"
             x:Name="ThisTextEditor" ShowLineNumbers="True" 
-            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
-            FontSize="12pt" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged" GotFocus="ThisTextEditor_GotFocus">
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="{Binding Gval.SettingsKeys.FontFamily}"
+            FontSize="16" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged" GotFocus="ThisTextEditor_GotFocus">
                 <avalonEdit:TextEditor.ContextMenu>
                     <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
                         <MenuItem Icon="&#59407;" FontFamily="../Resources/icons/#icomoon" Header="新增信息卡" Click="MenuItem0_Click" IsEnabled="True"/>
@@ -111,12 +111,16 @@
                 <Label Name="LbValueValue3" hc:BorderElement.CornerRadius="0" BorderThickness="0,0,0,0" Background="Transparent" Foreground="CadetBlue" Padding="0" MinWidth="10"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="5,0,5,0" >
-                <Slider x:Name="slider" Value="12" Width="120" Maximum="36" Minimum="10" ValueChanged="slider_ValueChanged" ToolTip="{Binding Value, ElementName=slider}" SmallChange="1" LargeChange="1" IsSnapToTickEnabled="True" Loaded="slider_Loaded"/>
+                <Slider x:Name="slider1" Value="0" Width="120" Maximum="18" Minimum="0" ValueChanged="slider1_ValueChanged" ToolTip="{Binding Value, ElementName=slider1}" SmallChange="1" LargeChange="1" IsSnapToTickEnabled="True" Loaded="slider1_Loaded"/>
+                <Slider x:Name="slider2" Value="16" Width="120" Maximum="48" Minimum="16" ValueChanged="slider2_ValueChanged" ToolTip="{Binding Value, ElementName=slider2}" SmallChange="1" LargeChange="1" IsSnapToTickEnabled="True" Loaded="slider2_Loaded"/>
                 <Button x:Name="readModel" FontFamily="../Resources/icons/#icomoon" Content="&#xe922;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="进入阅读模式" Click="readModel_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
                 <Button x:Name="reSlider" FontFamily="../Resources/icons/#icomoon" Content="&#xe9c3;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="还原字体大小" Click="reSlider_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
+                <ToggleButton x:Name="CbShowLineNumbers" BorderThickness="2" Style="{StaticResource ToggleButtonSwitch}" IsChecked="True" ToolTip="是否显示行号" Loaded="CbShowLineNumbers_Loaded" Unchecked="isCbShowLineNumbers_Change" Checked="isCbShowLineNumbers_Change" Width="20" Height="20"/>
             </StackPanel>
             </Grid>
-        <Button x:Name="BtnSummary" Visibility="Collapsed" FontFamily="../Resources/icons/#icomoon" Content="&#xe979;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="显示章节注释（草稿/章纲/备忘）" Click="BtnSummary_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button x:Name="BtnSummary" Visibility="Collapsed" FontFamily="../Resources/icons/#icomoon" Content="&#xe979;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Padding="0" BorderThickness="0" ToolTip="显示章节注释（草稿/章纲/备忘）" Click="BtnSummary_Click" Grid.Row="1" Grid.Column="3" Height="20" Width="20" />
+            </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1">
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe9c9;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnSaveDoc" Padding="0" BorderThickness="0" ToolTip="保存文档（Ctrl + S）" hc:FloatingBlock.Content="✔" Click="BtnSaveText_Click"/>
             <Button FontFamily="../Resources/icons/#icomoon" Content="&#xe947;" FontSize="16" Background="Transparent" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" x:Name="BtnCopy" Padding="0" BorderThickness="0" ToolTip="复制文档内容（不包含未保存的部分）" Click="BtnCopy_Click"/>

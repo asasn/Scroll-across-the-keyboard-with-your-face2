@@ -11,7 +11,7 @@
 	<Color name="心理" foreground="Violet" />
 	<Color name="敏感" foreground="Red"/>
 	<Color name="建议" foreground="Magenta"/>
-	<Color name="角色" foreground="Blue" fontFamily="宋体" />
+	<Color name="角色" foreground="Blue"/>
 	<Color name="龙套" foreground="DodgerBlue"/>
 	<Color name="势力" foreground="Violet"/>
 	<Color name="部门" foreground="Plum"/>

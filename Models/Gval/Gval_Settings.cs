@@ -19,7 +19,10 @@ namespace RootNS.Models
             public static string CurrentThemeColor { get { return "CurrentThemeColor"; } }
             public static string TomatoTimeSetTotalMinutes { get { return "TomatoTimeSetTotalMinutes"; } }
             public static string Scroll2End { get { return "Scroll2End"; } }
-            public static string FontSizeBypt { get { return "FontSizeBypt"; } }
+            public static string FontSize { get { return "FontSize"; } }
+            public static string FontFamily { get { return "FontFamily"; } }
+            public static string TextAreaMargin { get { return "TextAreaMargin"; } }
+            public static string IsShowLineNumbers { get { return "ShowLineNumbers"; } }
             public static string WebdavUrl { get { return "WebdavUrl"; } }
             public static string WebdavUserName { get { return "WebdavUserName"; } }
             public static string WebdavPassWord { get { return "WebdavPassWord"; } }

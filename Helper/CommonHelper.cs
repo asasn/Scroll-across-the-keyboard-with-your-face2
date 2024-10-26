@@ -60,17 +60,11 @@ namespace RootNS.Helper
                     return 0;
                 }
                 // 将特定符号替换为一个■
-                input = Regex.Replace(input, @"[…]", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"[…—……]", "■", RegexOptions.Multiline);
 
-                // 将连续的特殊符号替换为一个■
-                input = Regex.Replace(input, @"([—]+)", "■", RegexOptions.Multiline);
-
-                // 将连续的英文单词替换为一个■
-                input = Regex.Replace(input, @"([a-zA-Z~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F][a-zA-Z~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]+)", "■", RegexOptions.Multiline);
-
-                // 将连续的数字替换为一个■
-                input = Regex.Replace(input, @"([0-9~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F][0-9~!@#$%^&*()-_+?/\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]+)", "■", RegexOptions.Multiline);
-
+                // 将连续的英文单词、数字和可打印字符以及控制字符替换为一个■
+                input = Regex.Replace(input, @"([0-9a-zA-Z\x21-\x7F][0-9a-zA-Z\x21-\x7F]+)", "■", RegexOptions.Multiline);
+               
                 // 去除不可见符号和全角/半角空格
                 input = Regex.Replace(input, @"[\s]", "", RegexOptions.Multiline);
 
