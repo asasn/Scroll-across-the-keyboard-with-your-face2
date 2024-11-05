@@ -60,15 +60,15 @@ namespace RootNS.Helper
                     return 0;
                 }
                 // 将特定符号替换为一个■
-                input = Regex.Replace(input, @"[…—……]", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"[…—……]", "■");
 
                 // 将连续的英文单词、数字和可打印字符以及控制字符替换为一个■
-                input = Regex.Replace(input, @"([0-9a-zA-Z\x21-\x7F][0-9a-zA-Z\x21-\x7F]+)", "■", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"([0-9a-zA-Z\x21-\x7F]+)", "■");
                
                 // 去除不可见符号和全角/半角空格
-                input = Regex.Replace(input, @"[\s]", "", RegexOptions.Multiline);
+                input = Regex.Replace(input, @"[\s]", "");
 
-                // 返回字符串中空格的数量加1
+                // 返回字数
                 return input.Length;
             }
 
