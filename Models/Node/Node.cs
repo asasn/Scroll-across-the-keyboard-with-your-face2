@@ -1,5 +1,6 @@
 ﻿using RootNS.Helper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -125,6 +126,22 @@ namespace RootNS.Models
                 RaisePropertyChanged(nameof(ChildsCount));
             }
         }
+
+
+        private int _chapterNodesCount;
+        /// <summary>
+        /// 子章节（非目录）数量统计
+        /// </summary>
+        public int ChapterNodesCount
+        {
+            get { return _chapterNodesCount; }
+            set
+            {
+                _chapterNodesCount = value;
+                RaisePropertyChanged(nameof(ChapterNodesCount));
+            }
+        }
+
 
 
 

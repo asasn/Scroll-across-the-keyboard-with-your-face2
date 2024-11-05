@@ -44,13 +44,23 @@
                     </hc:ComboBox>
                     <Border x:Name="BorderB" BorderBrush="#E0E0E0" Background="#FAFAFA" BorderThickness="1" CornerRadius="5" Width="{Binding Width, ElementName=BorderR, Mode=OneWay}" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}" Grid.Row="2">
                         <TabControl IsEnabled="{Binding SelectedItem, Converter={StaticResource Object2BooleanConverter}, ElementName=TreeBox}" Grid.Row="4" DataContext="{Binding CurrentBook, Source={StaticResource Gval}}" Style="{DynamicResource TabControlStyle}" SelectionChanged="TabControl_SelectionChanged">
-                            <TabItem Header="草稿" DataContext="{Binding TabRoot.ChildNodes[0]}" Uid="{Binding Guid}">                                
+                            <TabItem DataContext="{Binding TabRoot.ChildNodes[0]}" Uid="{Binding Guid}">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding CurrentBook.TabRoot.ChildNodes[0].ChildsCount, Source={StaticResource Gval}, StringFormat={}草稿 {0}}" />
+                                    </StackPanel>
+                                </TabItem.Header>
                                 <mycontrols:MyTree x:Name="ChapterTree" Tag="Chapters"  Loaded="ChapterTree_Loaded"/>
                             </TabItem>
                             <TabItem Header="作品相关" DataContext="{Binding TabRoot.ChildNodes[1]}" Uid="{Binding Guid}">
                                 <mycontrols:MyTree/>
                             </TabItem>
-                            <TabItem Header="已发布" DataContext="{Binding TabRoot.ChildNodes[2]}" Uid="{Binding Guid}">
+                            <TabItem DataContext="{Binding TabRoot.ChildNodes[2]}" Uid="{Binding Guid}">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding CurrentBook.TabRoot.ChildNodes[2].ChapterNodesCount, Source={StaticResource Gval}, StringFormat={}已发布 {0}}" />
+                                    </StackPanel>
+                                </TabItem.Header>
                                 <mycontrols:MyTree/>
                             </TabItem>
                         </TabControl>

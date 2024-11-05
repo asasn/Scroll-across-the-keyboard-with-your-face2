@@ -40,6 +40,12 @@ namespace RootNS.Models
                 stuff.Index = this.ChildNodes.IndexOf(stuff);
                 this.ChildsCount += 1;
                 this.Count += 1;
+                Node tmp = this;
+                while (tmp.Parent != null)
+                {
+                    tmp.ChapterNodesCount = tmp.GetDocCollection().Count;
+                    tmp = tmp.Parent;
+                }
                 if (this != this.Owner.TabRoot)//根节点之下的第一层tabRoot才是需要的目录树，所以排除总树根
                 {
                     stuff.TypeName = this.TypeName;
@@ -69,6 +75,12 @@ namespace RootNS.Models
                 Node stuff = (Node)e.OldItems[0];
                 this.ChildsCount -= 1;
                 this.Count -= 1;
+                Node tmp = this;
+                while (tmp.Parent != null)
+                {
+                    tmp.ChapterNodesCount = tmp.GetDocCollection().Count;
+                    tmp = tmp.Parent;
+                }
                 if (Gval.FlagLoadingCompleted == true)
                 {
                     EditorHelper.UpdataSyntax();
@@ -294,7 +306,22 @@ namespace RootNS.Models
             return dirList;
         }
 
+        /// <summary>
+        /// 获取子节点当中的章节集合（不包含自身）
+        /// </summary>
+        public ObservableCollection<Node> DocCollection
+        {
+            get { return GetDocCollection(); }
+        }
+        private ObservableCollection<Node> GetDocCollection()
+        {
+            // 调用GetHeirsList()获取ArrayList
+            ArrayList heirsArrayList = GetHeirsList();
 
+            // 使用Cast<Node>()转换ArrayList中的元素，然后使用Where筛选
+            var filteredNodes = heirsArrayList.Cast<Node>().Where(node => !node.IsDir);
+            return new ObservableCollection<Node>(filteredNodes);
+        }
 
         /// <summary>
         /// 新建节点至表中（插入或忽略）
@@ -428,6 +455,7 @@ namespace RootNS.Models
 
             EditorHelper.UpdataSyntax();
         }
+
 
         /// <summary>
         /// 获取包括自身在内的后代列表（递归遍历子孙节点）
