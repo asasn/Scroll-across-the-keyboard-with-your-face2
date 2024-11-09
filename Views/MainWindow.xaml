@@ -124,7 +124,7 @@
                                     <TextBlock TextWrapping="Wrap" Text="{x:Static prop:Resources.TipBtnOutlines}"></TextBlock>
                                 </Button.ToolTip>
                             </Button>
-                            <Button x:Name="BtnReadmodel" ToolTipService.ShowDuration="60000" FontFamily="../Resources/icons/#icomoon" Content="&#xe9ab;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" Width="30" Height="30" Click="BtnReadmodel_Click">
+                            <Button x:Name="BtnReadmodel" ToolTipService.ShowDuration="60000" FontFamily="../Resources/icons/#icomoon" Content="&#xe945;" FontSize="24" BorderThickness="0" Padding="0" Foreground="{Binding CurrentThemeColor, Source={StaticResource Gval}}" Background="Transparent" Width="30" Height="30" Click="BtnReadmodel_Click">
                                 <Button.ToolTip>
                                     <TextBlock TextWrapping="Wrap" Text="{x:Static prop:Resources.TipBtnPackage}"></TextBlock>
                                 </Button.ToolTip>

@@ -157,8 +157,12 @@ namespace RootNS.Helper
                     reText += lineStr.Trim();
                 }
             }
-            //排版完成，重新赋值给文本框
-            tEditor.Text = reText;
+            //排版完成，重新赋值给文本框，这里不能直接用=赋值，而是要在tEditor.Document操作，以保留撤销操作。
+            if (reText != tEditor.Document.Text)
+            {
+                tEditor.Document.Replace(0, tEditor.Document.TextLength, reText);
+            }
+
             if (Gval.EditorSettings.CursorToEnd == true)
             {
                 //光标移动至文末

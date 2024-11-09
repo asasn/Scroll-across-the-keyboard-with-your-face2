@@ -56,7 +56,7 @@
             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
             Grid.Row="0"
             x:Name="ThisTextEditor" ShowLineNumbers="True" 
-            SyntaxHighlighting="Text" WordWrap="True" FontFamily="{Binding Gval.SettingsKeys.FontFamily}"
+            SyntaxHighlighting="Text" WordWrap="True" FontFamily="宋体"
             FontSize="16" CommandManager.Executed="ThisTextEditor_Executed"  CommandManager.PreviewExecuted="ThisTextEditor_PreviewExecuted" MouseHover="ThisTextEditor_MouseHover" MouseHoverStopped="ThisTextEditor_MouseHoverStopped" Loaded="ThisTextEditor_Loaded" KeyUp="ThisTextEditor_KeyUp" TextChanged="ThisTextEditor_TextChanged" GotFocus="ThisTextEditor_GotFocus">
                 <avalonEdit:TextEditor.ContextMenu>
                     <ContextMenu x:Name="TextEditorMenu" Opened="TextEditorMenu_Opened">
